@@ -41,6 +41,7 @@ library
     Patrol.Type.Dsn
     Patrol.Type.Event
     Patrol.Type.EventId
+    Patrol.Type.Exception
     Patrol.Type.Level
     Patrol.Type.Platform
     Patrol.Type.Response
