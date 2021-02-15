@@ -3,10 +3,10 @@ module Patrol.Type.Event
   ) where
 
 import qualified Data.Aeson as Aeson
-import qualified Data.Text as Text
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Platform as Platform
 import qualified Patrol.Type.Timestamp as Timestamp
+import qualified Patrol.Utility.Json as Json
 
 data Event = Event
   { eventId :: EventId.EventId
@@ -16,10 +16,7 @@ data Event = Event
 
 instance Aeson.ToJSON Event where
   toJSON event = Aeson.object
-    [ pair "event_id" $ eventId event
-    , pair "platform" $ platform event
-    , pair "timestamp" $ timestamp event
+    [ Json.pair "event_id" $ eventId event
+    , Json.pair "platform" $ platform event
+    , Json.pair "timestamp" $ timestamp event
     ]
-
-pair :: (Aeson.ToJSON value, Aeson.KeyValue pair) => String -> value -> pair
-pair k v = Text.pack k Aeson..= v
