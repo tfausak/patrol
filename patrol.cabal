@@ -42,9 +42,11 @@ library
     Patrol.Type.Event
     Patrol.Type.EventId
     Patrol.Type.Exception
+    Patrol.Type.Frame
     Patrol.Type.Level
     Patrol.Type.Platform
     Patrol.Type.Response
+    Patrol.Type.StackTrace
     Patrol.Type.Timestamp
   ghc-options:
     -Weverything
