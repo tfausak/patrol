@@ -46,6 +46,7 @@ library
     Patrol.Type.Frame
     Patrol.Type.Level
     Patrol.Type.Platform
+    Patrol.Type.Request
     Patrol.Type.Response
     Patrol.Type.StackTrace
     Patrol.Type.Timestamp
