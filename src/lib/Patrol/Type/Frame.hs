@@ -9,6 +9,7 @@ import qualified Data.Text as Text
 import qualified GHC.Stack as Stack
 import qualified Patrol.Utility.Json as Json
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/stacktrace/#frame-attributes>
 data Frame = Frame
   { colno :: Maybe Int
   , filename :: Maybe Text.Text

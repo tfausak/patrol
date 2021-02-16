@@ -7,6 +7,7 @@ module Patrol.Type.Timestamp
 import qualified Data.Aeson as Aeson
 import qualified Data.Time as Time
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/#required-attributes>
 newtype Timestamp
   = Timestamp Time.UTCTime
   deriving (Eq, Show)

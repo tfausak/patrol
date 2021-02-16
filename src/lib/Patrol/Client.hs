@@ -18,12 +18,12 @@ import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Response as Response
 
--- TODO: Handle 429 response codes.
--- TODO: Compress request body.
+-- | <https://develop.sentry.dev/sdk/store/>
 store :: Client.Manager -> Dsn.Dsn -> Event.Event -> IO EventId.EventId
 store manager dsn event = do
   now <- Time.getCurrentTime
   request <- Client.parseUrlThrow $ makeUrl dsn
+  -- TODO: Compress request body.
   response <- Client.httpLbs request
     { Client.requestBody = Client.RequestBodyLBS $ Aeson.encode event
     , Client.requestHeaders =
@@ -39,6 +39,7 @@ store manager dsn event = do
       ]
     , Client.method = Http.methodPost
     } manager
+  -- TODO: Handle 429 response codes.
   either fail (pure . Response.id_) . Aeson.eitherDecode $ Client.responseBody response
 
 makeUrl :: Dsn.Dsn -> String

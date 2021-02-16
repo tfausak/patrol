@@ -10,6 +10,7 @@ import qualified Data.Text as Text
 import qualified Network.URI as Uri
 import qualified Patrol.Utility.Maybe as Maybe
 
+-- | <https://develop.sentry.dev/sdk/overview/#parsing-the-dsn>
 data Dsn = Dsn
   { protocol :: Text.Text
   , publicKey :: Text.Text

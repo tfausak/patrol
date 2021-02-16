@@ -4,6 +4,7 @@ module Patrol.Type.Level
 
 import qualified Data.Aeson as Aeson
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/#optional-attributes>
 data Level
   = Fatal
   | Error

@@ -8,6 +8,7 @@ import qualified Data.Aeson as Aeson
 import qualified Data.Text as Text
 import qualified Data.UUID as Uuid
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/#required-attributes>
 newtype EventId
   = EventId Uuid.UUID
   deriving (Eq, Show)

@@ -9,6 +9,7 @@ import qualified GHC.Stack as Stack
 import qualified Patrol.Type.Frame as Frame
 import qualified Patrol.Utility.Json as Json
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/stacktrace/>
 newtype StackTrace = StackTrace
   { frames :: NonEmpty.NonEmpty Frame.Frame
   } deriving (Eq, Show)

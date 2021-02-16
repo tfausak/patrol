@@ -17,6 +17,7 @@ import qualified Patrol.Type.Platform as Platform
 import qualified Patrol.Type.Timestamp as Timestamp
 import qualified Patrol.Utility.Json as Json
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/>
 data Event = Event
   { dist :: Maybe Text.Text
   , environment :: Maybe Text.Text

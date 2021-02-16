@@ -11,6 +11,7 @@ import qualified Data.Typeable as Typeable
 import qualified Patrol.Type.StackTrace as StackTrace
 import qualified Patrol.Utility.Json as Json
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/exception/>
 data Exception = Exception
   { module_ :: Maybe Text.Text
   , stackTrace :: Maybe StackTrace.StackTrace
