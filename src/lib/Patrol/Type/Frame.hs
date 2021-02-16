@@ -29,10 +29,10 @@ instance Aeson.ToJSON Frame where
     ]
 
 fromSrcLoc :: String -> Stack.SrcLoc -> Frame
-fromSrcLoc theFunction srcLoc = Frame
+fromSrcLoc function srcLoc = Frame
   { colno = Just $ Stack.srcLocStartCol srcLoc
   , filename = Just . Text.pack $ Stack.srcLocFile srcLoc
-  , function = Text.pack theFunction
+  , function = Text.pack function
   , lineno = Just $ Stack.srcLocStartLine srcLoc
   , module_ = Just . Text.pack $ Stack.srcLocModule srcLoc
   , package = Just . Text.pack $ Stack.srcLocPackage srcLoc

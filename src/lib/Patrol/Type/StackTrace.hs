@@ -20,7 +20,5 @@ instance Aeson.ToJSON StackTrace where
 
 fromCallStack :: Stack.CallStack -> Maybe StackTrace
 fromCallStack callStack = do
-  theFrames <- NonEmpty.nonEmpty . fmap (uncurry Frame.fromSrcLoc) $ Stack.getCallStack callStack
-  pure StackTrace
-    { frames = theFrames
-    }
+  frames <- NonEmpty.nonEmpty . fmap (uncurry Frame.fromSrcLoc) $ Stack.getCallStack callStack
+  pure StackTrace { frames }

@@ -39,7 +39,7 @@ store manager dsn event = do
       ]
     , Client.method = Http.methodPost
     } manager
-  either fail (pure . Response.id) . Aeson.eitherDecode $ Client.responseBody response
+  either fail (pure . Response.id_) . Aeson.eitherDecode $ Client.responseBody response
 
 makeUrl :: Dsn.Dsn -> String
 makeUrl dsn =

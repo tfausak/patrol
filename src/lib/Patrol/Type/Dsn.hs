@@ -22,7 +22,7 @@ data Dsn = Dsn
 
 fromUri :: Uri.URI -> Either String Dsn
 fromUri uri = do
-  theProtocol <- Maybe.note "invalid protocol"
+  protocol <- Maybe.note "invalid protocol"
     . Text.stripSuffix (Text.singleton ':')
     . Text.pack
     $ Uri.uriScheme uri
@@ -32,22 +32,22 @@ fromUri uri = do
     . Text.pack
     $ Uri.uriUserInfo authority
   let
-    (thePublicKey, theSecretKey) = Text.drop 1
+    (publicKey, secretKey) = Text.drop 1
       <$> Text.breakOn (Text.singleton ':') userInfo
-    (theHost, thePort) = fmap (Text.drop 1) . Text.breakOn (Text.singleton ':')
+    (host, port) = fmap (Text.drop 1) . Text.breakOn (Text.singleton ':')
       . Text.pack
       $ Uri.uriRegName authority <> Uri.uriPort authority
-    (thePath, theProjectId) = Text.breakOnEnd (Text.singleton '/')
+    (path, projectId) = Text.breakOnEnd (Text.singleton '/')
       . Text.pack
       $ Uri.uriPath uri
   Right Dsn
-    { protocol = theProtocol
-    , publicKey = thePublicKey
-    , secretKey = if Text.null theSecretKey then Nothing else Just theSecretKey
-    , host = theHost
-    , port = if Text.null thePort then Nothing else Just thePort
-    , path = thePath
-    , projectId = theProjectId
+    { protocol
+    , publicKey
+    , secretKey = if Text.null secretKey then Nothing else Just secretKey
+    , host
+    , port = if Text.null port then Nothing else Just port
+    , path
+    , projectId
     }
 
 fromString :: String -> Either String Dsn

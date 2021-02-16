@@ -56,12 +56,12 @@ instance Aeson.ToJSON Event where
 
 new :: IO.MonadIO io => io Event
 new = IO.liftIO $ do
-  theEventId <- EventId.fromUuid <$> Uuid.nextRandom
-  theTimestamp <- Timestamp.fromUtcTime <$> Time.getCurrentTime
+  eventId <- EventId.fromUuid <$> Uuid.nextRandom
+  timestamp <- Timestamp.fromUtcTime <$> Time.getCurrentTime
   pure Event
     { dist = Nothing
     , environment = Nothing
-    , eventId = theEventId
+    , eventId
     , exception = Nothing
     , extra = Nothing
     , fingerprint = Nothing
@@ -72,6 +72,6 @@ new = IO.liftIO $ do
     , release = Nothing
     , serverName = Nothing
     , tags = Nothing
-    , timestamp = theTimestamp
+    , timestamp
     , transaction = Nothing
     }
