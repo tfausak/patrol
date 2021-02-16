@@ -16,6 +16,7 @@ import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Platform as Platform
 import qualified Patrol.Type.Request as Request
 import qualified Patrol.Type.Timestamp as Timestamp
+import qualified Patrol.Type.User as User
 import qualified Patrol.Utility.Json as Json
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/>
@@ -36,6 +37,7 @@ data Event = Event
   , tags :: Maybe (Map.Map Text.Text Text.Text)
   , timestamp :: Timestamp.Timestamp
   , transaction :: Maybe Text.Text
+  , user :: Maybe User.User
   } deriving (Eq, Show)
 
 instance Aeson.ToJSON Event where
@@ -56,6 +58,7 @@ instance Aeson.ToJSON Event where
     , Json.pair "tags" <$> tags event
     , Just . Json.pair "timestamp" $ timestamp event
     , Json.pair "transaction" <$> transaction event
+    , Json.pair "user" <$> user event
     ]
 
 new :: IO.MonadIO io => io Event
@@ -79,4 +82,5 @@ new = IO.liftIO $ do
     , tags = Nothing
     , timestamp
     , transaction = Nothing
+    , user = Nothing
     }

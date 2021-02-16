@@ -50,6 +50,7 @@ library
     Patrol.Type.Response
     Patrol.Type.StackTrace
     Patrol.Type.Timestamp
+    Patrol.Type.User
   ghc-options:
     -Weverything
     -Wno-implicit-prelude
