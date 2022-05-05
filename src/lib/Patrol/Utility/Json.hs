@@ -5,10 +5,10 @@ module Patrol.Utility.Json
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Types as Aeson
-import qualified Data.Text as Text
+import qualified Data.String as String
 
 pair :: (Aeson.ToJSON value, Aeson.KeyValue pair) => String -> value -> pair
-pair key value = Text.pack key Aeson..= value
+pair key value = String.fromString key Aeson..= value
 
 required :: Aeson.FromJSON value => Aeson.Object -> String -> Aeson.Parser value
-required object key = object Aeson..: Text.pack key
+required object key = object Aeson..: String.fromString key
