@@ -1,6 +1,7 @@
 module Patrol.Type.Platform
-  ( Platform(..)
-  ) where
+  ( Platform (..),
+  )
+where
 
 import qualified Data.Aeson as Aeson
 

@@ -1,7 +1,8 @@
 module Patrol.Utility.Json
-  ( pair
-  , required
-  ) where
+  ( pair,
+    required,
+  )
+where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Types as Aeson

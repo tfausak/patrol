@@ -1,0 +1,100 @@
+name: Workflow
+on:
+  push: null
+  release:
+    types:
+      - created
+jobs:
+
+  cabal:
+    runs-on: ubuntu-latest
+    name: Cabal
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: cabal check
+
+  hlint:
+    runs-on: ubuntu-latest
+    name: HLint
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: haskell/actions/hlint-setup@v2
+
+      - uses: haskell/actions/hlint-run@v2
+        with:
+          fail-on: status
+
+  ormolu:
+    runs-on: ubuntu-latest
+    name: Ormolu
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: mrkkrp/ormolu-action@v7
+
+  build:
+    strategy:
+      matrix:
+        include:
+          - { platform: macos, ghc: 9.4.2 }
+          - { platform: ubuntu, ghc: 9.4.2 }
+          - { platform: windows, ghc: 9.4.2 }
+          - { platform: ubuntu, ghc: 9.2.4 }
+          - { platform: ubuntu, ghc: 9.0.2 }
+    runs-on: ${{ matrix.platform }}-latest
+    name: GHC ${{ matrix.ghc }} on ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: mkdir artifact
+
+      - id: artifact
+        run: echo '::set-output name=directory::artifact/${{ matrix.platform }}/${{ matrix.ghc }}'
+
+      - run: mkdir -p ${{ steps.artifact.outputs.directory }}
+
+      - id: setup-haskell
+        uses: haskell/actions/setup@v2
+        with:
+          ghc-version: ${{ matrix.ghc }}
+          cabal-version: 3.8.1.0
+
+      - run: cabal configure --enable-tests --flags pedantic --jobs
+
+      - run: cat cabal.project.local
+
+      - run: cp cabal.project.local ${{ steps.artifact.outputs.directory }}
+
+      - run: cabal freeze
+
+      - run: cat cabal.project.freeze
+
+      - run: cp cabal.project.freeze ${{ steps.artifact.outputs.directory }}
+
+      - run: cabal outdated --v2-freeze-file cabal.project.freeze
+
+      - uses: actions/cache@v3
+        with:
+          path: ${{ steps.setup-haskell.outputs.cabal-store }}
+          key: ${{ matrix.platform }}-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
+          restore-keys: ${{ matrix.platform }}-${{ matrix.ghc }}-
+
+      - run: cabal build --only-download
+
+      - run: cabal build --only-dependencies
+
+      - run: cabal build
+
+      - run: cabal sdist --output-dir ${{ steps.artifact.outputs.directory }}
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: patrol-${{ github.sha }}
+          path: artifact
+
+      - run: cabal run patrol-test-suite
+
+      - if: github.event_name == 'release' && matrix.platform == 'ubuntu' && matrix.ghc == '9.4.2'
+        run: cabal upload --publish --username '${{ secrets.HACKAGE_USERNAME }}' --password '${{ secrets.HACKAGE_PASSWORD }}' artifact/patrol-*.tar.gz

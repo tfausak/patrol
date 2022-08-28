@@ -1,6 +1,7 @@
 module Patrol.Client
-  ( store
-  ) where
+  ( store,
+  )
+where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.ByteString as ByteString
@@ -24,34 +25,40 @@ store manager dsn event = do
   now <- Time.getCurrentTime
   request <- Client.parseUrlThrow $ makeUrl dsn
   -- TODO: Compress request body.
-  response <- Client.httpLbs request
-    { Client.requestBody = Client.RequestBodyLBS $ Aeson.encode event
-    , Client.requestHeaders =
-      [ (Http.hContentType, utf8 "application/json")
-      , (Http.hUserAgent, utf8 userAgent)
-      , (ci $ utf8 "X-Sentry-Auth", Text.encodeUtf8 . Text.intercalate (Text.singleton ',') $ Maybe.catMaybes
-        [ Just $ Text.pack "Sentry sentry_version=7"
-        , Just . Text.pack $ "sentry_client=" <> userAgent
-        , Just . Text.pack $ "sentry_timestamp=" <> Time.formatTime Time.defaultTimeLocale "%s" now
-        , Just $ Text.pack "sentry_key=" <> Dsn.publicKey dsn
-        , (\ x -> Text.pack "sentry_secret=" <> x) <$> Dsn.secretKey dsn
-        ])
-      ]
-    , Client.method = Http.methodPost
-    } manager
+  response <-
+    Client.httpLbs
+      request
+        { Client.requestBody = Client.RequestBodyLBS $ Aeson.encode event,
+          Client.requestHeaders =
+            [ (Http.hContentType, utf8 "application/json"),
+              (Http.hUserAgent, utf8 userAgent),
+              ( ci $ utf8 "X-Sentry-Auth",
+                Text.encodeUtf8 . Text.intercalate (Text.singleton ',') $
+                  Maybe.catMaybes
+                    [ Just $ Text.pack "Sentry sentry_version=7",
+                      Just . Text.pack $ "sentry_client=" <> userAgent,
+                      Just . Text.pack $ "sentry_timestamp=" <> Time.formatTime Time.defaultTimeLocale "%s" now,
+                      Just $ Text.pack "sentry_key=" <> Dsn.publicKey dsn,
+                      (\x -> Text.pack "sentry_secret=" <> x) <$> Dsn.secretKey dsn
+                    ]
+              )
+            ],
+          Client.method = Http.methodPost
+        }
+      manager
   -- TODO: Handle 429 response codes.
   either fail (pure . Response.id_) . Aeson.eitherDecode $ Client.responseBody response
 
 makeUrl :: Dsn.Dsn -> String
 makeUrl dsn =
   Text.unpack (Dsn.protocol dsn)
-  <> "://"
-  <> Text.unpack (Dsn.host dsn)
-  <> maybe "" (\ x -> ":" <> Text.unpack x) (Dsn.port dsn)
-  <> Text.unpack (Dsn.path dsn)
-  <> "api/"
-  <> Text.unpack (Dsn.projectId dsn)
-  <> "/store/"
+    <> "://"
+    <> Text.unpack (Dsn.host dsn)
+    <> maybe "" (\x -> ":" <> Text.unpack x) (Dsn.port dsn)
+    <> Text.unpack (Dsn.path dsn)
+    <> "api/"
+    <> Text.unpack (Dsn.projectId dsn)
+    <> "/store/"
 
 utf8 :: String -> ByteString.ByteString
 utf8 = Text.encodeUtf8 . Text.pack

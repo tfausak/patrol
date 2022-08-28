@@ -1,6 +1,7 @@
 module Patrol.Type.Level
-  ( Level(..)
-  ) where
+  ( Level (..),
+  )
+where
 
 import qualified Data.Aeson as Aeson
 

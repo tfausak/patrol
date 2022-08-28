@@ -1,4 +1,4 @@
 # Change log
 
-Patrol uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+Patrol uses the [Package Versioning Policy](https://pvp.haskell.org).
 The change log is available through [the releases](https://github.com/tfausak/patrol/releases) on GitHub.

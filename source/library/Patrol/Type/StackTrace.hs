@@ -1,7 +1,8 @@
 module Patrol.Type.StackTrace
-  ( StackTrace(..)
-  , fromCallStack
-  ) where
+  ( StackTrace (..),
+    fromCallStack,
+  )
+where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.List.NonEmpty as NonEmpty
@@ -12,14 +13,16 @@ import qualified Patrol.Utility.Json as Json
 -- | <https://develop.sentry.dev/sdk/event-payloads/stacktrace/>
 newtype StackTrace = StackTrace
   { frames :: NonEmpty.NonEmpty Frame.Frame
-  } deriving (Eq, Show)
+  }
+  deriving (Eq, Show)
 
 instance Aeson.ToJSON StackTrace where
-  toJSON stackTrace = Aeson.object
-    [ Json.pair "frames" $ frames stackTrace
-    ]
+  toJSON stackTrace =
+    Aeson.object
+      [ Json.pair "frames" $ frames stackTrace
+      ]
 
 fromCallStack :: Stack.CallStack -> Maybe StackTrace
 fromCallStack callStack = do
   frames <- NonEmpty.nonEmpty . fmap (uncurry Frame.fromSrcLoc) $ Stack.getCallStack callStack
-  pure StackTrace { frames }
+  pure StackTrace {frames}

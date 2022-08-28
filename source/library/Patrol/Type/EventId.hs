@@ -1,8 +1,9 @@
 module Patrol.Type.EventId
-  ( EventId
-  , fromUuid
-  , toUuid
-  ) where
+  ( EventId,
+    fromUuid,
+    toUuid,
+  )
+where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Text as Text
@@ -14,10 +15,11 @@ newtype EventId
   deriving (Eq, Show)
 
 instance Aeson.FromJSON EventId where
-  parseJSON = Aeson.withText "EventId" $ \ text -> case Text.chunksOf 4 text of
-    [a, b, c, d, e, f, g, h] -> maybe (fail "invalid EventId") (pure . fromUuid)
-      . Uuid.fromText
-      $ Text.intercalate (Text.singleton '-') [a <> b, c, d, e, f <> g <> h]
+  parseJSON = Aeson.withText "EventId" $ \text -> case Text.chunksOf 4 text of
+    [a, b, c, d, e, f, g, h] ->
+      maybe (fail "invalid EventId") (pure . fromUuid)
+        . Uuid.fromText
+        $ Text.intercalate (Text.singleton '-') [a <> b, c, d, e, f <> g <> h]
     _ -> fail "invalid EventId"
 
 instance Aeson.ToJSON EventId where

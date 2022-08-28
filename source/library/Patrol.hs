@@ -1,18 +1,19 @@
 -- | <https://develop.sentry.dev/sdk/>
 module Patrol
-  ( Dsn.Dsn
-  , Event.Event
-  , EventId.EventId
-  , Exception.Exception
-  , Frame.Frame
-  , Level.Level
-  , Platform.Platform
-  , Request.Request
-  , Response.Response
-  , StackTrace.StackTrace
-  , Timestamp.Timestamp
-  , User.User
-  ) where
+  ( Dsn.Dsn,
+    Event.Event,
+    EventId.EventId,
+    Exception.Exception,
+    Frame.Frame,
+    Level.Level,
+    Platform.Platform,
+    Request.Request,
+    Response.Response,
+    StackTrace.StackTrace,
+    Timestamp.Timestamp,
+    User.User,
+  )
+where
 
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Event as Event

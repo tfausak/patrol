@@ -1,8 +1,9 @@
 module Patrol.Type.Timestamp
-  ( Timestamp
-  , fromUtcTime
-  , toUtcTime
-  ) where
+  ( Timestamp,
+    fromUtcTime,
+    toUtcTime,
+  )
+where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Time as Time
