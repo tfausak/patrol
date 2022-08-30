@@ -2,5 +2,7 @@
 set -o errexit -o xtrace
 
 volume=cabal-store
-docker volume inspect "$volume" ||
+if ! docker volume inspect "$volume"
+then
   docker volume create "$volume"
+fi

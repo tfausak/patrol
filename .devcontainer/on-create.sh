@@ -5,5 +5,5 @@ cabal update
 
 if ! test -f cabal.project.local
 then
-  cabal configure --enable-tests --jobs
+  cabal configure --enable-tests --jobs --test-show-details direct
 fi

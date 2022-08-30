@@ -1,6 +1,6 @@
-import qualified Patrol.Type.Event as Event
+import Patrol ()
+import qualified Test.Hspec as Hspec
 
 main :: IO ()
-main = do
-  event <- Event.new
-  print event
+main = Hspec.hspec . Hspec.describe "Patrol" $ do
+  Hspec.it "" Hspec.pending
