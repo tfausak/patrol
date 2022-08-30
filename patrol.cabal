@@ -23,6 +23,8 @@ flag pedantic
 common library
   build-depends:
     , base >= 4.15.1 && < 4.18
+    , network-uri >= 2.6.4 && < 2.7
+    , text >= 2.0.1 && < 2.1
   default-language: Haskell2010
   ghc-options:
     -Weverything
@@ -54,6 +56,15 @@ library
   autogen-modules: Paths_patrol
   exposed-modules:
     Patrol
+    Patrol.Extra.Text
+    Patrol.Type.Dsn
+    Patrol.Type.Host
+    Patrol.Type.Path
+    Patrol.Type.Port
+    Patrol.Type.ProjectId
+    Patrol.Type.Protocol
+    Patrol.Type.PublicKey
+    Patrol.Type.SecretKey
   hs-source-dirs: source/library
   other-modules: Paths_patrol
 
@@ -64,4 +75,14 @@ test-suite patrol-test-suite
     , hspec >= 2.10.1 && < 2.11
   hs-source-dirs: source/test-suite
   main-is: Main.hs
+  other-modules:
+    Patrol.Extra.TextSpec
+    Patrol.Type.DsnSpec
+    Patrol.Type.HostSpec
+    Patrol.Type.PathSpec
+    Patrol.Type.PortSpec
+    Patrol.Type.ProjectIdSpec
+    Patrol.Type.ProtocolSpec
+    Patrol.Type.PublicKeySpec
+    Patrol.Type.SecretKeySpec
   type: exitcode-stdio-1.0
