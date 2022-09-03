@@ -6,12 +6,13 @@ import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Key as Key
 import qualified Data.ByteString.Lazy as LazyByteString
 import qualified Data.Text as Text
+import qualified Data.Text.Encoding as Text
 import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
 import qualified Patrol.Constant as Constant
 import qualified Patrol.Extra.List as List
 import qualified Patrol.Type.Dsn as Dsn
-import qualified Patrol.Type.Event.Id as Id
+import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Host as Host
 import qualified Patrol.Type.Path as Path
 import qualified Patrol.Type.Port as Port
@@ -19,7 +20,7 @@ import qualified Patrol.Type.ProjectId as ProjectId
 import qualified Patrol.Type.Protocol as Protocol
 
 newtype Event = Event
-  { id :: Id.Id
+  { id :: EventId.EventId
   -- TODO: Add more fields.
   }
   deriving (Eq, Show)
@@ -32,7 +33,7 @@ instance Aeson.ToJSON Event where
 
 new :: IO.MonadIO io => io Event
 new = do
-  theId <- Id.random
+  theId <- EventId.random
   pure
     Event
       { Patrol.Type.Event.id = theId
@@ -57,7 +58,7 @@ intoRequest dsn event = do
       authorization = Dsn.intoAuthorization dsn
       newHeaders =
         [ (Http.hContentType, Constant.applicationJson),
-          (Http.hUserAgent, Constant.userAgent),
+          (Http.hUserAgent, Text.encodeUtf8 Constant.userAgent),
           (Constant.xSentryAuth, authorization)
         ]
   pure

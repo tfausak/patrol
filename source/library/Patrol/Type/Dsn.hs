@@ -94,8 +94,9 @@ intoAuthorization dsn =
     . (Text.pack "Sentry " <>)
     . Text.intercalate (Text.singleton ',')
     $ Maybe.mapMaybe
-      (\(k, m) -> fmap (\v -> k <> Text.singleton '=' <> v) m)
-      [ (Text.pack "sentry_version", Just Constant.sentryVersion),
-        (Text.pack "sentry_key", Just . PublicKey.intoText $ publicKey dsn),
-        (Text.pack "sentry_secret", fmap SecretKey.intoText $ secretKey dsn)
+      (\(k, m) -> fmap (\v -> Text.pack k <> Text.singleton '=' <> v) m)
+      [ ("sentry_version", Just Constant.sentryVersion),
+        ("sentry_client", Just Constant.userAgent),
+        ("sentry_key", Just . PublicKey.intoText $ publicKey dsn),
+        ("sentry_secret", fmap SecretKey.intoText $ secretKey dsn)
       ]

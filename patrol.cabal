@@ -70,7 +70,7 @@ library
     Patrol.Extra.Text
     Patrol.Type.Dsn
     Patrol.Type.Event
-    Patrol.Type.Event.Id
+    Patrol.Type.EventId
     Patrol.Type.Host
     Patrol.Type.Path
     Patrol.Type.Port
@@ -79,6 +79,7 @@ library
     Patrol.Type.PublicKey
     Patrol.Type.Response
     Patrol.Type.SecretKey
+    Patrol.Version
   hs-source-dirs: source/library
   other-modules: Paths_patrol
 
@@ -94,7 +95,7 @@ test-suite patrol-test-suite
     Patrol.Extra.ListSpec
     Patrol.Extra.TextSpec
     Patrol.Type.DsnSpec
-    Patrol.Type.Event.IdSpec
+    Patrol.Type.EventIdSpec
     Patrol.Type.EventSpec
     Patrol.Type.HostSpec
     Patrol.Type.PathSpec

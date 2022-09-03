@@ -4,7 +4,7 @@ import qualified Patrol.ConstantSpec
 import qualified Patrol.Extra.ListSpec
 import qualified Patrol.Extra.TextSpec
 import qualified Patrol.Type.DsnSpec
-import qualified Patrol.Type.Event.IdSpec
+import qualified Patrol.Type.EventIdSpec
 import qualified Patrol.Type.EventSpec
 import qualified Patrol.Type.HostSpec
 import qualified Patrol.Type.PathSpec
@@ -22,7 +22,7 @@ spec = do
   Patrol.Extra.ListSpec.spec
   Patrol.Extra.TextSpec.spec
   Patrol.Type.DsnSpec.spec
-  Patrol.Type.Event.IdSpec.spec
+  Patrol.Type.EventIdSpec.spec
   Patrol.Type.EventSpec.spec
   Patrol.Type.HostSpec.spec
   Patrol.Type.PathSpec.spec

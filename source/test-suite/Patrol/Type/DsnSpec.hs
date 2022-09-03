@@ -13,6 +13,7 @@ import qualified Patrol.Type.ProjectId as ProjectId
 import qualified Patrol.Type.Protocol as Protocol
 import qualified Patrol.Type.PublicKey as PublicKey
 import qualified Patrol.Type.SecretKey as SecretKey
+import qualified Patrol.Version as Version
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -83,10 +84,10 @@ spec = Hspec.describe "Patrol.Type.Dsn" $ do
   Hspec.describe "intoAuthorization" $ do
     Hspec.it "works without a secret key" $ do
       dsn <- maybe (fail "invalid DSN") pure $ Dsn.fromUri [Uri.uri|a://b@c/d|]
-      let byteString = Text.encodeUtf8 $ Text.pack "Sentry sentry_version=7,sentry_key=b"
+      let byteString = Text.encodeUtf8 . Text.pack $ "Sentry sentry_version=7,sentry_client=patrol/" <> Version.string <> ",sentry_key=b"
       Dsn.intoAuthorization dsn `Hspec.shouldBe` byteString
 
     Hspec.it "works with a secret key" $ do
       dsn <- maybe (fail "invalid DSN") pure $ Dsn.fromUri [Uri.uri|a://b:c@d/e|]
-      let byteString = Text.encodeUtf8 $ Text.pack "Sentry sentry_version=7,sentry_key=b,sentry_secret=c"
+      let byteString = Text.encodeUtf8 . Text.pack $ "Sentry sentry_version=7,sentry_client=patrol/" <> Version.string <> ",sentry_key=b,sentry_secret=c"
       Dsn.intoAuthorization dsn `Hspec.shouldBe` byteString

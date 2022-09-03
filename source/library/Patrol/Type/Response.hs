@@ -3,10 +3,10 @@ module Patrol.Type.Response where
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Key as Key
 import qualified Data.Typeable as Typeable
-import qualified Patrol.Type.Event.Id as Id
+import qualified Patrol.Type.EventId as EventId
 
 newtype Response = Response
-  { id :: Id.Id
+  { id :: EventId.EventId
   }
   deriving (Eq, Show)
 

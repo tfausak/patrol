@@ -1,6 +1,5 @@
 module Patrol.ConstantSpec where
 
-import qualified Data.ByteString as ByteString
 import qualified Data.CaseInsensitive as CI
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Text
@@ -19,7 +18,7 @@ spec = Hspec.describe "Patrol.Constant" $ do
 
   Hspec.describe "userAgent" $ do
     Hspec.it "is correct" $ do
-      Constant.userAgent `Hspec.shouldSatisfy` ByteString.isPrefixOf (Text.encodeUtf8 $ Text.pack "patrol/")
+      Constant.userAgent `Hspec.shouldSatisfy` Text.isPrefixOf (Text.pack "patrol/")
 
   Hspec.describe "xSentryAuth" $ do
     Hspec.it "is correct" $ do

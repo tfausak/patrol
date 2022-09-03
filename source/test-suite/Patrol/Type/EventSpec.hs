@@ -14,7 +14,7 @@ import qualified Network.URI.Static as Uri
 import qualified Patrol.Constant as Constant
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Event as Event
-import qualified Patrol.Type.Event.Id as Event.Id
+import qualified Patrol.Type.EventId as EventId
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -22,11 +22,11 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
   Hspec.describe "new" $ do
     Hspec.it "generates an ID" $ do
       event <- Event.new
-      Event.id event `Hspec.shouldNotBe` Event.Id.fromUuid Uuid.nil
+      Event.id event `Hspec.shouldNotBe` EventId.fromUuid Uuid.nil
 
   Hspec.describe "ToJSON" $ do
     Hspec.it "works" $ do
-      let event = Event.Event {Event.id = Event.Id.fromUuid Uuid.nil}
+      let event = Event.Event {Event.id = EventId.fromUuid Uuid.nil}
           lazyByteString = LazyByteString.fromStrict . Text.encodeUtf8 $ Text.pack "{\"event_id\":\"00000000000000000000000000000000\"}"
       Aeson.encode event `Hspec.shouldBe` lazyByteString
 

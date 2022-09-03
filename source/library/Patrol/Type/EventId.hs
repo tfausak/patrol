@@ -1,4 +1,4 @@
-module Patrol.Type.Event.Id where
+module Patrol.Type.EventId where
 
 import qualified Control.Monad as Monad
 import qualified Control.Monad.Catch as Exception
@@ -12,33 +12,33 @@ import qualified Data.UUID.V4 as Uuid
 import qualified Patrol.Exception.Problem as Problem
 import qualified Text.Printf as Printf
 
-newtype Id
-  = Id Uuid.UUID
+newtype EventId
+  = EventId Uuid.UUID
   deriving (Eq, Show)
 
-instance Aeson.FromJSON Id where
+instance Aeson.FromJSON EventId where
   parseJSON =
-    let name = show $ Typeable.typeRep (Typeable.Proxy :: Typeable.Proxy Id)
+    let name = show $ Typeable.typeRep (Typeable.Proxy :: Typeable.Proxy EventId)
      in Aeson.withText name $ maybe (fail $ "invalid " <> name) pure . fromText
 
-instance Aeson.ToJSON Id where
+instance Aeson.ToJSON EventId where
   toJSON = Aeson.toJSON . intoText
 
-fromUuid :: Uuid.UUID -> Id
-fromUuid = Id
+fromUuid :: Uuid.UUID -> EventId
+fromUuid = EventId
 
-intoUuid :: Id -> Uuid.UUID
-intoUuid (Id uuid) = uuid
+intoUuid :: EventId -> Uuid.UUID
+intoUuid (EventId uuid) = uuid
 
-random :: IO.MonadIO io => io Id
+random :: IO.MonadIO io => io EventId
 random = IO.liftIO $ fmap fromUuid Uuid.nextRandom
 
-intoText :: Id -> Text.Text
+intoText :: EventId -> Text.Text
 intoText eventId =
   let (lo, hi) = Uuid.toWords64 $ intoUuid eventId
    in Text.pack $ Printf.printf "%016x%016x" lo hi
 
-fromText :: Exception.MonadThrow m => Text.Text -> m Id
+fromText :: Exception.MonadThrow m => Text.Text -> m EventId
 fromText t1 = do
   let parse :: (Exception.MonadThrow n, Integral a) => Int -> Text.Text -> n (a, Text.Text)
       parse size text = do
