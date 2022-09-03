@@ -1,1 +1,5 @@
 packages: .
+
+allow-newer:
+  -- https://github.com/haskell-hvr/uuid/pull/70
+  , uuid:time
