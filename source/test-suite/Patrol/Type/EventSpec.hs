@@ -23,10 +23,17 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "generates an ID" $ do
       event <- Event.new
       Event.id event `Hspec.shouldNotBe` EventId.fromUuid Uuid.nil
+    Hspec.it "sets the timestamp" $ do
+      event <- Event.new
+      Event.timestamp event `Hspec.shouldSatisfy` Maybe.isJust
 
   Hspec.describe "ToJSON" $ do
     Hspec.it "works" $ do
-      let event = Event.Event {Event.id = EventId.fromUuid Uuid.nil}
+      let event =
+            Event.Event
+              { Event.id = EventId.fromUuid Uuid.nil,
+                Event.timestamp = Nothing
+              }
           lazyByteString = LazyByteString.fromStrict . Text.encodeUtf8 $ Text.pack "{\"event_id\":\"00000000000000000000000000000000\"}"
       Aeson.encode event `Hspec.shouldBe` lazyByteString
 

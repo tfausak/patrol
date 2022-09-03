@@ -7,6 +7,7 @@ import qualified Data.Aeson.Key as Key
 import qualified Data.ByteString.Lazy as LazyByteString
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Text
+import qualified Data.Time as Time
 import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
 import qualified Patrol.Constant as Constant
@@ -18,25 +19,32 @@ import qualified Patrol.Type.Path as Path
 import qualified Patrol.Type.Port as Port
 import qualified Patrol.Type.ProjectId as ProjectId
 import qualified Patrol.Type.Protocol as Protocol
+import qualified Patrol.Type.Timestamp as Timestamp
 
-newtype Event = Event
-  { id :: EventId.EventId
-  -- TODO: Add more fields.
+data Event = Event
+  { id :: EventId.EventId,
+    timestamp :: Maybe Timestamp.Timestamp
+    -- TODO: Add more fields.
   }
   deriving (Eq, Show)
 
 instance Aeson.ToJSON Event where
   toJSON event =
-    Aeson.object
-      [ Key.fromString "event_id" Aeson..= Patrol.Type.Event.id event
-      ]
+    Aeson.object $
+      filter
+        ((/=) Aeson.Null . snd)
+        [ Key.fromString "event_id" Aeson..= Patrol.Type.Event.id event,
+          Key.fromString "timestamp" Aeson..= timestamp event
+        ]
 
 new :: IO.MonadIO io => io Event
 new = do
   theId <- EventId.random
+  now <- IO.liftIO Time.getCurrentTime
   pure
     Event
-      { Patrol.Type.Event.id = theId
+      { Patrol.Type.Event.id = theId,
+        timestamp = Just $ Timestamp.fromUtcTime now
       }
 
 intoRequest :: Exception.MonadThrow m => Dsn.Dsn -> Event -> m Client.Request

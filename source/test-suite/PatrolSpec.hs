@@ -1,5 +1,6 @@
 module PatrolSpec where
 
+import qualified Patrol.ClientSpec
 import qualified Patrol.ConstantSpec
 import qualified Patrol.Extra.ListSpec
 import qualified Patrol.Extra.TextSpec
@@ -14,10 +15,12 @@ import qualified Patrol.Type.ProtocolSpec
 import qualified Patrol.Type.PublicKeySpec
 import qualified Patrol.Type.ResponseSpec
 import qualified Patrol.Type.SecretKeySpec
+import qualified Patrol.Type.TimestampSpec
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
 spec = do
+  Patrol.ClientSpec.spec
   Patrol.ConstantSpec.spec
   Patrol.Extra.ListSpec.spec
   Patrol.Extra.TextSpec.spec
@@ -32,3 +35,4 @@ spec = do
   Patrol.Type.PublicKeySpec.spec
   Patrol.Type.ResponseSpec.spec
   Patrol.Type.SecretKeySpec.spec
+  Patrol.Type.TimestampSpec.spec
