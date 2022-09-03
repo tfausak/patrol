@@ -14,7 +14,7 @@ spec = Hspec.describe "Patrol.Type.SecretKey" $ do
       let text = Text.singleton ' '
       SecretKey.fromText text `Hspec.shouldBe` Just (SecretKey.SecretKey text)
 
-  Hspec.describe "toText" $ do
+  Hspec.describe "intoText" $ do
     Hspec.it "converts into text" $ do
       let text = Text.singleton ' '
-      SecretKey.toText (SecretKey.SecretKey text) `Hspec.shouldBe` text
+      SecretKey.intoText (SecretKey.SecretKey text) `Hspec.shouldBe` text

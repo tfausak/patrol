@@ -1,8 +1,14 @@
 module Patrol.Type.Dsn where
 
 import qualified Control.Monad as Monad
+import qualified Control.Monad.Catch as Exception
+import qualified Data.ByteString as ByteString
+import qualified Data.Maybe as Maybe
 import qualified Data.Text as Text
+import qualified Data.Text.Encoding as Text
 import qualified Network.URI as Uri
+import qualified Patrol.Constant as Constant
+import qualified Patrol.Exception.Problem as Problem
 import qualified Patrol.Type.Host as Host
 import qualified Patrol.Type.Path as Path
 import qualified Patrol.Type.Port as Port
@@ -23,25 +29,25 @@ data Dsn = Dsn
   }
   deriving (Eq, Show)
 
-fromUri :: Uri.URI -> Maybe Dsn
+fromUri :: Exception.MonadThrow m => Uri.URI -> m Dsn
 fromUri uri = do
   theProtocol <- do
-    text <- Text.stripSuffix (Text.singleton ':') . Text.pack $ Uri.uriScheme uri
+    text <- maybe (Exception.throwM $ Problem.Problem "invalid scheme") pure . Text.stripSuffix (Text.singleton ':') . Text.pack $ Uri.uriScheme uri
     Protocol.fromText text
-  uriAuth <- Uri.uriAuthority uri
-  userInfo <- Text.stripSuffix (Text.singleton '@') . Text.pack $ Uri.uriUserInfo uriAuth
+  uriAuth <- maybe (Exception.throwM $ Problem.Problem "missing authority") pure $ Uri.uriAuthority uri
+  userInfo <- maybe (Exception.throwM $ Problem.Problem "invalid user information") pure . Text.stripSuffix (Text.singleton '@') . Text.pack $ Uri.uriUserInfo uriAuth
   let (user, pass) = fmap (Text.drop 1) $ Text.breakOn (Text.singleton ':') userInfo
   thePublicKey <- PublicKey.fromText user
-  maybeSecretKey <- if Text.null pass then pure Nothing else fmap pure $ SecretKey.fromText pass
+  maybeSecretKey <- if Text.null pass then pure Nothing else fmap Just $ SecretKey.fromText pass
   theHost <- Host.fromText . Text.pack $ Uri.uriRegName uriAuth
   maybePort <- case Text.stripPrefix (Text.singleton ':') . Text.pack $ Uri.uriPort uriAuth of
     Nothing -> pure Nothing
-    Just text -> fmap (pure . Port.fromNatural) . Read.readMaybe $ Text.unpack text
+    Just text -> maybe (Exception.throwM $ Problem.Problem "invalid port") (pure . Just . Port.fromNatural) . Read.readMaybe $ Text.unpack text
   let (before, after) = Text.breakOnEnd (Text.singleton '/') . Text.pack $ Uri.uriPath uri
   thePath <- Path.fromText before
   theProjectId <- ProjectId.fromText after
-  Monad.guard . null $ Uri.uriQuery uri
-  Monad.guard . null $ Uri.uriFragment uri
+  Monad.unless (null $ Uri.uriQuery uri) . Exception.throwM $ Problem.Problem "unexpected query"
+  Monad.unless (null $ Uri.uriFragment uri) . Exception.throwM $ Problem.Problem "unexpected fragment"
   pure
     Dsn
       { protocol = theProtocol,
@@ -53,31 +59,43 @@ fromUri uri = do
         projectId = theProjectId
       }
 
-toUri :: Dsn -> Uri.URI
-toUri dsn =
+intoUri :: Dsn -> Uri.URI
+intoUri dsn =
   Uri.URI
-    { Uri.uriScheme = mconcat [Text.unpack . Protocol.toText $ protocol dsn, ":"],
+    { Uri.uriScheme = mconcat [Text.unpack . Protocol.intoText $ protocol dsn, ":"],
       Uri.uriAuthority =
         Just
           Uri.URIAuth
             { Uri.uriUserInfo =
                 mconcat
-                  [ Text.unpack . PublicKey.toText $ publicKey dsn,
+                  [ Text.unpack . PublicKey.intoText $ publicKey dsn,
                     case secretKey dsn of
                       Nothing -> ""
-                      Just x -> mconcat [":", Text.unpack $ SecretKey.toText x],
+                      Just x -> mconcat [":", Text.unpack $ SecretKey.intoText x],
                     "@"
                   ],
-              Uri.uriRegName = Text.unpack . Host.toText $ host dsn,
+              Uri.uriRegName = Text.unpack . Host.intoText $ host dsn,
               Uri.uriPort = case port dsn of
                 Nothing -> ""
-                Just x -> mconcat [":", show $ Port.toNatural x]
+                Just x -> mconcat [":", show $ Port.intoNatural x]
             },
       Uri.uriPath =
         mconcat
-          [ Text.unpack . Path.toText $ path dsn,
-            Text.unpack . ProjectId.toText $ projectId dsn
+          [ Text.unpack . Path.intoText $ path dsn,
+            Text.unpack . ProjectId.intoText $ projectId dsn
           ],
       Uri.uriQuery = "",
       Uri.uriFragment = ""
     }
+
+intoAuthorization :: Dsn -> ByteString.ByteString
+intoAuthorization dsn =
+  Text.encodeUtf8
+    . (Text.pack "Sentry " <>)
+    . Text.intercalate (Text.singleton ',')
+    $ Maybe.mapMaybe
+      (\(k, m) -> fmap (\v -> k <> Text.singleton '=' <> v) m)
+      [ (Text.pack "sentry_version", Just Constant.sentryVersion),
+        (Text.pack "sentry_key", Just . PublicKey.intoText $ publicKey dsn),
+        (Text.pack "sentry_secret", fmap SecretKey.intoText $ secretKey dsn)
+      ]

@@ -9,6 +9,6 @@ spec = Hspec.describe "Patrol.Type.Port" $ do
     Hspec.it "converts from natural" $ do
       Port.fromNatural 0 `Hspec.shouldBe` Port.Port 0
 
-  Hspec.describe "toNatural" $ do
+  Hspec.describe "intoNatural" $ do
     Hspec.it "converts into natural" $ do
-      Port.toNatural (Port.Port 0) `Hspec.shouldBe` 0
+      Port.intoNatural (Port.Port 0) `Hspec.shouldBe` 0

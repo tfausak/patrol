@@ -1,3 +1,5 @@
 /.vscode/
 /cabal.project.*
 /dist-newstyle/
+
+*.tix

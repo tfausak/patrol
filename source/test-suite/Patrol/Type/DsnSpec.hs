@@ -1,7 +1,10 @@
+{-# LANGUAGE QuasiQuotes #-}
+
 module Patrol.Type.DsnSpec where
 
 import qualified Data.Text as Text
-import qualified Network.URI as Uri
+import qualified Data.Text.Encoding as Text
+import qualified Network.URI.Static as Uri
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Host as Host
 import qualified Patrol.Type.Path as Path
@@ -16,11 +19,9 @@ spec :: Hspec.Spec
 spec = Hspec.describe "Patrol.Type.Dsn" $ do
   Hspec.describe "fromUri" $ do
     Hspec.it "fails with an invalid DSN" $ do
-      uri <- parseUri "invalid:"
-      Dsn.fromUri uri `Hspec.shouldBe` Nothing
+      Dsn.fromUri [Uri.uri|a:|] `Hspec.shouldBe` Nothing
 
     Hspec.it "succeeds with a minimal DSN" $ do
-      uri <- parseUri "a://b@c/d"
       let dsn =
             Dsn.Dsn
               { Dsn.protocol = Protocol.Protocol $ Text.singleton 'a',
@@ -31,10 +32,9 @@ spec = Hspec.describe "Patrol.Type.Dsn" $ do
                 Dsn.path = Path.Path $ Text.singleton '/',
                 Dsn.projectId = ProjectId.ProjectId $ Text.singleton 'd'
               }
-      Dsn.fromUri uri `Hspec.shouldBe` Just dsn
+      Dsn.fromUri [Uri.uri|a://b@c/d|] `Hspec.shouldBe` Just dsn
 
     Hspec.it "succeeds with a maximal DSN" $ do
-      uri <- parseUri "a://b:c@d:5/f/g"
       let dsn =
             Dsn.Dsn
               { Dsn.protocol = Protocol.Protocol $ Text.singleton 'a',
@@ -45,17 +45,15 @@ spec = Hspec.describe "Patrol.Type.Dsn" $ do
                 Dsn.path = Path.Path $ Text.pack "/f/",
                 Dsn.projectId = ProjectId.ProjectId $ Text.singleton 'g'
               }
-      Dsn.fromUri uri `Hspec.shouldBe` Just dsn
+      Dsn.fromUri [Uri.uri|a://b:c@d:5/f/g|] `Hspec.shouldBe` Just dsn
 
     Hspec.it "fails with a query" $ do
-      uri <- parseUri "a://b@c/d?"
-      Dsn.fromUri uri `Hspec.shouldBe` Nothing
+      Dsn.fromUri [Uri.uri|a://b@c/d?|] `Hspec.shouldBe` Nothing
 
     Hspec.it "fails with a fragment" $ do
-      uri <- parseUri "a://b@c/d#"
-      Dsn.fromUri uri `Hspec.shouldBe` Nothing
+      Dsn.fromUri [Uri.uri|a://b@c/d#|] `Hspec.shouldBe` Nothing
 
-  Hspec.describe "toUri" $ do
+  Hspec.describe "intoUri" $ do
     Hspec.it "converts a minimal DSN into URI" $ do
       let dsn =
             Dsn.Dsn
@@ -67,8 +65,7 @@ spec = Hspec.describe "Patrol.Type.Dsn" $ do
                 Dsn.path = Path.Path $ Text.singleton '/',
                 Dsn.projectId = ProjectId.ProjectId $ Text.singleton 'd'
               }
-      uri <- parseUri "a://b@c/d"
-      Dsn.toUri dsn `Hspec.shouldBe` uri
+      Dsn.intoUri dsn `Hspec.shouldBe` [Uri.uri|a://b@c/d|]
 
     Hspec.it "converts a maximal DSN into URI" $ do
       let dsn =
@@ -81,10 +78,15 @@ spec = Hspec.describe "Patrol.Type.Dsn" $ do
                 Dsn.path = Path.Path $ Text.pack "/f/",
                 Dsn.projectId = ProjectId.ProjectId $ Text.singleton 'g'
               }
-      uri <- parseUri "a://b:c@d:5/f/g"
-      Dsn.toUri dsn `Hspec.shouldBe` uri
+      Dsn.intoUri dsn `Hspec.shouldBe` [Uri.uri|a://b:c@d:5/f/g|]
 
-parseUri :: String -> IO Uri.URI
-parseUri string = case Uri.parseURI string of
-  Nothing -> fail $ "invalid URI: " <> show string
-  Just uri -> pure uri
+  Hspec.describe "intoAuthorization" $ do
+    Hspec.it "works without a secret key" $ do
+      dsn <- maybe (fail "invalid DSN") pure $ Dsn.fromUri [Uri.uri|a://b@c/d|]
+      let byteString = Text.encodeUtf8 $ Text.pack "Sentry sentry_version=7,sentry_key=b"
+      Dsn.intoAuthorization dsn `Hspec.shouldBe` byteString
+
+    Hspec.it "works with a secret key" $ do
+      dsn <- maybe (fail "invalid DSN") pure $ Dsn.fromUri [Uri.uri|a://b:c@d/e|]
+      let byteString = Text.encodeUtf8 $ Text.pack "Sentry sentry_version=7,sentry_key=b,sentry_secret=c"
+      Dsn.intoAuthorization dsn `Hspec.shouldBe` byteString

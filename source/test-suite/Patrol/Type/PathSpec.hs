@@ -14,7 +14,7 @@ spec = Hspec.describe "Patrol.Type.Path" $ do
       let text = Text.singleton ' '
       Path.fromText text `Hspec.shouldBe` Just (Path.Path text)
 
-  Hspec.describe "toText" $ do
+  Hspec.describe "intoText" $ do
     Hspec.it "converts into text" $ do
       let text = Text.singleton ' '
-      Path.toText (Path.Path text) `Hspec.shouldBe` text
+      Path.intoText (Path.Path text) `Hspec.shouldBe` text

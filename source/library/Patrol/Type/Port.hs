@@ -9,5 +9,5 @@ newtype Port
 fromNatural :: Natural.Natural -> Port
 fromNatural = Port
 
-toNatural :: Port -> Natural.Natural
-toNatural (Port natural) = natural
+intoNatural :: Port -> Natural.Natural
+intoNatural (Port natural) = natural

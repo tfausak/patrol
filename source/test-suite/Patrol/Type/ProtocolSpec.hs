@@ -14,7 +14,7 @@ spec = Hspec.describe "Patrol.Type.Protocol" $ do
       let text = Text.singleton ' '
       Protocol.fromText text `Hspec.shouldBe` Just (Protocol.Protocol text)
 
-  Hspec.describe "toText" $ do
+  Hspec.describe "intoText" $ do
     Hspec.it "converts into text" $ do
       let text = Text.singleton ' '
-      Protocol.toText (Protocol.Protocol text) `Hspec.shouldBe` text
+      Protocol.intoText (Protocol.Protocol text) `Hspec.shouldBe` text

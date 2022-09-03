@@ -14,7 +14,7 @@ spec = Hspec.describe "Patrol.Type.Host" $ do
       let text = Text.singleton ' '
       Host.fromText text `Hspec.shouldBe` Just (Host.Host text)
 
-  Hspec.describe "toText" $ do
+  Hspec.describe "intoText" $ do
     Hspec.it "converts into text" $ do
       let text = Text.singleton ' '
-      Host.toText (Host.Host text) `Hspec.shouldBe` text
+      Host.intoText (Host.Host text) `Hspec.shouldBe` text

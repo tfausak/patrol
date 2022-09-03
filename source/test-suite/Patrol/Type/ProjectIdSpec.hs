@@ -14,7 +14,7 @@ spec = Hspec.describe "Patrol.Type.ProjectId" $ do
       let text = Text.singleton ' '
       ProjectId.fromText text `Hspec.shouldBe` Just (ProjectId.ProjectId text)
 
-  Hspec.describe "toText" $ do
+  Hspec.describe "intoText" $ do
     Hspec.it "converts into text" $ do
       let text = Text.singleton ' '
-      ProjectId.toText (ProjectId.ProjectId text) `Hspec.shouldBe` text
+      ProjectId.intoText (ProjectId.ProjectId text) `Hspec.shouldBe` text

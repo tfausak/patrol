@@ -14,7 +14,7 @@ spec = Hspec.describe "Patrol.Type.PublicKey" $ do
       let text = Text.singleton ' '
       PublicKey.fromText text `Hspec.shouldBe` Just (PublicKey.PublicKey text)
 
-  Hspec.describe "toText" $ do
+  Hspec.describe "intoText" $ do
     Hspec.it "converts into text" $ do
       let text = Text.singleton ' '
-      PublicKey.toText (PublicKey.PublicKey text) `Hspec.shouldBe` text
+      PublicKey.intoText (PublicKey.PublicKey text) `Hspec.shouldBe` text

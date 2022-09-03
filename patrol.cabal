@@ -22,9 +22,15 @@ flag pedantic
 
 common library
   build-depends:
+    , aeson >= 2.1.0 && < 2.2
     , base >= 4.15.1 && < 4.18
+    , bytestring >= 0.10.12 && < 0.12
+    , case-insensitive >= 1.2.1 && < 1.3
+    , http-client >= 0.7.13 && < 0.8
+    , http-types >= 0.12.3 && < 0.13
     , network-uri >= 2.6.4 && < 2.7
-    , text >= 2.0.1 && < 2.1
+    , text >= 1.2.5 && < 1.3 || >= 2.0.1 && < 2.1
+    , uuid >= 1.3.15 && < 1.4
   default-language: Haskell2010
   ghc-options:
     -Weverything
@@ -54,16 +60,24 @@ library
   import: library
 
   autogen-modules: Paths_patrol
+  build-depends:
+    , exceptions >= 0.10.4 && < 0.11
   exposed-modules:
     Patrol
+    Patrol.Constant
+    Patrol.Exception.Problem
+    Patrol.Extra.List
     Patrol.Extra.Text
     Patrol.Type.Dsn
+    Patrol.Type.Event
+    Patrol.Type.Event.Id
     Patrol.Type.Host
     Patrol.Type.Path
     Patrol.Type.Port
     Patrol.Type.ProjectId
     Patrol.Type.Protocol
     Patrol.Type.PublicKey
+    Patrol.Type.Response
     Patrol.Type.SecretKey
   hs-source-dirs: source/library
   other-modules: Paths_patrol
@@ -76,13 +90,19 @@ test-suite patrol-test-suite
   hs-source-dirs: source/test-suite
   main-is: Main.hs
   other-modules:
+    Patrol.ConstantSpec
+    Patrol.Extra.ListSpec
     Patrol.Extra.TextSpec
     Patrol.Type.DsnSpec
+    Patrol.Type.Event.IdSpec
+    Patrol.Type.EventSpec
     Patrol.Type.HostSpec
     Patrol.Type.PathSpec
     Patrol.Type.PortSpec
     Patrol.Type.ProjectIdSpec
     Patrol.Type.ProtocolSpec
     Patrol.Type.PublicKeySpec
+    Patrol.Type.ResponseSpec
     Patrol.Type.SecretKeySpec
+    PatrolSpec
   type: exitcode-stdio-1.0
