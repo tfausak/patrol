@@ -16,6 +16,7 @@ import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Host as Host
 import qualified Patrol.Type.Path as Path
+import qualified Patrol.Type.Platform as Platform
 import qualified Patrol.Type.Port as Port
 import qualified Patrol.Type.ProjectId as ProjectId
 import qualified Patrol.Type.Protocol as Protocol
@@ -23,6 +24,7 @@ import qualified Patrol.Type.Timestamp as Timestamp
 
 data Event = Event
   { id :: EventId.EventId,
+    platform :: Maybe Platform.Platform,
     timestamp :: Maybe Timestamp.Timestamp
     -- TODO: Add more fields.
   }
@@ -34,6 +36,7 @@ instance Aeson.ToJSON Event where
       filter
         ((/=) Aeson.Null . snd)
         [ Key.fromString "event_id" Aeson..= Patrol.Type.Event.id event,
+          Key.fromString "platform" Aeson..= platform event,
           Key.fromString "timestamp" Aeson..= timestamp event
         ]
 
@@ -44,6 +47,7 @@ new = do
   pure
     Event
       { Patrol.Type.Event.id = theId,
+        platform = Just Platform.Haskell,
         timestamp = Just $ Timestamp.fromUtcTime now
       }
 

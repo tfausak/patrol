@@ -15,6 +15,7 @@ import qualified Patrol.Constant as Constant
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
+import qualified Patrol.Type.Platform as Platform
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -23,15 +24,21 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "generates an ID" $ do
       event <- Event.new
       Event.id event `Hspec.shouldNotBe` EventId.fromUuid Uuid.nil
+
     Hspec.it "sets the timestamp" $ do
       event <- Event.new
       Event.timestamp event `Hspec.shouldSatisfy` Maybe.isJust
+
+    Hspec.it "sets the platform" $ do
+      event <- Event.new
+      Event.platform event `Hspec.shouldBe` Just Platform.Haskell
 
   Hspec.describe "ToJSON" $ do
     Hspec.it "works" $ do
       let event =
             Event.Event
               { Event.id = EventId.fromUuid Uuid.nil,
+                Event.platform = Nothing,
                 Event.timestamp = Nothing
               }
           lazyByteString = LazyByteString.fromStrict . Text.encodeUtf8 $ Text.pack "{\"event_id\":\"00000000000000000000000000000000\"}"
