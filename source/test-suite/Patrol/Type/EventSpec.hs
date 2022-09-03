@@ -15,6 +15,7 @@ import qualified Patrol.Constant as Constant
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
+import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Platform as Platform
 import qualified Test.Hspec as Hspec
 
@@ -33,11 +34,16 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       event <- Event.new
       Event.platform event `Hspec.shouldBe` Just Platform.Haskell
 
+    Hspec.it "sets the level" $ do
+      event <- Event.new
+      Event.level event `Hspec.shouldBe` Just Level.Error
+
   Hspec.describe "ToJSON" $ do
     Hspec.it "works" $ do
       let event =
             Event.Event
               { Event.id = EventId.fromUuid Uuid.nil,
+                Event.level = Nothing,
                 Event.platform = Nothing,
                 Event.timestamp = Nothing
               }
