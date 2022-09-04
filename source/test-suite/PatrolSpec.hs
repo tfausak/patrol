@@ -20,6 +20,8 @@ import qualified Patrol.Type.PublicKeySpec
 import qualified Patrol.Type.ReleaseSpec
 import qualified Patrol.Type.ResponseSpec
 import qualified Patrol.Type.SecretKeySpec
+import qualified Patrol.Type.TagKeySpec
+import qualified Patrol.Type.TagValueSpec
 import qualified Patrol.Type.TimestampSpec
 import qualified Patrol.Type.TransactionSpec
 import qualified Test.Hspec as Hspec
@@ -46,5 +48,7 @@ spec = do
   Patrol.Type.ReleaseSpec.spec
   Patrol.Type.ResponseSpec.spec
   Patrol.Type.SecretKeySpec.spec
+  Patrol.Type.TagKeySpec.spec
+  Patrol.Type.TagValueSpec.spec
   Patrol.Type.TimestampSpec.spec
   Patrol.Type.TransactionSpec.spec

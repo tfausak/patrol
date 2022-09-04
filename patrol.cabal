@@ -26,6 +26,7 @@ common library
     , base >= 4.15 && < 4.18
     , bytestring >= 0.10.12 && < 0.12
     , case-insensitive >= 1.2.1 && < 1.3
+    , containers >= 0.6.4 && < 0.7
     , http-client >= 0.7.13 && < 0.8
     , http-types >= 0.12.3 && < 0.13
     , network-uri >= 2.6.4 && < 2.7
@@ -87,6 +88,8 @@ library
     Patrol.Type.Response
     Patrol.Type.SecretKey
     Patrol.Type.ServerName
+    Patrol.Type.TagKey
+    Patrol.Type.TagValue
     Patrol.Type.Timestamp
     Patrol.Type.Transaction
     Patrol.Version
@@ -122,6 +125,8 @@ test-suite patrol-test-suite
     Patrol.Type.ResponseSpec
     Patrol.Type.SecretKeySpec
     Patrol.Type.ServerNameSpec
+    Patrol.Type.TagKeySpec
+    Patrol.Type.TagValueSpec
     Patrol.Type.TimestampSpec
     Patrol.Type.TransactionSpec
     PatrolSpec

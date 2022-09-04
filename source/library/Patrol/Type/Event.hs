@@ -5,6 +5,7 @@ import qualified Control.Monad.IO.Class as IO
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Key as Key
 import qualified Data.ByteString.Lazy as LazyByteString
+import qualified Data.Map as Map
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Text
 import qualified Network.HTTP.Client as Client
@@ -24,6 +25,8 @@ import qualified Patrol.Type.ProjectId as ProjectId
 import qualified Patrol.Type.Protocol as Protocol
 import qualified Patrol.Type.Release as Release
 import qualified Patrol.Type.ServerName as ServerName
+import qualified Patrol.Type.TagKey as TagKey
+import qualified Patrol.Type.TagValue as TagValue
 import qualified Patrol.Type.Timestamp as Timestamp
 import qualified Patrol.Type.Transaction as Transaction
 
@@ -35,6 +38,7 @@ data Event = Event
     platform :: Maybe Platform.Platform,
     release :: Maybe Release.Release,
     serverName :: Maybe ServerName.ServerName,
+    tags :: Maybe (Map.Map TagKey.TagKey TagValue.TagValue),
     timestamp :: Maybe Timestamp.Timestamp,
     transaction :: Maybe Transaction.Transaction
     -- TODO: Add more fields.
@@ -53,6 +57,7 @@ instance Aeson.ToJSON Event where
           Key.fromString "platform" Aeson..= platform event,
           Key.fromString "release" Aeson..= release event,
           Key.fromString "server_name" Aeson..= serverName event,
+          Key.fromString "tags" Aeson..= tags event,
           Key.fromString "timestamp" Aeson..= timestamp event,
           Key.fromString "transaction" Aeson..= transaction event
         ]
@@ -70,6 +75,7 @@ new = do
         platform = Just Platform.Haskell,
         release = Nothing,
         serverName = Nothing,
+        tags = Nothing,
         timestamp = Just theTimestamp,
         transaction = Nothing
       }

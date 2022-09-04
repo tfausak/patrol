@@ -16,6 +16,8 @@ module Patrol
     Patrol.Type.Response.Response,
     Patrol.Type.SecretKey.SecretKey,
     Patrol.Type.ServerName.ServerName,
+    Patrol.Type.TagKey.TagKey,
+    Patrol.Type.TagValue.TagValue,
     Patrol.Type.Timestamp.Timestamp,
     Patrol.Type.Transaction.Transaction,
   )
@@ -38,5 +40,7 @@ import qualified Patrol.Type.Release
 import qualified Patrol.Type.Response
 import qualified Patrol.Type.SecretKey
 import qualified Patrol.Type.ServerName
+import qualified Patrol.Type.TagKey
+import qualified Patrol.Type.TagValue
 import qualified Patrol.Type.Timestamp
 import qualified Patrol.Type.Transaction

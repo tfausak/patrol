@@ -5,6 +5,7 @@ module Patrol.Type.EventSpec where
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.QQ.Simple as Aeson
 import qualified Data.ByteString.Lazy as LazyByteString
+import qualified Data.Map as Map
 import qualified Data.Maybe as Maybe
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Text
@@ -22,6 +23,8 @@ import qualified Patrol.Type.Logger as Logger
 import qualified Patrol.Type.Platform as Platform
 import qualified Patrol.Type.Release as Release
 import qualified Patrol.Type.ServerName as ServerName
+import qualified Patrol.Type.TagKey as TagKey
+import qualified Patrol.Type.TagValue as TagValue
 import qualified Patrol.Type.Timestamp as Timestamp
 import qualified Patrol.Type.Transaction as Transaction
 import qualified Test.Hspec as Hspec
@@ -55,6 +58,7 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
               Event.platform = Nothing,
               Event.release = Nothing,
               Event.serverName = Nothing,
+              Event.tags = Nothing,
               Event.timestamp = Nothing,
               Event.transaction = Nothing
             }
@@ -91,6 +95,13 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "works with server name" $ do
       let event = emptyEvent {Event.serverName = ServerName.fromText $ Text.pack "example-server-name"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "server_name": "example-server-name" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with tags" $ do
+      tagKey <- TagKey.fromText $ Text.pack "tag-key"
+      tagValue <- TagValue.fromText $ Text.pack "tag-value"
+      let event = emptyEvent {Event.tags = Just $ Map.fromList [(tagKey, tagValue)]}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "tags": { "tag-key": "tag-value" } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with timestamp" $ do
