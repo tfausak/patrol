@@ -7,7 +7,6 @@ import qualified Data.Aeson.Key as Key
 import qualified Data.ByteString.Lazy as LazyByteString
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Text
-import qualified Data.Time as Time
 import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
 import qualified Patrol.Constant as Constant
@@ -26,6 +25,7 @@ import qualified Patrol.Type.Timestamp as Timestamp
 data Event = Event
   { id :: EventId.EventId,
     level :: Maybe Level.Level,
+    logger :: Maybe Text.Text,
     platform :: Maybe Platform.Platform,
     timestamp :: Maybe Timestamp.Timestamp
     -- TODO: Add more fields.
@@ -39,6 +39,7 @@ instance Aeson.ToJSON Event where
         ((/=) Aeson.Null . snd)
         [ Key.fromString "event_id" Aeson..= Patrol.Type.Event.id event,
           Key.fromString "level" Aeson..= level event,
+          Key.fromString "logger" Aeson..= logger event,
           Key.fromString "platform" Aeson..= platform event,
           Key.fromString "timestamp" Aeson..= timestamp event
         ]
@@ -46,13 +47,14 @@ instance Aeson.ToJSON Event where
 new :: IO.MonadIO io => io Event
 new = do
   theId <- EventId.random
-  now <- IO.liftIO Time.getCurrentTime
+  theTimestamp <- Timestamp.now
   pure
     Event
       { Patrol.Type.Event.id = theId,
         level = Just Level.Error,
+        logger = Nothing,
         platform = Just Platform.Haskell,
-        timestamp = Just $ Timestamp.fromUtcTime now
+        timestamp = Just theTimestamp
       }
 
 intoRequest :: Exception.MonadThrow m => Dsn.Dsn -> Event -> m Client.Request

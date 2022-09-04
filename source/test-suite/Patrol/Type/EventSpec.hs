@@ -3,6 +3,7 @@
 module Patrol.Type.EventSpec where
 
 import qualified Data.Aeson as Aeson
+import qualified Data.Aeson.QQ.Simple as Aeson
 import qualified Data.ByteString.Lazy as LazyByteString
 import qualified Data.Maybe as Maybe
 import qualified Data.Text as Text
@@ -17,6 +18,7 @@ import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Platform as Platform
+import qualified Patrol.Type.Timestamp as Timestamp
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -39,16 +41,38 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Event.level event `Hspec.shouldBe` Just Level.Error
 
   Hspec.describe "ToJSON" $ do
+    let emptyEvent =
+          Event.Event
+            { Event.id = EventId.fromUuid Uuid.nil,
+              Event.level = Nothing,
+              Event.logger = Nothing,
+              Event.platform = Nothing,
+              Event.timestamp = Nothing
+            }
+
     Hspec.it "works" $ do
-      let event =
-            Event.Event
-              { Event.id = EventId.fromUuid Uuid.nil,
-                Event.level = Nothing,
-                Event.platform = Nothing,
-                Event.timestamp = Nothing
-              }
-          lazyByteString = LazyByteString.fromStrict . Text.encodeUtf8 $ Text.pack "{\"event_id\":\"00000000000000000000000000000000\"}"
-      Aeson.encode event `Hspec.shouldBe` lazyByteString
+      let lazyByteString = LazyByteString.fromStrict . Text.encodeUtf8 $ Text.pack "{\"event_id\":\"00000000000000000000000000000000\"}"
+      Aeson.encode emptyEvent `Hspec.shouldBe` lazyByteString
+
+    Hspec.it "works with level" $ do
+      let event = emptyEvent {Event.level = Just Level.Error}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "level": "error" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with logger" $ do
+      let event = emptyEvent {Event.logger = Just $ Text.pack "example-logger"}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "logger": "example-logger" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with platform" $ do
+      let event = emptyEvent {Event.platform = Just Platform.Haskell}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "platform": "haskell" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with timestamp" $ do
+      let event = emptyEvent {Event.timestamp = Just Timestamp.epoch}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "timestamp": "1970-01-01T00:00:00Z" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
 
   Hspec.describe "intoRequest" $ do
     Hspec.it "sets the method" $ do

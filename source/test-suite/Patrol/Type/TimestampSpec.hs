@@ -22,3 +22,11 @@ spec = Hspec.describe "Patrol.Type.Timestamp" $ do
       let timestamp = Timestamp.fromUtcTime . Time.UTCTime (Time.fromGregorian 2001 2 3) $ 4 * 60 * 60 + 5 * 60 + 6 + 0.7
           lazyByteString = Aeson.encode "2001-02-03T04:05:06.7Z"
       Aeson.encode timestamp `Hspec.shouldBe` lazyByteString
+
+  Hspec.describe "epoch" $ do
+    Hspec.it "is correct" $ do
+      Timestamp.epoch `Hspec.shouldBe` Timestamp.fromUtcTime (Time.UTCTime (Time.fromGregorian 1970 1 1) 0)
+
+  Hspec.describe "now" $ do
+    Hspec.it "" $ do
+      Hspec.pending
