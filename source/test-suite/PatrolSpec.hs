@@ -4,6 +4,7 @@ import qualified Patrol.ClientSpec
 import qualified Patrol.ConstantSpec
 import qualified Patrol.Extra.ListSpec
 import qualified Patrol.Extra.TextSpec
+import qualified Patrol.Type.DistSpec
 import qualified Patrol.Type.DsnSpec
 import qualified Patrol.Type.EventIdSpec
 import qualified Patrol.Type.EventSpec
@@ -26,6 +27,7 @@ spec = do
   Patrol.ConstantSpec.spec
   Patrol.Extra.ListSpec.spec
   Patrol.Extra.TextSpec.spec
+  Patrol.Type.DistSpec.spec
   Patrol.Type.DsnSpec.spec
   Patrol.Type.EventIdSpec.spec
   Patrol.Type.EventSpec.spec

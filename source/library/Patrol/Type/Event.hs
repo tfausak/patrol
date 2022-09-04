@@ -11,6 +11,7 @@ import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
 import qualified Patrol.Constant as Constant
 import qualified Patrol.Extra.List as List
+import qualified Patrol.Type.Dist as Dist
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Host as Host
@@ -23,7 +24,7 @@ import qualified Patrol.Type.Protocol as Protocol
 import qualified Patrol.Type.Timestamp as Timestamp
 
 data Event = Event
-  { dist :: Maybe Text.Text,
+  { dist :: Maybe Dist.Dist,
     id :: EventId.EventId,
     level :: Maybe Level.Level,
     logger :: Maybe Text.Text,

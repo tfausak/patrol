@@ -13,6 +13,7 @@ import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
 import qualified Network.URI.Static as Uri
 import qualified Patrol.Constant as Constant
+import qualified Patrol.Type.Dist as Dist
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
@@ -59,7 +60,7 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.encode emptyEvent `Hspec.shouldBe` lazyByteString
 
     Hspec.it "works with dist" $ do
-      let event = emptyEvent {Event.dist = Just $ Text.pack "example-dist"}
+      let event = emptyEvent {Event.dist = Dist.fromText $ Text.pack "example-dist"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "dist": "example-dist" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
