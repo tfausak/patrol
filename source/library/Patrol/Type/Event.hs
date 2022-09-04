@@ -27,6 +27,7 @@ data Event = Event
     level :: Maybe Level.Level,
     logger :: Maybe Text.Text,
     platform :: Maybe Platform.Platform,
+    release :: Maybe Text.Text,
     serverName :: Maybe Text.Text,
     timestamp :: Maybe Timestamp.Timestamp,
     transaction :: Maybe Text.Text
@@ -43,6 +44,7 @@ instance Aeson.ToJSON Event where
           Key.fromString "level" Aeson..= level event,
           Key.fromString "logger" Aeson..= logger event,
           Key.fromString "platform" Aeson..= platform event,
+          Key.fromString "release" Aeson..= release event,
           Key.fromString "server_name" Aeson..= serverName event,
           Key.fromString "timestamp" Aeson..= timestamp event,
           Key.fromString "transaction" Aeson..= transaction event
@@ -58,6 +60,7 @@ new = do
         level = Just Level.Error,
         logger = Nothing,
         platform = Just Platform.Haskell,
+        release = Nothing,
         serverName = Nothing,
         timestamp = Just theTimestamp,
         transaction = Nothing

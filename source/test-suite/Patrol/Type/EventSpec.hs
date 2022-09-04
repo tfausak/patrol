@@ -47,6 +47,7 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
               Event.level = Nothing,
               Event.logger = Nothing,
               Event.platform = Nothing,
+              Event.release = Nothing,
               Event.serverName = Nothing,
               Event.timestamp = Nothing,
               Event.transaction = Nothing
@@ -69,6 +70,11 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "works with platform" $ do
       let event = emptyEvent {Event.platform = Just Platform.Haskell}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "platform": "haskell" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with release" $ do
+      let event = emptyEvent {Event.release = Just $ Text.pack "example-release"}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "release": "example-release" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with server name" $ do
