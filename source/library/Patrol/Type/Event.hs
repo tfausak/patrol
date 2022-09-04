@@ -27,7 +27,8 @@ data Event = Event
     level :: Maybe Level.Level,
     logger :: Maybe Text.Text,
     platform :: Maybe Platform.Platform,
-    timestamp :: Maybe Timestamp.Timestamp
+    timestamp :: Maybe Timestamp.Timestamp,
+    transaction :: Maybe Text.Text
     -- TODO: Add more fields.
   }
   deriving (Eq, Show)
@@ -41,7 +42,8 @@ instance Aeson.ToJSON Event where
           Key.fromString "level" Aeson..= level event,
           Key.fromString "logger" Aeson..= logger event,
           Key.fromString "platform" Aeson..= platform event,
-          Key.fromString "timestamp" Aeson..= timestamp event
+          Key.fromString "timestamp" Aeson..= timestamp event,
+          Key.fromString "transaction" Aeson..= transaction event
         ]
 
 new :: IO.MonadIO io => io Event
@@ -54,7 +56,8 @@ new = do
         level = Just Level.Error,
         logger = Nothing,
         platform = Just Platform.Haskell,
-        timestamp = Just theTimestamp
+        timestamp = Just theTimestamp,
+        transaction = Nothing
       }
 
 intoRequest :: Exception.MonadThrow m => Dsn.Dsn -> Event -> m Client.Request

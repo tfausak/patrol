@@ -47,7 +47,8 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
               Event.level = Nothing,
               Event.logger = Nothing,
               Event.platform = Nothing,
-              Event.timestamp = Nothing
+              Event.timestamp = Nothing,
+              Event.transaction = Nothing
             }
 
     Hspec.it "works" $ do
@@ -72,6 +73,11 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "works with timestamp" $ do
       let event = emptyEvent {Event.timestamp = Just Timestamp.epoch}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "timestamp": "1970-01-01T00:00:00Z" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with transaction" $ do
+      let event = emptyEvent {Event.transaction = Just $ Text.pack "example-transaction"}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "transaction": "example-transaction" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
   Hspec.describe "intoRequest" $ do

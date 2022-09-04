@@ -28,5 +28,5 @@ spec = Hspec.describe "Patrol.Type.Timestamp" $ do
       Timestamp.epoch `Hspec.shouldBe` Timestamp.fromUtcTime (Time.UTCTime (Time.fromGregorian 1970 1 1) 0)
 
   Hspec.describe "now" $ do
-    Hspec.it "" $ do
+    Hspec.it "needs tests" $ do
       Hspec.pending
