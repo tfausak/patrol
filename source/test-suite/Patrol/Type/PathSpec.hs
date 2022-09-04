@@ -11,10 +11,10 @@ spec = Hspec.describe "Patrol.Type.Path" $ do
       Path.fromText Text.empty `Hspec.shouldBe` Nothing
 
     Hspec.it "succeeds when the text is not empty" $ do
-      let text = Text.singleton ' '
+      let text = Text.singleton 'x'
       Path.fromText text `Hspec.shouldBe` Just (Path.Path text)
 
   Hspec.describe "intoText" $ do
     Hspec.it "converts into text" $ do
-      let text = Text.singleton ' '
+      let text = Text.singleton 'x'
       Path.intoText (Path.Path text) `Hspec.shouldBe` text

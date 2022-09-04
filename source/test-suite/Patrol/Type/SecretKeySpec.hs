@@ -11,10 +11,10 @@ spec = Hspec.describe "Patrol.Type.SecretKey" $ do
       SecretKey.fromText Text.empty `Hspec.shouldBe` Nothing
 
     Hspec.it "succeeds when the text is not empty" $ do
-      let text = Text.singleton ' '
+      let text = Text.singleton 'x'
       SecretKey.fromText text `Hspec.shouldBe` Just (SecretKey.SecretKey text)
 
   Hspec.describe "intoText" $ do
     Hspec.it "converts into text" $ do
-      let text = Text.singleton ' '
+      let text = Text.singleton 'x'
       SecretKey.intoText (SecretKey.SecretKey text) `Hspec.shouldBe` text

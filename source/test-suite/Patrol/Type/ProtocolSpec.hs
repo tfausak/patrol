@@ -11,10 +11,10 @@ spec = Hspec.describe "Patrol.Type.Protocol" $ do
       Protocol.fromText Text.empty `Hspec.shouldBe` Nothing
 
     Hspec.it "succeeds when the text is not empty" $ do
-      let text = Text.singleton ' '
+      let text = Text.singleton 'x'
       Protocol.fromText text `Hspec.shouldBe` Just (Protocol.Protocol text)
 
   Hspec.describe "intoText" $ do
     Hspec.it "converts into text" $ do
-      let text = Text.singleton ' '
+      let text = Text.singleton 'x'
       Protocol.intoText (Protocol.Protocol text) `Hspec.shouldBe` text
