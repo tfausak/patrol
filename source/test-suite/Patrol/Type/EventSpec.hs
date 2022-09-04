@@ -43,7 +43,8 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
   Hspec.describe "ToJSON" $ do
     let emptyEvent =
           Event.Event
-            { Event.id = EventId.fromUuid Uuid.nil,
+            { Event.dist = Nothing,
+              Event.id = EventId.fromUuid Uuid.nil,
               Event.level = Nothing,
               Event.logger = Nothing,
               Event.platform = Nothing,
@@ -56,6 +57,11 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "works" $ do
       let lazyByteString = LazyByteString.fromStrict . Text.encodeUtf8 $ Text.pack "{\"event_id\":\"00000000000000000000000000000000\"}"
       Aeson.encode emptyEvent `Hspec.shouldBe` lazyByteString
+
+    Hspec.it "works with dist" $ do
+      let event = emptyEvent {Event.dist = Just $ Text.pack "example-dist"}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "dist": "example-dist" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with level" $ do
       let event = emptyEvent {Event.level = Just Level.Error}

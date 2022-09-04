@@ -23,7 +23,8 @@ import qualified Patrol.Type.Protocol as Protocol
 import qualified Patrol.Type.Timestamp as Timestamp
 
 data Event = Event
-  { id :: EventId.EventId,
+  { dist :: Maybe Text.Text,
+    id :: EventId.EventId,
     level :: Maybe Level.Level,
     logger :: Maybe Text.Text,
     platform :: Maybe Platform.Platform,
@@ -40,7 +41,8 @@ instance Aeson.ToJSON Event where
     Aeson.object $
       filter
         ((/=) Aeson.Null . snd)
-        [ Key.fromString "event_id" Aeson..= Patrol.Type.Event.id event,
+        [ Key.fromString "dist" Aeson..= dist event,
+          Key.fromString "event_id" Aeson..= Patrol.Type.Event.id event,
           Key.fromString "level" Aeson..= level event,
           Key.fromString "logger" Aeson..= logger event,
           Key.fromString "platform" Aeson..= platform event,
@@ -56,7 +58,8 @@ new = do
   theTimestamp <- Timestamp.now
   pure
     Event
-      { Patrol.Type.Event.id = theId,
+      { dist = Nothing,
+        Patrol.Type.Event.id = theId,
         level = Just Level.Error,
         logger = Nothing,
         platform = Just Platform.Haskell,
