@@ -47,6 +47,7 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
               Event.level = Nothing,
               Event.logger = Nothing,
               Event.platform = Nothing,
+              Event.serverName = Nothing,
               Event.timestamp = Nothing,
               Event.transaction = Nothing
             }
@@ -68,6 +69,11 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "works with platform" $ do
       let event = emptyEvent {Event.platform = Just Platform.Haskell}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "platform": "haskell" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with server name" $ do
+      let event = emptyEvent {Event.serverName = Just $ Text.pack "example-server-name"}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "server_name": "example-server-name" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with timestamp" $ do
