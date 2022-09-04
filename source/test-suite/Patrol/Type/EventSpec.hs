@@ -16,6 +16,7 @@ import qualified Network.URI.Static as Uri
 import qualified Patrol.Constant as Constant
 import qualified Patrol.Type.Dist as Dist
 import qualified Patrol.Type.Dsn as Dsn
+import qualified Patrol.Type.Environment as Environment
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Level as Level
@@ -48,10 +49,15 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       event <- Event.new
       Event.level event `Hspec.shouldBe` Just Level.Error
 
+    Hspec.it "sets the environment" $ do
+      event <- Event.new
+      Event.environment event `Hspec.shouldBe` Just Environment.production
+
   Hspec.describe "ToJSON" $ do
     let emptyEvent =
           Event.Event
             { Event.dist = Nothing,
+              Event.environment = Nothing,
               Event.id = EventId.fromUuid Uuid.nil,
               Event.level = Nothing,
               Event.logger = Nothing,
@@ -70,6 +76,11 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "works with dist" $ do
       let event = emptyEvent {Event.dist = Dist.fromText $ Text.pack "example-dist"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "dist": "example-dist" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with environment" $ do
+      let event = emptyEvent {Event.environment = Environment.fromText $ Text.pack "example-environment"}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "environment": "example-environment" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with level" $ do

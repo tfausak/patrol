@@ -14,6 +14,7 @@ import qualified Patrol.Constant as Constant
 import qualified Patrol.Extra.List as List
 import qualified Patrol.Type.Dist as Dist
 import qualified Patrol.Type.Dsn as Dsn
+import qualified Patrol.Type.Environment as Environment
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Host as Host
 import qualified Patrol.Type.Level as Level
@@ -32,6 +33,7 @@ import qualified Patrol.Type.Transaction as Transaction
 
 data Event = Event
   { dist :: Maybe Dist.Dist,
+    environment :: Maybe Environment.Environment,
     id :: EventId.EventId,
     level :: Maybe Level.Level,
     logger :: Maybe Logger.Logger,
@@ -51,6 +53,7 @@ instance Aeson.ToJSON Event where
       filter
         ((/=) Aeson.Null . snd)
         [ Key.fromString "dist" Aeson..= dist event,
+          Key.fromString "environment" Aeson..= environment event,
           Key.fromString "event_id" Aeson..= Patrol.Type.Event.id event,
           Key.fromString "level" Aeson..= level event,
           Key.fromString "logger" Aeson..= logger event,
@@ -69,6 +72,7 @@ new = do
   pure
     Event
       { dist = Nothing,
+        environment = Just Environment.production,
         Patrol.Type.Event.id = theId,
         level = Just Level.Error,
         logger = Nothing,
