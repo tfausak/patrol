@@ -17,6 +17,7 @@ module Patrol
     Patrol.Type.SecretKey.SecretKey,
     Patrol.Type.ServerName.ServerName,
     Patrol.Type.Timestamp.Timestamp,
+    Patrol.Type.Transaction.Transaction,
   )
 where
 
@@ -38,3 +39,4 @@ import qualified Patrol.Type.Response
 import qualified Patrol.Type.SecretKey
 import qualified Patrol.Type.ServerName
 import qualified Patrol.Type.Timestamp
+import qualified Patrol.Type.Transaction

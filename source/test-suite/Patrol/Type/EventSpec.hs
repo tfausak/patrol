@@ -23,6 +23,7 @@ import qualified Patrol.Type.Platform as Platform
 import qualified Patrol.Type.Release as Release
 import qualified Patrol.Type.ServerName as ServerName
 import qualified Patrol.Type.Timestamp as Timestamp
+import qualified Patrol.Type.Transaction as Transaction
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -98,7 +99,7 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with transaction" $ do
-      let event = emptyEvent {Event.transaction = Just $ Text.pack "example-transaction"}
+      let event = emptyEvent {Event.transaction = Transaction.fromText $ Text.pack "example-transaction"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "transaction": "example-transaction" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 

@@ -88,6 +88,7 @@ library
     Patrol.Type.SecretKey
     Patrol.Type.ServerName
     Patrol.Type.Timestamp
+    Patrol.Type.Transaction
     Patrol.Version
   hs-source-dirs: source/library
   other-modules: Paths_patrol
@@ -122,5 +123,6 @@ test-suite patrol-test-suite
     Patrol.Type.SecretKeySpec
     Patrol.Type.ServerNameSpec
     Patrol.Type.TimestampSpec
+    Patrol.Type.TransactionSpec
     PatrolSpec
   type: exitcode-stdio-1.0

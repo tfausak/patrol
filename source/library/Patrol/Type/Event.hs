@@ -25,6 +25,7 @@ import qualified Patrol.Type.Protocol as Protocol
 import qualified Patrol.Type.Release as Release
 import qualified Patrol.Type.ServerName as ServerName
 import qualified Patrol.Type.Timestamp as Timestamp
+import qualified Patrol.Type.Transaction as Transaction
 
 data Event = Event
   { dist :: Maybe Dist.Dist,
@@ -35,7 +36,7 @@ data Event = Event
     release :: Maybe Release.Release,
     serverName :: Maybe ServerName.ServerName,
     timestamp :: Maybe Timestamp.Timestamp,
-    transaction :: Maybe Text.Text
+    transaction :: Maybe Transaction.Transaction
     -- TODO: Add more fields.
   }
   deriving (Eq, Show)
