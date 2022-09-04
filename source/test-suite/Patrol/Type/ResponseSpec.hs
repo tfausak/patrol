@@ -19,5 +19,5 @@ spec = Hspec.describe "Patrol.Type.Response" $ do
       Aeson.decode lazyByteString `Hspec.shouldBe` Just response
 
     Hspec.it "fails with the wrong type" $ do
-      let lazyByteString = LazyByteString.fromStrict . Text.encodeUtf8 $ Text.pack "null"
+      let lazyByteString = Aeson.encode Aeson.Null
       Aeson.eitherDecode lazyByteString `Hspec.shouldBe` (Left "Error in $: parsing Response failed, expected Object, but encountered Null" :: Either String Response.Response)
