@@ -18,6 +18,7 @@ import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Level as Level
+import qualified Patrol.Type.Logger as Logger
 import qualified Patrol.Type.Platform as Platform
 import qualified Patrol.Type.Timestamp as Timestamp
 import qualified Test.Hspec as Hspec
@@ -70,7 +71,7 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with logger" $ do
-      let event = emptyEvent {Event.logger = Just $ Text.pack "example-logger"}
+      let event = emptyEvent {Event.logger = Logger.fromText $ Text.pack "example-logger"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "logger": "example-logger" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 

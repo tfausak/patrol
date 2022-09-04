@@ -5,6 +5,7 @@ module Patrol
     Patrol.Type.Event.Event,
     Patrol.Type.Host.Host,
     Patrol.Type.Level.Level,
+    Patrol.Type.Logger.Logger,
     Patrol.Type.Path.Path,
     Patrol.Type.Platform.Platform,
     Patrol.Type.Port.Port,
@@ -23,6 +24,7 @@ import qualified Patrol.Type.Dsn
 import qualified Patrol.Type.Event
 import qualified Patrol.Type.Host
 import qualified Patrol.Type.Level
+import qualified Patrol.Type.Logger
 import qualified Patrol.Type.Path
 import qualified Patrol.Type.Platform
 import qualified Patrol.Type.Port

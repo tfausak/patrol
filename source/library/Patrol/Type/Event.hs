@@ -16,6 +16,7 @@ import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Host as Host
 import qualified Patrol.Type.Level as Level
+import qualified Patrol.Type.Logger as Logger
 import qualified Patrol.Type.Path as Path
 import qualified Patrol.Type.Platform as Platform
 import qualified Patrol.Type.Port as Port
@@ -27,7 +28,7 @@ data Event = Event
   { dist :: Maybe Dist.Dist,
     id :: EventId.EventId,
     level :: Maybe Level.Level,
-    logger :: Maybe Text.Text,
+    logger :: Maybe Logger.Logger,
     platform :: Maybe Platform.Platform,
     release :: Maybe Text.Text,
     serverName :: Maybe Text.Text,

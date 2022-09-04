@@ -10,6 +10,7 @@ import qualified Patrol.Type.EventIdSpec
 import qualified Patrol.Type.EventSpec
 import qualified Patrol.Type.HostSpec
 import qualified Patrol.Type.LevelSpec
+import qualified Patrol.Type.LoggerSpec
 import qualified Patrol.Type.PathSpec
 import qualified Patrol.Type.PlatformSpec
 import qualified Patrol.Type.PortSpec
@@ -33,6 +34,7 @@ spec = do
   Patrol.Type.EventSpec.spec
   Patrol.Type.HostSpec.spec
   Patrol.Type.LevelSpec.spec
+  Patrol.Type.LoggerSpec.spec
   Patrol.Type.PathSpec.spec
   Patrol.Type.PlatformSpec.spec
   Patrol.Type.PortSpec.spec

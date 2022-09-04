@@ -76,6 +76,7 @@ library
     Patrol.Type.EventId
     Patrol.Type.Host
     Patrol.Type.Level
+    Patrol.Type.Logger
     Patrol.Type.Path
     Patrol.Type.Platform
     Patrol.Type.Port
@@ -107,6 +108,7 @@ test-suite patrol-test-suite
     Patrol.Type.EventSpec
     Patrol.Type.HostSpec
     Patrol.Type.LevelSpec
+    Patrol.Type.LoggerSpec
     Patrol.Type.PathSpec
     Patrol.Type.PlatformSpec
     Patrol.Type.PortSpec
