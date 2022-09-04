@@ -21,6 +21,7 @@ import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Logger as Logger
 import qualified Patrol.Type.Platform as Platform
 import qualified Patrol.Type.Release as Release
+import qualified Patrol.Type.ServerName as ServerName
 import qualified Patrol.Type.Timestamp as Timestamp
 import qualified Test.Hspec as Hspec
 
@@ -87,7 +88,7 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with server name" $ do
-      let event = emptyEvent {Event.serverName = Just $ Text.pack "example-server-name"}
+      let event = emptyEvent {Event.serverName = ServerName.fromText $ Text.pack "example-server-name"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "server_name": "example-server-name" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 

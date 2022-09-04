@@ -86,6 +86,7 @@ library
     Patrol.Type.Release
     Patrol.Type.Response
     Patrol.Type.SecretKey
+    Patrol.Type.ServerName
     Patrol.Type.Timestamp
     Patrol.Version
   hs-source-dirs: source/library
@@ -119,6 +120,7 @@ test-suite patrol-test-suite
     Patrol.Type.ReleaseSpec
     Patrol.Type.ResponseSpec
     Patrol.Type.SecretKeySpec
+    Patrol.Type.ServerNameSpec
     Patrol.Type.TimestampSpec
     PatrolSpec
   type: exitcode-stdio-1.0

@@ -15,6 +15,7 @@ module Patrol
     Patrol.Type.Release.Release,
     Patrol.Type.Response.Response,
     Patrol.Type.SecretKey.SecretKey,
+    Patrol.Type.ServerName.ServerName,
     Patrol.Type.Timestamp.Timestamp,
   )
 where
@@ -35,4 +36,5 @@ import qualified Patrol.Type.PublicKey
 import qualified Patrol.Type.Release
 import qualified Patrol.Type.Response
 import qualified Patrol.Type.SecretKey
+import qualified Patrol.Type.ServerName
 import qualified Patrol.Type.Timestamp
