@@ -22,6 +22,7 @@ import qualified Patrol.Type.Platform as Platform
 import qualified Patrol.Type.Port as Port
 import qualified Patrol.Type.ProjectId as ProjectId
 import qualified Patrol.Type.Protocol as Protocol
+import qualified Patrol.Type.Release as Release
 import qualified Patrol.Type.Timestamp as Timestamp
 
 data Event = Event
@@ -30,7 +31,7 @@ data Event = Event
     level :: Maybe Level.Level,
     logger :: Maybe Logger.Logger,
     platform :: Maybe Platform.Platform,
-    release :: Maybe Text.Text,
+    release :: Maybe Release.Release,
     serverName :: Maybe Text.Text,
     timestamp :: Maybe Timestamp.Timestamp,
     transaction :: Maybe Text.Text

@@ -83,6 +83,7 @@ library
     Patrol.Type.ProjectId
     Patrol.Type.Protocol
     Patrol.Type.PublicKey
+    Patrol.Type.Release
     Patrol.Type.Response
     Patrol.Type.SecretKey
     Patrol.Type.Timestamp
@@ -115,6 +116,7 @@ test-suite patrol-test-suite
     Patrol.Type.ProjectIdSpec
     Patrol.Type.ProtocolSpec
     Patrol.Type.PublicKeySpec
+    Patrol.Type.ReleaseSpec
     Patrol.Type.ResponseSpec
     Patrol.Type.SecretKeySpec
     Patrol.Type.TimestampSpec

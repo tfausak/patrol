@@ -12,6 +12,7 @@ module Patrol
     Patrol.Type.ProjectId.ProjectId,
     Patrol.Type.Protocol.Protocol,
     Patrol.Type.PublicKey.PublicKey,
+    Patrol.Type.Release.Release,
     Patrol.Type.Response.Response,
     Patrol.Type.SecretKey.SecretKey,
     Patrol.Type.Timestamp.Timestamp,
@@ -31,6 +32,7 @@ import qualified Patrol.Type.Port
 import qualified Patrol.Type.ProjectId
 import qualified Patrol.Type.Protocol
 import qualified Patrol.Type.PublicKey
+import qualified Patrol.Type.Release
 import qualified Patrol.Type.Response
 import qualified Patrol.Type.SecretKey
 import qualified Patrol.Type.Timestamp

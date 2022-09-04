@@ -20,6 +20,7 @@ import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Logger as Logger
 import qualified Patrol.Type.Platform as Platform
+import qualified Patrol.Type.Release as Release
 import qualified Patrol.Type.Timestamp as Timestamp
 import qualified Test.Hspec as Hspec
 
@@ -81,7 +82,7 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with release" $ do
-      let event = emptyEvent {Event.release = Just $ Text.pack "example-release"}
+      let event = emptyEvent {Event.release = Release.fromText $ Text.pack "example-release"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "release": "example-release" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 

@@ -17,6 +17,7 @@ import qualified Patrol.Type.PortSpec
 import qualified Patrol.Type.ProjectIdSpec
 import qualified Patrol.Type.ProtocolSpec
 import qualified Patrol.Type.PublicKeySpec
+import qualified Patrol.Type.ReleaseSpec
 import qualified Patrol.Type.ResponseSpec
 import qualified Patrol.Type.SecretKeySpec
 import qualified Patrol.Type.TimestampSpec
@@ -41,6 +42,7 @@ spec = do
   Patrol.Type.ProjectIdSpec.spec
   Patrol.Type.ProtocolSpec.spec
   Patrol.Type.PublicKeySpec.spec
+  Patrol.Type.ReleaseSpec.spec
   Patrol.Type.ResponseSpec.spec
   Patrol.Type.SecretKeySpec.spec
   Patrol.Type.TimestampSpec.spec
