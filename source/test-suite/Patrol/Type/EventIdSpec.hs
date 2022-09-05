@@ -44,6 +44,7 @@ spec = Hspec.describe "Patrol.Type.EventId" $ do
       EventId.fromText (Text.pack "0123456789abcdef0123456789abcdef0") `Hspec.shouldBe` Nothing
 
     Hspec.it "fails with invalid hexadecimal" $ do
+      EventId.fromText (Text.pack "Z123456789abcdef0123456789abcdef") `Hspec.shouldBe` Nothing
       EventId.fromText (Text.pack "0123456789Zbcdef0123456789abcdef") `Hspec.shouldBe` Nothing
       EventId.fromText (Text.pack "0123456789abcdef0123456789Zbcdef") `Hspec.shouldBe` Nothing
 
