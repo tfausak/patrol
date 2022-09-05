@@ -19,6 +19,8 @@ import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Host as Host
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Logger as Logger
+import qualified Patrol.Type.ModuleName as ModuleName
+import qualified Patrol.Type.ModuleVersion as ModuleVersion
 import qualified Patrol.Type.Path as Path
 import qualified Patrol.Type.Platform as Platform
 import qualified Patrol.Type.Port as Port
@@ -37,6 +39,7 @@ data Event = Event
     id :: EventId.EventId,
     level :: Maybe Level.Level,
     logger :: Maybe Logger.Logger,
+    modules :: Maybe (Map.Map ModuleName.ModuleName ModuleVersion.ModuleVersion),
     platform :: Maybe Platform.Platform,
     release :: Maybe Release.Release,
     serverName :: Maybe ServerName.ServerName,
@@ -57,6 +60,7 @@ instance Aeson.ToJSON Event where
           Key.fromString "event_id" Aeson..= Patrol.Type.Event.id event,
           Key.fromString "level" Aeson..= level event,
           Key.fromString "logger" Aeson..= logger event,
+          Key.fromString "modules" Aeson..= modules event,
           Key.fromString "platform" Aeson..= platform event,
           Key.fromString "release" Aeson..= release event,
           Key.fromString "server_name" Aeson..= serverName event,
@@ -76,6 +80,7 @@ new = do
         Patrol.Type.Event.id = theId,
         level = Just Level.Error,
         logger = Nothing,
+        modules = Nothing,
         platform = Just Platform.Haskell,
         release = Nothing,
         serverName = Nothing,

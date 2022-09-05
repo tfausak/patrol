@@ -79,6 +79,8 @@ library
     Patrol.Type.Host
     Patrol.Type.Level
     Patrol.Type.Logger
+    Patrol.Type.ModuleName
+    Patrol.Type.ModuleVersion
     Patrol.Type.Path
     Patrol.Type.Platform
     Patrol.Type.Port
@@ -117,6 +119,8 @@ test-suite patrol-test-suite
     Patrol.Type.HostSpec
     Patrol.Type.LevelSpec
     Patrol.Type.LoggerSpec
+    Patrol.Type.ModuleNameSpec
+    Patrol.Type.ModuleVersionSpec
     Patrol.Type.PathSpec
     Patrol.Type.PlatformSpec
     Patrol.Type.PortSpec

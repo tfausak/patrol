@@ -7,6 +7,8 @@ module Patrol
     Patrol.Type.Host.Host,
     Patrol.Type.Level.Level,
     Patrol.Type.Logger.Logger,
+    Patrol.Type.ModuleName.ModuleName,
+    Patrol.Type.ModuleVersion.ModuleVersion,
     Patrol.Type.Path.Path,
     Patrol.Type.Platform.Platform,
     Patrol.Type.Port.Port,
@@ -32,6 +34,8 @@ import qualified Patrol.Type.Event
 import qualified Patrol.Type.Host
 import qualified Patrol.Type.Level
 import qualified Patrol.Type.Logger
+import qualified Patrol.Type.ModuleName
+import qualified Patrol.Type.ModuleVersion
 import qualified Patrol.Type.Path
 import qualified Patrol.Type.Platform
 import qualified Patrol.Type.Port

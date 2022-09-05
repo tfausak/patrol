@@ -21,6 +21,8 @@ import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Logger as Logger
+import qualified Patrol.Type.ModuleName as ModuleName
+import qualified Patrol.Type.ModuleVersion as ModuleVersion
 import qualified Patrol.Type.Platform as Platform
 import qualified Patrol.Type.Release as Release
 import qualified Patrol.Type.ServerName as ServerName
@@ -61,6 +63,7 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
               Event.id = EventId.fromUuid Uuid.nil,
               Event.level = Nothing,
               Event.logger = Nothing,
+              Event.modules = Nothing,
               Event.platform = Nothing,
               Event.release = Nothing,
               Event.serverName = Nothing,
@@ -91,6 +94,13 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "works with logger" $ do
       let event = emptyEvent {Event.logger = Logger.fromText $ Text.pack "example-logger"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "logger": "example-logger" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with modules" $ do
+      moduleName <- ModuleName.fromText $ Text.pack "module-name"
+      moduleVersion <- ModuleVersion.fromText $ Text.pack "module-version"
+      let event = emptyEvent {Event.modules = Just $ Map.fromList [(moduleName, moduleVersion)]}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "modules": { "module-name": "module-version" } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with platform" $ do
