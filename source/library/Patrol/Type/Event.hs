@@ -36,16 +36,16 @@ import qualified Patrol.Type.Transaction as Transaction
 data Event = Event
   { dist :: Maybe Dist.Dist,
     environment :: Maybe Environment.Environment,
-    extra :: Maybe (Map.Map Text.Text Aeson.Value),
-    fingerprint :: Maybe [Text.Text],
+    extra :: Map.Map Text.Text Aeson.Value,
+    fingerprint :: [Text.Text],
     id :: EventId.EventId,
     level :: Maybe Level.Level,
     logger :: Maybe Logger.Logger,
-    modules :: Maybe (Map.Map ModuleName.ModuleName ModuleVersion.ModuleVersion),
+    modules :: Map.Map ModuleName.ModuleName ModuleVersion.ModuleVersion,
     platform :: Maybe Platform.Platform,
     release :: Maybe Release.Release,
     serverName :: Maybe ServerName.ServerName,
-    tags :: Maybe (Map.Map TagKey.TagKey TagValue.TagValue),
+    tags :: Map.Map TagKey.TagKey TagValue.TagValue,
     timestamp :: Maybe Timestamp.Timestamp,
     transaction :: Maybe Transaction.Transaction
     -- TODO: Add more fields.
@@ -54,24 +54,29 @@ data Event = Event
 
 instance Aeson.ToJSON Event where
   toJSON event =
-    Aeson.object $
-      filter
-        ((/=) Aeson.Null . snd)
-        [ Key.fromString "dist" Aeson..= dist event,
-          Key.fromString "environment" Aeson..= environment event,
-          Key.fromString "extra" Aeson..= extra event,
-          Key.fromString "event_id" Aeson..= Patrol.Type.Event.id event,
-          Key.fromString "fingerprint" Aeson..= fingerprint event,
-          Key.fromString "level" Aeson..= level event,
-          Key.fromString "logger" Aeson..= logger event,
-          Key.fromString "modules" Aeson..= modules event,
-          Key.fromString "platform" Aeson..= platform event,
-          Key.fromString "release" Aeson..= release event,
-          Key.fromString "server_name" Aeson..= serverName event,
-          Key.fromString "tags" Aeson..= tags event,
-          Key.fromString "timestamp" Aeson..= timestamp event,
-          Key.fromString "transaction" Aeson..= transaction event
-        ]
+    let isEmpty json = case json of
+          Aeson.Array array -> null array
+          Aeson.Null -> True
+          Aeson.Object object -> null object
+          _ -> False
+     in Aeson.object $
+          filter
+            (not . isEmpty . snd)
+            [ Key.fromString "dist" Aeson..= dist event,
+              Key.fromString "environment" Aeson..= environment event,
+              Key.fromString "extra" Aeson..= extra event,
+              Key.fromString "event_id" Aeson..= Patrol.Type.Event.id event,
+              Key.fromString "fingerprint" Aeson..= fingerprint event,
+              Key.fromString "level" Aeson..= level event,
+              Key.fromString "logger" Aeson..= logger event,
+              Key.fromString "modules" Aeson..= modules event,
+              Key.fromString "platform" Aeson..= platform event,
+              Key.fromString "release" Aeson..= release event,
+              Key.fromString "server_name" Aeson..= serverName event,
+              Key.fromString "tags" Aeson..= tags event,
+              Key.fromString "timestamp" Aeson..= timestamp event,
+              Key.fromString "transaction" Aeson..= transaction event
+            ]
 
 new :: IO.MonadIO io => io Event
 new = do
@@ -81,16 +86,16 @@ new = do
     Event
       { dist = Nothing,
         environment = Just Environment.production,
-        extra = Nothing,
-        fingerprint = Nothing,
+        extra = Map.empty,
+        fingerprint = [],
         Patrol.Type.Event.id = theId,
         level = Just Level.Error,
         logger = Nothing,
-        modules = Nothing,
+        modules = Map.empty,
         platform = Just Platform.Haskell,
         release = Nothing,
         serverName = Nothing,
-        tags = Nothing,
+        tags = Map.empty,
         timestamp = Just theTimestamp,
         transaction = Nothing
       }
