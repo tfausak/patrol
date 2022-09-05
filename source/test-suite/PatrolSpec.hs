@@ -7,6 +7,8 @@ import qualified Patrol.Extra.TextSpec
 import qualified Patrol.Type.DistSpec
 import qualified Patrol.Type.DsnSpec
 import qualified Patrol.Type.EnvironmentSpec
+import qualified Patrol.Type.ErrorSpec
+import qualified Patrol.Type.ErrorTypeSpec
 import qualified Patrol.Type.EventIdSpec
 import qualified Patrol.Type.EventSpec
 import qualified Patrol.Type.HostSpec
@@ -38,6 +40,8 @@ spec = do
   Patrol.Type.DistSpec.spec
   Patrol.Type.DsnSpec.spec
   Patrol.Type.EnvironmentSpec.spec
+  Patrol.Type.ErrorSpec.spec
+  Patrol.Type.ErrorTypeSpec.spec
   Patrol.Type.EventIdSpec.spec
   Patrol.Type.EventSpec.spec
   Patrol.Type.HostSpec.spec

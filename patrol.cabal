@@ -74,6 +74,8 @@ library
     Patrol.Type.Dist
     Patrol.Type.Dsn
     Patrol.Type.Environment
+    Patrol.Type.Error
+    Patrol.Type.ErrorType
     Patrol.Type.Event
     Patrol.Type.EventId
     Patrol.Type.Host
@@ -114,6 +116,8 @@ test-suite patrol-test-suite
     Patrol.Type.DistSpec
     Patrol.Type.DsnSpec
     Patrol.Type.EnvironmentSpec
+    Patrol.Type.ErrorSpec
+    Patrol.Type.ErrorTypeSpec
     Patrol.Type.EventIdSpec
     Patrol.Type.EventSpec
     Patrol.Type.HostSpec

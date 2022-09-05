@@ -15,6 +15,7 @@ import qualified Patrol.Extra.List as List
 import qualified Patrol.Type.Dist as Dist
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Environment as Environment
+import qualified Patrol.Type.Error as Error
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Host as Host
 import qualified Patrol.Type.Level as Level
@@ -36,6 +37,7 @@ import qualified Patrol.Type.Transaction as Transaction
 data Event = Event
   { dist :: Maybe Dist.Dist,
     environment :: Maybe Environment.Environment,
+    errors :: [Error.Error],
     extra :: Map.Map Text.Text Aeson.Value,
     fingerprint :: [Text.Text],
     id :: EventId.EventId,
@@ -64,6 +66,7 @@ instance Aeson.ToJSON Event where
             (not . isEmpty . snd)
             [ Key.fromString "dist" Aeson..= dist event,
               Key.fromString "environment" Aeson..= environment event,
+              Key.fromString "errors" Aeson..= errors event,
               Key.fromString "extra" Aeson..= extra event,
               Key.fromString "event_id" Aeson..= Patrol.Type.Event.id event,
               Key.fromString "fingerprint" Aeson..= fingerprint event,
@@ -86,6 +89,7 @@ new = do
     Event
       { dist = Nothing,
         environment = Just Environment.production,
+        errors = [],
         extra = Map.empty,
         fingerprint = [],
         Patrol.Type.Event.id = theId,

@@ -3,6 +3,8 @@ module Patrol
     Patrol.Type.Dist.Dist,
     Patrol.Type.Dsn.Dsn,
     Patrol.Type.Environment.Environment,
+    Patrol.Type.Error.Error,
+    Patrol.Type.ErrorType.ErrorType,
     Patrol.Type.Event.Event,
     Patrol.Type.Host.Host,
     Patrol.Type.Level.Level,
@@ -30,6 +32,8 @@ import qualified Patrol.Exception.Problem
 import qualified Patrol.Type.Dist
 import qualified Patrol.Type.Dsn
 import qualified Patrol.Type.Environment
+import qualified Patrol.Type.Error
+import qualified Patrol.Type.ErrorType
 import qualified Patrol.Type.Event
 import qualified Patrol.Type.Host
 import qualified Patrol.Type.Level
