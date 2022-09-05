@@ -60,6 +60,7 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
           Event.Event
             { Event.dist = Nothing,
               Event.environment = Nothing,
+              Event.extra = Nothing,
               Event.id = EventId.fromUuid Uuid.nil,
               Event.level = Nothing,
               Event.logger = Nothing,
@@ -84,6 +85,11 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "works with environment" $ do
       let event = emptyEvent {Event.environment = Environment.fromText $ Text.pack "example-environment"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "environment": "example-environment" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with extra" $ do
+      let event = emptyEvent {Event.extra = Just $ Map.singleton (Text.pack "example-extra") (Aeson.toJSON False)}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "extra": { "example-extra": false } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with level" $ do

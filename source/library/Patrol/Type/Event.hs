@@ -36,6 +36,7 @@ import qualified Patrol.Type.Transaction as Transaction
 data Event = Event
   { dist :: Maybe Dist.Dist,
     environment :: Maybe Environment.Environment,
+    extra :: Maybe (Map.Map Text.Text Aeson.Value),
     id :: EventId.EventId,
     level :: Maybe Level.Level,
     logger :: Maybe Logger.Logger,
@@ -57,6 +58,7 @@ instance Aeson.ToJSON Event where
         ((/=) Aeson.Null . snd)
         [ Key.fromString "dist" Aeson..= dist event,
           Key.fromString "environment" Aeson..= environment event,
+          Key.fromString "extra" Aeson..= extra event,
           Key.fromString "event_id" Aeson..= Patrol.Type.Event.id event,
           Key.fromString "level" Aeson..= level event,
           Key.fromString "logger" Aeson..= logger event,
@@ -77,6 +79,7 @@ new = do
     Event
       { dist = Nothing,
         environment = Just Environment.production,
+        extra = Nothing,
         Patrol.Type.Event.id = theId,
         level = Just Level.Error,
         logger = Nothing,
