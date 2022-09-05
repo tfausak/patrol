@@ -6,6 +6,7 @@ module Patrol
     Patrol.Type.Error.Error,
     Patrol.Type.ErrorType.ErrorType,
     Patrol.Type.Event.Event,
+    Patrol.Type.EventId.EventId,
     Patrol.Type.Host.Host,
     Patrol.Type.Level.Level,
     Patrol.Type.Logger.Logger,
@@ -35,6 +36,7 @@ import qualified Patrol.Type.Environment
 import qualified Patrol.Type.Error
 import qualified Patrol.Type.ErrorType
 import qualified Patrol.Type.Event
+import qualified Patrol.Type.EventId
 import qualified Patrol.Type.Host
 import qualified Patrol.Type.Level
 import qualified Patrol.Type.Logger
