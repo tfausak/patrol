@@ -1,6 +1,6 @@
 module Patrol.Type.Environment where
 
-import qualified Control.Monad.Catch as Exception
+import qualified Control.Monad.Catch as Catch
 import qualified Data.Aeson as Aeson
 import qualified Data.Text as Text
 import qualified Patrol.Extra.Text as Text
@@ -12,7 +12,7 @@ newtype Environment
 instance Aeson.ToJSON Environment where
   toJSON = Aeson.toJSON . intoText
 
-fromText :: Exception.MonadThrow m => Text.Text -> m Environment
+fromText :: Catch.MonadThrow m => Text.Text -> m Environment
 fromText = fmap Environment . Text.presence
 
 intoText :: Environment -> Text.Text

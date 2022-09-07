@@ -1,6 +1,6 @@
 module Patrol.Type.TagKey where
 
-import qualified Control.Monad.Catch as Exception
+import qualified Control.Monad.Catch as Catch
 import qualified Data.Aeson as Aeson
 import qualified Data.Functor.Contravariant as Contravariant
 import qualified Data.Text as Text
@@ -16,7 +16,7 @@ instance Aeson.ToJSON TagKey where
 instance Aeson.ToJSONKey TagKey where
   toJSONKey = Contravariant.contramap intoText Aeson.toJSONKey
 
-fromText :: Exception.MonadThrow m => Text.Text -> m TagKey
+fromText :: Catch.MonadThrow m => Text.Text -> m TagKey
 fromText = fmap TagKey . Text.presence
 
 intoText :: TagKey -> Text.Text

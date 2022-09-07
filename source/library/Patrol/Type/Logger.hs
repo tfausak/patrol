@@ -1,6 +1,6 @@
 module Patrol.Type.Logger where
 
-import qualified Control.Monad.Catch as Exception
+import qualified Control.Monad.Catch as Catch
 import qualified Data.Aeson as Aeson
 import qualified Data.Text as Text
 import qualified Patrol.Extra.Text as Text
@@ -12,7 +12,7 @@ newtype Logger
 instance Aeson.ToJSON Logger where
   toJSON = Aeson.toJSON . intoText
 
-fromText :: Exception.MonadThrow m => Text.Text -> m Logger
+fromText :: Catch.MonadThrow m => Text.Text -> m Logger
 fromText = fmap Logger . Text.presence
 
 intoText :: Logger -> Text.Text

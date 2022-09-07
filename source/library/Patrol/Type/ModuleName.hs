@@ -1,6 +1,6 @@
 module Patrol.Type.ModuleName where
 
-import qualified Control.Monad.Catch as Exception
+import qualified Control.Monad.Catch as Catch
 import qualified Data.Aeson as Aeson
 import qualified Data.Functor.Contravariant as Contravariant
 import qualified Data.Text as Text
@@ -16,7 +16,7 @@ instance Aeson.ToJSON ModuleName where
 instance Aeson.ToJSONKey ModuleName where
   toJSONKey = Contravariant.contramap intoText Aeson.toJSONKey
 
-fromText :: Exception.MonadThrow m => Text.Text -> m ModuleName
+fromText :: Catch.MonadThrow m => Text.Text -> m ModuleName
 fromText = fmap ModuleName . Text.presence
 
 intoText :: ModuleName -> Text.Text

@@ -1,7 +1,7 @@
 module Patrol.Type.Dsn where
 
 import qualified Control.Monad as Monad
-import qualified Control.Monad.Catch as Exception
+import qualified Control.Monad.Catch as Catch
 import qualified Data.ByteString as ByteString
 import qualified Data.Maybe as Maybe
 import qualified Data.Text as Text
@@ -29,25 +29,25 @@ data Dsn = Dsn
   }
   deriving (Eq, Show)
 
-fromUri :: Exception.MonadThrow m => Uri.URI -> m Dsn
+fromUri :: Catch.MonadThrow m => Uri.URI -> m Dsn
 fromUri uri = do
   theProtocol <- do
-    text <- maybe (Exception.throwM $ Problem.Problem "invalid scheme") pure . Text.stripSuffix (Text.singleton ':') . Text.pack $ Uri.uriScheme uri
+    text <- maybe (Catch.throwM $ Problem.Problem "invalid scheme") pure . Text.stripSuffix (Text.singleton ':') . Text.pack $ Uri.uriScheme uri
     Protocol.fromText text
-  uriAuth <- maybe (Exception.throwM $ Problem.Problem "missing authority") pure $ Uri.uriAuthority uri
-  userInfo <- maybe (Exception.throwM $ Problem.Problem "invalid user information") pure . Text.stripSuffix (Text.singleton '@') . Text.pack $ Uri.uriUserInfo uriAuth
+  uriAuth <- maybe (Catch.throwM $ Problem.Problem "missing authority") pure $ Uri.uriAuthority uri
+  userInfo <- maybe (Catch.throwM $ Problem.Problem "invalid user information") pure . Text.stripSuffix (Text.singleton '@') . Text.pack $ Uri.uriUserInfo uriAuth
   let (user, pass) = fmap (Text.drop 1) $ Text.breakOn (Text.singleton ':') userInfo
   thePublicKey <- PublicKey.fromText user
   maybeSecretKey <- if Text.null pass then pure Nothing else fmap Just $ SecretKey.fromText pass
   theHost <- Host.fromText . Text.pack $ Uri.uriRegName uriAuth
   maybePort <- case Text.stripPrefix (Text.singleton ':') . Text.pack $ Uri.uriPort uriAuth of
     Nothing -> pure Nothing
-    Just text -> maybe (Exception.throwM $ Problem.Problem "invalid port") (pure . Just . Port.fromNatural) . Read.readMaybe $ Text.unpack text
+    Just text -> maybe (Catch.throwM $ Problem.Problem "invalid port") (pure . Just . Port.fromNatural) . Read.readMaybe $ Text.unpack text
   let (before, after) = Text.breakOnEnd (Text.singleton '/') . Text.pack $ Uri.uriPath uri
   thePath <- Path.fromText before
   theProjectId <- ProjectId.fromText after
-  Monad.unless (null $ Uri.uriQuery uri) . Exception.throwM $ Problem.Problem "unexpected query"
-  Monad.unless (null $ Uri.uriFragment uri) . Exception.throwM $ Problem.Problem "unexpected fragment"
+  Monad.unless (null $ Uri.uriQuery uri) . Catch.throwM $ Problem.Problem "unexpected query"
+  Monad.unless (null $ Uri.uriFragment uri) . Catch.throwM $ Problem.Problem "unexpected fragment"
   pure
     Dsn
       { protocol = theProtocol,

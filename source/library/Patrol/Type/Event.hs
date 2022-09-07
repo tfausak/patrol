@@ -1,6 +1,6 @@
 module Patrol.Type.Event where
 
-import qualified Control.Monad.Catch as Exception
+import qualified Control.Monad.Catch as Catch
 import qualified Control.Monad.IO.Class as IO
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Key as Key
@@ -104,7 +104,7 @@ new = do
         transaction = Nothing
       }
 
-intoRequest :: Exception.MonadThrow m => Dsn.Dsn -> Event -> m Client.Request
+intoRequest :: Catch.MonadThrow m => Dsn.Dsn -> Event -> m Client.Request
 intoRequest dsn event = do
   request <-
     Client.parseUrlThrow

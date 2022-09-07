@@ -1,7 +1,7 @@
 module Patrol.Type.EventId where
 
 import qualified Control.Monad as Monad
-import qualified Control.Monad.Catch as Exception
+import qualified Control.Monad.Catch as Catch
 import qualified Control.Monad.IO.Class as IO
 import qualified Data.Aeson as Aeson
 import qualified Data.Text as Text
@@ -38,21 +38,21 @@ intoText eventId =
   let (lo, hi) = Uuid.toWords64 $ intoUuid eventId
    in Text.pack $ Printf.printf "%016x%016x" lo hi
 
-fromText :: Exception.MonadThrow m => Text.Text -> m EventId
+fromText :: Catch.MonadThrow m => Text.Text -> m EventId
 fromText t1 = do
-  let parse :: (Exception.MonadThrow n, Integral a) => Int -> Text.Text -> n (a, Text.Text)
+  let parse :: (Catch.MonadThrow n, Integral a) => Int -> Text.Text -> n (a, Text.Text)
       parse size text = do
         let (before, after) = Text.splitAt size text
         case Text.compareLength before size of
-          GT -> Exception.throwM $ Problem.Problem "impossible"
-          LT -> Exception.throwM $ Problem.Problem "not enough input"
+          GT -> Catch.throwM $ Problem.Problem "impossible"
+          LT -> Catch.throwM $ Problem.Problem "not enough input"
           EQ -> case Text.hexadecimal before of
-            Left _ -> Exception.throwM $ Problem.Problem "invalid hexadecimal"
+            Left _ -> Catch.throwM $ Problem.Problem "invalid hexadecimal"
             Right (integral, leftover) ->
               if Text.null leftover
                 then pure (integral, after)
-                else Exception.throwM $ Problem.Problem "invalid hexadecimal"
+                else Catch.throwM $ Problem.Problem "invalid hexadecimal"
   (lo, t2) <- parse 16 t1
   (hi, t3) <- parse 16 t2
-  Monad.unless (Text.null t3) . Exception.throwM $ Problem.Problem "too much input"
+  Monad.unless (Text.null t3) . Catch.throwM $ Problem.Problem "too much input"
   pure . fromUuid $ Uuid.fromWords64 lo hi

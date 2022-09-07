@@ -1,6 +1,6 @@
 module Patrol.Client where
 
-import qualified Control.Monad.Catch as Exception
+import qualified Control.Monad.Catch as Catch
 import qualified Control.Monad.IO.Class as IO
 import qualified Data.Aeson as Aeson
 import qualified Network.HTTP.Client as Client
@@ -10,14 +10,16 @@ import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.Response as Response
 
 store ::
-  (IO.MonadIO io, Exception.MonadThrow io) =>
+  (IO.MonadIO io, Catch.MonadThrow io) =>
   Client.Manager ->
   Dsn.Dsn ->
   Event.Event ->
   io Response.Response
 store manager dsn event = do
   request <- Event.intoRequest dsn event
+  IO.liftIO $ print request
   response <- IO.liftIO $ Client.httpLbs request manager
-  maybe (Exception.throwM $ Problem.Problem "invalid response body") pure
+  IO.liftIO $ print response
+  maybe (Catch.throwM $ Problem.Problem "invalid response body") pure
     . Aeson.decode
     $ Client.responseBody response
