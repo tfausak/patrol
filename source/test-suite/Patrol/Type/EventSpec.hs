@@ -21,6 +21,7 @@ import qualified Patrol.Type.Error as Error
 import qualified Patrol.Type.ErrorType as ErrorType
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
+import qualified Patrol.Type.Exception as Exception
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Logger as Logger
 import qualified Patrol.Type.ModuleName as ModuleName
@@ -63,6 +64,7 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
             { Event.dist = Nothing,
               Event.environment = Nothing,
               Event.errors = [],
+              Event.exceptions = [],
               Event.extra = Map.empty,
               Event.fingerprint = [],
               Event.id = EventId.fromUuid Uuid.nil,
@@ -94,6 +96,11 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "works with errors" $ do
       let event = emptyEvent {Event.errors = [Error.Error {Error.type_ = ErrorType.UnknownError, Error.value = Map.empty}]}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "errors": [ { "type": "unknown_error" } ] } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with exceptions" $ do
+      let event = emptyEvent {Event.exceptions = [Exception.Exception {Exception.module_ = Nothing, Exception.type_ = Text.pack "example-exception", Exception.value = Nothing}]}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "exception": [ { "type": "example-exception" } ] } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with extra" $ do

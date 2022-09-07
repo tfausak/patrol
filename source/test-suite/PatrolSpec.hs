@@ -12,6 +12,7 @@ import qualified Patrol.Type.ErrorSpec
 import qualified Patrol.Type.ErrorTypeSpec
 import qualified Patrol.Type.EventIdSpec
 import qualified Patrol.Type.EventSpec
+import qualified Patrol.Type.ExceptionSpec
 import qualified Patrol.Type.HostSpec
 import qualified Patrol.Type.LevelSpec
 import qualified Patrol.Type.LoggerSpec
@@ -46,6 +47,7 @@ spec = do
   Patrol.Type.ErrorTypeSpec.spec
   Patrol.Type.EventIdSpec.spec
   Patrol.Type.EventSpec.spec
+  Patrol.Type.ExceptionSpec.spec
   Patrol.Type.HostSpec.spec
   Patrol.Type.LevelSpec.spec
   Patrol.Type.LoggerSpec.spec

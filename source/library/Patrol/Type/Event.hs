@@ -18,6 +18,7 @@ import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Environment as Environment
 import qualified Patrol.Type.Error as Error
 import qualified Patrol.Type.EventId as EventId
+import qualified Patrol.Type.Exception as Exception
 import qualified Patrol.Type.Host as Host
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Logger as Logger
@@ -39,6 +40,7 @@ data Event = Event
   { dist :: Maybe Dist.Dist,
     environment :: Maybe Environment.Environment,
     errors :: [Error.Error],
+    exceptions :: [Exception.Exception],
     extra :: Map.Map Text.Text Aeson.Value,
     fingerprint :: [Text.Text],
     id :: EventId.EventId,
@@ -58,24 +60,25 @@ data Event = Event
 instance Aeson.ToJSON Event where
   toJSON event =
     Aeson.object $
-          filter
+      filter
         (not . Aeson.isEmpty . snd)
-            [ Key.fromString "dist" Aeson..= dist event,
-              Key.fromString "environment" Aeson..= environment event,
-              Key.fromString "errors" Aeson..= errors event,
-              Key.fromString "extra" Aeson..= extra event,
-              Key.fromString "event_id" Aeson..= Patrol.Type.Event.id event,
-              Key.fromString "fingerprint" Aeson..= fingerprint event,
-              Key.fromString "level" Aeson..= level event,
-              Key.fromString "logger" Aeson..= logger event,
-              Key.fromString "modules" Aeson..= modules event,
-              Key.fromString "platform" Aeson..= platform event,
-              Key.fromString "release" Aeson..= release event,
-              Key.fromString "server_name" Aeson..= serverName event,
-              Key.fromString "tags" Aeson..= tags event,
-              Key.fromString "timestamp" Aeson..= timestamp event,
-              Key.fromString "transaction" Aeson..= transaction event
-            ]
+        [ Key.fromString "dist" Aeson..= dist event,
+          Key.fromString "environment" Aeson..= environment event,
+          Key.fromString "errors" Aeson..= errors event,
+          Key.fromString "exception" Aeson..= exceptions event,
+          Key.fromString "extra" Aeson..= extra event,
+          Key.fromString "event_id" Aeson..= Patrol.Type.Event.id event,
+          Key.fromString "fingerprint" Aeson..= fingerprint event,
+          Key.fromString "level" Aeson..= level event,
+          Key.fromString "logger" Aeson..= logger event,
+          Key.fromString "modules" Aeson..= modules event,
+          Key.fromString "platform" Aeson..= platform event,
+          Key.fromString "release" Aeson..= release event,
+          Key.fromString "server_name" Aeson..= serverName event,
+          Key.fromString "tags" Aeson..= tags event,
+          Key.fromString "timestamp" Aeson..= timestamp event,
+          Key.fromString "transaction" Aeson..= transaction event
+        ]
 
 new :: IO.MonadIO io => io Event
 new = do
@@ -86,6 +89,7 @@ new = do
       { dist = Nothing,
         environment = Just Environment.production,
         errors = [],
+        exceptions = [],
         extra = Map.empty,
         fingerprint = [],
         Patrol.Type.Event.id = theId,
