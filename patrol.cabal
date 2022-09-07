@@ -69,6 +69,7 @@ library
     Patrol.Client
     Patrol.Constant
     Patrol.Exception.Problem
+    Patrol.Extra.Aeson
     Patrol.Extra.List
     Patrol.Extra.Text
     Patrol.Type.Dist
@@ -111,6 +112,7 @@ test-suite patrol-test-suite
   other-modules:
     Patrol.ClientSpec
     Patrol.ConstantSpec
+    Patrol.Extra.AesonSpec
     Patrol.Extra.ListSpec
     Patrol.Extra.TextSpec
     Patrol.Type.DistSpec

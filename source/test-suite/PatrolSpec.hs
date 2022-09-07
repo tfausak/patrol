@@ -2,6 +2,7 @@ module PatrolSpec where
 
 import qualified Patrol.ClientSpec
 import qualified Patrol.ConstantSpec
+import qualified Patrol.Extra.AesonSpec
 import qualified Patrol.Extra.ListSpec
 import qualified Patrol.Extra.TextSpec
 import qualified Patrol.Type.DistSpec
@@ -35,6 +36,7 @@ spec :: Hspec.Spec
 spec = do
   Patrol.ClientSpec.spec
   Patrol.ConstantSpec.spec
+  Patrol.Extra.AesonSpec.spec
   Patrol.Extra.ListSpec.spec
   Patrol.Extra.TextSpec.spec
   Patrol.Type.DistSpec.spec

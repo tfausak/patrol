@@ -11,6 +11,7 @@ import qualified Data.Text.Encoding as Text
 import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
 import qualified Patrol.Constant as Constant
+import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Extra.List as List
 import qualified Patrol.Type.Dist as Dist
 import qualified Patrol.Type.Dsn as Dsn
@@ -56,14 +57,9 @@ data Event = Event
 
 instance Aeson.ToJSON Event where
   toJSON event =
-    let isEmpty json = case json of
-          Aeson.Array array -> null array
-          Aeson.Null -> True
-          Aeson.Object object -> null object
-          _ -> False
-     in Aeson.object $
+    Aeson.object $
           filter
-            (not . isEmpty . snd)
+        (not . Aeson.isEmpty . snd)
             [ Key.fromString "dist" Aeson..= dist event,
               Key.fromString "environment" Aeson..= environment event,
               Key.fromString "errors" Aeson..= errors event,
