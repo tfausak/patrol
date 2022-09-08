@@ -13,6 +13,7 @@ module Patrol
     Patrol.Type.Logger.Logger,
     Patrol.Type.ModuleName.ModuleName,
     Patrol.Type.ModuleVersion.ModuleVersion,
+    Patrol.Type.NonEmptyText.NonEmptyText,
     Patrol.Type.Path.Path,
     Patrol.Type.Platform.Platform,
     Patrol.Type.Port.Port,
@@ -44,6 +45,7 @@ import qualified Patrol.Type.Level
 import qualified Patrol.Type.Logger
 import qualified Patrol.Type.ModuleName
 import qualified Patrol.Type.ModuleVersion
+import qualified Patrol.Type.NonEmptyText
 import qualified Patrol.Type.Path
 import qualified Patrol.Type.Platform
 import qualified Patrol.Type.Port

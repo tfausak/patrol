@@ -84,6 +84,7 @@ library
     Patrol.Type.Logger
     Patrol.Type.ModuleName
     Patrol.Type.ModuleVersion
+    Patrol.Type.NonEmptyText
     Patrol.Type.Path
     Patrol.Type.Platform
     Patrol.Type.Port
@@ -128,6 +129,7 @@ test-suite patrol-test-suite
     Patrol.Type.LoggerSpec
     Patrol.Type.ModuleNameSpec
     Patrol.Type.ModuleVersionSpec
+    Patrol.Type.NonEmptyTextSpec
     Patrol.Type.PathSpec
     Patrol.Type.PlatformSpec
     Patrol.Type.PortSpec

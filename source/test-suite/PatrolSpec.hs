@@ -18,6 +18,7 @@ import qualified Patrol.Type.LevelSpec
 import qualified Patrol.Type.LoggerSpec
 import qualified Patrol.Type.ModuleNameSpec
 import qualified Patrol.Type.ModuleVersionSpec
+import qualified Patrol.Type.NonEmptyTextSpec
 import qualified Patrol.Type.PathSpec
 import qualified Patrol.Type.PlatformSpec
 import qualified Patrol.Type.PortSpec
@@ -53,6 +54,7 @@ spec = do
   Patrol.Type.LoggerSpec.spec
   Patrol.Type.ModuleNameSpec.spec
   Patrol.Type.ModuleVersionSpec.spec
+  Patrol.Type.NonEmptyTextSpec.spec
   Patrol.Type.PathSpec.spec
   Patrol.Type.PlatformSpec.spec
   Patrol.Type.PortSpec.spec

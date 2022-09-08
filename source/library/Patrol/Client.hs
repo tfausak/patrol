@@ -17,9 +17,7 @@ store ::
   io Response.Response
 store manager dsn event = do
   request <- Event.intoRequest dsn event
-  IO.liftIO $ print request
   response <- IO.liftIO $ Client.httpLbs request manager
-  IO.liftIO $ print response
   maybe (Catch.throwM $ Problem.Problem "invalid response body") pure
     . Aeson.decode
     $ Client.responseBody response
