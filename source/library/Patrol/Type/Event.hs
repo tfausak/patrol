@@ -8,51 +8,36 @@ import qualified Data.ByteString.Lazy as LazyByteString
 import qualified Data.Map as Map
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Text
+import qualified Data.Time as Time
 import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
 import qualified Patrol.Constant as Constant
 import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Extra.List as List
-import qualified Patrol.Type.Dist as Dist
 import qualified Patrol.Type.Dsn as Dsn
-import qualified Patrol.Type.Environment as Environment
 import qualified Patrol.Type.Error as Error
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Exception as Exception
-import qualified Patrol.Type.Host as Host
 import qualified Patrol.Type.Level as Level
-import qualified Patrol.Type.Logger as Logger
-import qualified Patrol.Type.ModuleName as ModuleName
-import qualified Patrol.Type.ModuleVersion as ModuleVersion
-import qualified Patrol.Type.Path as Path
 import qualified Patrol.Type.Platform as Platform
-import qualified Patrol.Type.Port as Port
-import qualified Patrol.Type.ProjectId as ProjectId
-import qualified Patrol.Type.Protocol as Protocol
-import qualified Patrol.Type.Release as Release
-import qualified Patrol.Type.ServerName as ServerName
-import qualified Patrol.Type.TagKey as TagKey
-import qualified Patrol.Type.TagValue as TagValue
-import qualified Patrol.Type.Timestamp as Timestamp
-import qualified Patrol.Type.Transaction as Transaction
 
 data Event = Event
-  { dist :: Maybe Dist.Dist,
-    environment :: Maybe Environment.Environment,
+  { dist :: Maybe Text.Text,
+    environment :: Maybe Text.Text,
     errors :: [Error.Error],
     exceptions :: [Exception.Exception],
     extra :: Map.Map Text.Text Aeson.Value,
     fingerprint :: [Text.Text],
     id :: EventId.EventId,
     level :: Maybe Level.Level,
-    logger :: Maybe Logger.Logger,
-    modules :: Map.Map ModuleName.ModuleName ModuleVersion.ModuleVersion,
+    logger :: Maybe Text.Text,
+    modules :: Map.Map Text.Text Text.Text,
     platform :: Maybe Platform.Platform,
-    release :: Maybe Release.Release,
-    serverName :: Maybe ServerName.ServerName,
-    tags :: Map.Map TagKey.TagKey TagValue.TagValue,
-    timestamp :: Maybe Timestamp.Timestamp,
-    transaction :: Maybe Transaction.Transaction
+    release :: Maybe Text.Text,
+    serverName :: Maybe Text.Text,
+    tags :: Map.Map Text.Text Text.Text,
+    timestamp :: Maybe Time.UTCTime,
+    transaction :: Maybe Text.Text
     -- TODO: Add more fields.
   }
   deriving (Eq, Show)
@@ -83,11 +68,11 @@ instance Aeson.ToJSON Event where
 new :: IO.MonadIO io => io Event
 new = do
   theId <- EventId.random
-  theTimestamp <- Timestamp.now
+  theTimestamp <- IO.liftIO Time.getCurrentTime
   pure
     Event
       { dist = Nothing,
-        environment = Just Environment.production,
+        environment = Just $ Text.pack "production",
         errors = [],
         exceptions = [],
         extra = Map.empty,
@@ -110,13 +95,13 @@ intoRequest dsn event = do
     Client.parseUrlThrow
       . Text.unpack
       $ mconcat
-        [ Protocol.intoText $ Dsn.protocol dsn,
+        [ Dsn.protocol dsn,
           Text.pack "://",
-          Host.intoText $ Dsn.host dsn,
-          maybe Text.empty (Text.pack . (:) ':' . show . Port.intoNatural) $ Dsn.port dsn,
-          Path.intoText $ Dsn.path dsn,
+          Dsn.host dsn,
+          maybe Text.empty (Text.pack . (:) ':' . show) $ Dsn.port dsn,
+          Dsn.path dsn,
           Text.pack "api/",
-          ProjectId.intoText $ Dsn.projectId dsn,
+          Dsn.projectId dsn,
           Text.pack "/store/"
         ]
   let oldHeaders = Client.requestHeaders request

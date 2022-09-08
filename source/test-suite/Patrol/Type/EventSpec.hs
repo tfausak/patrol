@@ -9,30 +9,20 @@ import qualified Data.Map as Map
 import qualified Data.Maybe as Maybe
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Text
+import qualified Data.Time as Time
 import qualified Data.UUID as Uuid
 import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
 import qualified Network.URI.Static as Uri
 import qualified Patrol.Constant as Constant
-import qualified Patrol.Type.Dist as Dist
 import qualified Patrol.Type.Dsn as Dsn
-import qualified Patrol.Type.Environment as Environment
 import qualified Patrol.Type.Error as Error
 import qualified Patrol.Type.ErrorType as ErrorType
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Exception as Exception
 import qualified Patrol.Type.Level as Level
-import qualified Patrol.Type.Logger as Logger
-import qualified Patrol.Type.ModuleName as ModuleName
-import qualified Patrol.Type.ModuleVersion as ModuleVersion
 import qualified Patrol.Type.Platform as Platform
-import qualified Patrol.Type.Release as Release
-import qualified Patrol.Type.ServerName as ServerName
-import qualified Patrol.Type.TagKey as TagKey
-import qualified Patrol.Type.TagValue as TagValue
-import qualified Patrol.Type.Timestamp as Timestamp
-import qualified Patrol.Type.Transaction as Transaction
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -56,7 +46,7 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
 
     Hspec.it "sets the environment" $ do
       event <- Event.new
-      Event.environment event `Hspec.shouldBe` Just Environment.production
+      Event.environment event `Hspec.shouldBe` Just (Text.pack "production")
 
   Hspec.describe "ToJSON" $ do
     let emptyEvent =
@@ -84,12 +74,12 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.encode emptyEvent `Hspec.shouldBe` lazyByteString
 
     Hspec.it "works with dist" $ do
-      let event = emptyEvent {Event.dist = Dist.fromText $ Text.pack "example-dist"}
+      let event = emptyEvent {Event.dist = Just $ Text.pack "example-dist"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "dist": "example-dist" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with environment" $ do
-      let event = emptyEvent {Event.environment = Environment.fromText $ Text.pack "example-environment"}
+      let event = emptyEvent {Event.environment = Just $ Text.pack "example-environment"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "environment": "example-environment" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
@@ -119,14 +109,14 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with logger" $ do
-      let event = emptyEvent {Event.logger = Logger.fromText $ Text.pack "example-logger"}
+      let event = emptyEvent {Event.logger = Just $ Text.pack "example-logger"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "logger": "example-logger" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with modules" $ do
-      moduleName <- ModuleName.fromText $ Text.pack "module-name"
-      moduleVersion <- ModuleVersion.fromText $ Text.pack "module-version"
-      let event = emptyEvent {Event.modules = Map.fromList [(moduleName, moduleVersion)]}
+      let moduleName = Text.pack "module-name"
+          moduleVersion = Text.pack "module-version"
+          event = emptyEvent {Event.modules = Map.fromList [(moduleName, moduleVersion)]}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "modules": { "module-name": "module-version" } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
@@ -136,29 +126,29 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with release" $ do
-      let event = emptyEvent {Event.release = Release.fromText $ Text.pack "example-release"}
+      let event = emptyEvent {Event.release = Just $ Text.pack "example-release"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "release": "example-release" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with server name" $ do
-      let event = emptyEvent {Event.serverName = ServerName.fromText $ Text.pack "example-server-name"}
+      let event = emptyEvent {Event.serverName = Just $ Text.pack "example-server-name"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "server_name": "example-server-name" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with tags" $ do
-      tagKey <- TagKey.fromText $ Text.pack "tag-key"
-      tagValue <- TagValue.fromText $ Text.pack "tag-value"
-      let event = emptyEvent {Event.tags = Map.fromList [(tagKey, tagValue)]}
+      let tagKey = Text.pack "tag-key"
+          tagValue = Text.pack "tag-value"
+          event = emptyEvent {Event.tags = Map.fromList [(tagKey, tagValue)]}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "tags": { "tag-key": "tag-value" } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with timestamp" $ do
-      let event = emptyEvent {Event.timestamp = Just Timestamp.epoch}
+      let event = emptyEvent {Event.timestamp = Just $ Time.UTCTime (Time.fromGregorian 1970 1 1) 0}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "timestamp": "1970-01-01T00:00:00Z" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with transaction" $ do
-      let event = emptyEvent {Event.transaction = Transaction.fromText $ Text.pack "example-transaction"}
+      let event = emptyEvent {Event.transaction = Just $ Text.pack "example-transaction"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "transaction": "example-transaction" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 

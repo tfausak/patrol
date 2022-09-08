@@ -70,35 +70,15 @@ library
     Patrol.Exception.Problem
     Patrol.Extra.Aeson
     Patrol.Extra.List
-    Patrol.Extra.Text
-    Patrol.Type.Dist
     Patrol.Type.Dsn
-    Patrol.Type.Environment
     Patrol.Type.Error
     Patrol.Type.ErrorType
     Patrol.Type.Event
     Patrol.Type.EventId
     Patrol.Type.Exception
-    Patrol.Type.Host
     Patrol.Type.Level
-    Patrol.Type.Logger
-    Patrol.Type.ModuleName
-    Patrol.Type.ModuleVersion
-    Patrol.Type.NonEmptyText
-    Patrol.Type.Path
     Patrol.Type.Platform
-    Patrol.Type.Port
-    Patrol.Type.ProjectId
-    Patrol.Type.Protocol
-    Patrol.Type.PublicKey
-    Patrol.Type.Release
     Patrol.Type.Response
-    Patrol.Type.SecretKey
-    Patrol.Type.ServerName
-    Patrol.Type.TagKey
-    Patrol.Type.TagValue
-    Patrol.Type.Timestamp
-    Patrol.Type.Transaction
     Patrol.Version
   hs-source-dirs: source/library
   other-modules: Paths_patrol
@@ -115,34 +95,14 @@ test-suite patrol-test-suite
     Patrol.ConstantSpec
     Patrol.Extra.AesonSpec
     Patrol.Extra.ListSpec
-    Patrol.Extra.TextSpec
-    Patrol.Type.DistSpec
     Patrol.Type.DsnSpec
-    Patrol.Type.EnvironmentSpec
     Patrol.Type.ErrorSpec
     Patrol.Type.ErrorTypeSpec
     Patrol.Type.EventIdSpec
     Patrol.Type.EventSpec
     Patrol.Type.ExceptionSpec
-    Patrol.Type.HostSpec
     Patrol.Type.LevelSpec
-    Patrol.Type.LoggerSpec
-    Patrol.Type.ModuleNameSpec
-    Patrol.Type.ModuleVersionSpec
-    Patrol.Type.NonEmptyTextSpec
-    Patrol.Type.PathSpec
     Patrol.Type.PlatformSpec
-    Patrol.Type.PortSpec
-    Patrol.Type.ProjectIdSpec
-    Patrol.Type.ProtocolSpec
-    Patrol.Type.PublicKeySpec
-    Patrol.Type.ReleaseSpec
     Patrol.Type.ResponseSpec
-    Patrol.Type.SecretKeySpec
-    Patrol.Type.ServerNameSpec
-    Patrol.Type.TagKeySpec
-    Patrol.Type.TagValueSpec
-    Patrol.Type.TimestampSpec
-    Patrol.Type.TransactionSpec
     PatrolSpec
   type: exitcode-stdio-1.0
