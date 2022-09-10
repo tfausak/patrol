@@ -78,8 +78,10 @@ library
     Patrol.Type.Exception
     Patrol.Type.Level
     Patrol.Type.Mechanism
+    Patrol.Type.Meta
     Patrol.Type.Platform
     Patrol.Type.Response
+    Patrol.Type.Signal
     Patrol.Version
   hs-source-dirs: source/library
   other-modules: Paths_patrol
@@ -104,7 +106,9 @@ test-suite patrol-test-suite
     Patrol.Type.ExceptionSpec
     Patrol.Type.LevelSpec
     Patrol.Type.MechanismSpec
+    Patrol.Type.MetaSpec
     Patrol.Type.PlatformSpec
     Patrol.Type.ResponseSpec
+    Patrol.Type.SignalSpec
     PatrolSpec
   type: exitcode-stdio-1.0

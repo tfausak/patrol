@@ -34,6 +34,7 @@ spec = Hspec.describe "Patrol.Type.Exception" $ do
                 Mechanism.description = Nothing,
                 Mechanism.handled = Nothing,
                 Mechanism.helpLink = Nothing,
+                Mechanism.meta = Nothing,
                 Mechanism.synthetic = Nothing,
                 Mechanism.type_ = Text.pack "example-mechanism"
               }

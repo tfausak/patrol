@@ -12,8 +12,10 @@ import qualified Patrol.Type.EventSpec
 import qualified Patrol.Type.ExceptionSpec
 import qualified Patrol.Type.LevelSpec
 import qualified Patrol.Type.MechanismSpec
+import qualified Patrol.Type.MetaSpec
 import qualified Patrol.Type.PlatformSpec
 import qualified Patrol.Type.ResponseSpec
+import qualified Patrol.Type.SignalSpec
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -30,5 +32,7 @@ spec = do
   Patrol.Type.ExceptionSpec.spec
   Patrol.Type.LevelSpec.spec
   Patrol.Type.MechanismSpec.spec
+  Patrol.Type.MetaSpec.spec
   Patrol.Type.PlatformSpec.spec
   Patrol.Type.ResponseSpec.spec
+  Patrol.Type.SignalSpec.spec
