@@ -1,6 +1,10 @@
+{-# LANGUAGE QuasiQuotes #-}
+{-# LANGUAGE TypeApplications #-}
+
 module Patrol.Type.EventIdSpec where
 
 import qualified Data.Aeson as Aeson
+import qualified Data.Aeson.QQ.Simple as Aeson
 import qualified Data.Text as Text
 import qualified Data.UUID as Uuid
 import qualified Patrol.Type.EventId as EventId
@@ -50,20 +54,20 @@ spec = Hspec.describe "Patrol.Type.EventId" $ do
 
   Hspec.describe "FromJSON" $ do
     Hspec.it "works" $ do
-      let lazyByteString = Aeson.encode "00112233445566778899aabbccddeeff"
+      let json = [Aeson.aesonQQ| "00112233445566778899aabbccddeeff" |]
           eventId = EventId.fromUuid $ Uuid.fromWords64 0x0011223344556677 0x8899aabbccddeeff
-      Aeson.decode lazyByteString `Hspec.shouldBe` Just eventId
+      Aeson.fromJSON json `Hspec.shouldBe` Aeson.Success eventId
 
     Hspec.it "fails with not enough digits" $ do
-      let lazyByteString = Aeson.encode ""
-      Aeson.eitherDecode lazyByteString `Hspec.shouldBe` (Left "Error in $: invalid EventId" :: Either String EventId.EventId)
+      let json = [Aeson.aesonQQ| "" |]
+      Aeson.fromJSON @EventId.EventId json `Hspec.shouldBe` Aeson.Error "invalid EventId"
 
     Hspec.it "fails with the wrong type" $ do
-      let lazyByteString = Aeson.encode Aeson.Null
-      Aeson.eitherDecode lazyByteString `Hspec.shouldBe` (Left "Error in $: parsing EventId failed, expected String, but encountered Null" :: Either String EventId.EventId)
+      let json = [Aeson.aesonQQ| null |]
+      Aeson.fromJSON @EventId.EventId json `Hspec.shouldBe` Aeson.Error "parsing EventId failed, expected String, but encountered Null"
 
   Hspec.describe "ToJSON" $ do
     Hspec.it "works" $ do
       let eventId = EventId.fromUuid $ Uuid.fromWords64 0x0011223344556677 0x8899aabbccddeeff
-          lazyByteString = Aeson.encode "00112233445566778899aabbccddeeff"
-      Aeson.encode eventId `Hspec.shouldBe` lazyByteString
+          json = [Aeson.aesonQQ| "00112233445566778899aabbccddeeff" |]
+      Aeson.toJSON eventId `Hspec.shouldBe` json

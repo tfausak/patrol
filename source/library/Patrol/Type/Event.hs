@@ -25,10 +25,10 @@ data Event = Event
   { dist :: Maybe Text.Text,
     environment :: Maybe Text.Text,
     errors :: [Error.Error],
-    exceptions :: [Exception.Exception],
+    eventId :: EventId.EventId,
+    exception :: [Exception.Exception],
     extra :: Map.Map Text.Text Aeson.Value,
     fingerprint :: [Text.Text],
-    id :: EventId.EventId,
     level :: Maybe Level.Level,
     logger :: Maybe Text.Text,
     modules :: Map.Map Text.Text Text.Text,
@@ -50,9 +50,9 @@ instance Aeson.ToJSON Event where
         [ Key.fromString "dist" Aeson..= dist event,
           Key.fromString "environment" Aeson..= environment event,
           Key.fromString "errors" Aeson..= errors event,
-          Key.fromString "exception" Aeson..= exceptions event,
+          Key.fromString "exception" Aeson..= exception event,
           Key.fromString "extra" Aeson..= extra event,
-          Key.fromString "event_id" Aeson..= Patrol.Type.Event.id event,
+          Key.fromString "event_id" Aeson..= eventId event,
           Key.fromString "fingerprint" Aeson..= fingerprint event,
           Key.fromString "level" Aeson..= level event,
           Key.fromString "logger" Aeson..= logger event,
@@ -67,17 +67,17 @@ instance Aeson.ToJSON Event where
 
 new :: IO.MonadIO io => io Event
 new = do
-  theId <- EventId.random
+  theEventId <- EventId.random
   theTimestamp <- IO.liftIO Time.getCurrentTime
   pure
     Event
       { dist = Nothing,
         environment = Just $ Text.pack "production",
         errors = [],
-        exceptions = [],
+        eventId = theEventId,
+        exception = [],
         extra = Map.empty,
         fingerprint = [],
-        Patrol.Type.Event.id = theId,
         level = Just Level.Error,
         logger = Nothing,
         modules = Map.empty,
