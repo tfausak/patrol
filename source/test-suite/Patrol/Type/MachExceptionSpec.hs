@@ -13,18 +13,33 @@ spec = Hspec.describe "Patrol.Type.MachException" $ do
   Hspec.describe "ToJSON" $ do
     let emptyMachException =
           MachException.MachException
-            { MachException.code = 1,
-              MachException.exception = 0,
-              MachException.subcode = 2,
+            { MachException.code = Nothing,
+              MachException.exception = Nothing,
+              MachException.subcode = Nothing,
               MachException.name = Nothing
             }
 
     Hspec.it "works" $ do
       let machException = emptyMachException
-          json = [Aeson.aesonQQ| { "exception": 0, "code": 1, "subcode": 2 } |]
+          json = [Aeson.aesonQQ| {} |]
+      Aeson.toJSON machException `Hspec.shouldBe` json
+
+    Hspec.it "works with a code" $ do
+      let machException = emptyMachException {MachException.code = Just 0}
+          json = [Aeson.aesonQQ| { "code": 0 } |]
+      Aeson.toJSON machException `Hspec.shouldBe` json
+
+    Hspec.it "works with an exception" $ do
+      let machException = emptyMachException {MachException.exception = Just 0}
+          json = [Aeson.aesonQQ| { "exception": 0 } |]
       Aeson.toJSON machException `Hspec.shouldBe` json
 
     Hspec.it "works with a name" $ do
       let machException = emptyMachException {MachException.name = Just $ Text.pack "example-name"}
-          json = [Aeson.aesonQQ| { "exception": 0, "code": 1, "subcode": 2, "name": "example-name" } |]
+          json = [Aeson.aesonQQ| { "name": "example-name" } |]
+      Aeson.toJSON machException `Hspec.shouldBe` json
+
+    Hspec.it "works with a subcode" $ do
+      let machException = emptyMachException {MachException.subcode = Just 0}
+          json = [Aeson.aesonQQ| { "subcode": 0 } |]
       Aeson.toJSON machException `Hspec.shouldBe` json

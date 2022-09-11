@@ -87,8 +87,9 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "works with some errors" $ do
       let error_ =
             Error.Error
-              { Error.type_ = ErrorType.UnknownError,
-                Error.value = Map.empty
+              { Error.name = Nothing,
+                Error.type_ = ErrorType.UnknownError,
+                Error.value = Aeson.Null
               }
           event = emptyEvent {Event.errors = [error_]}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "errors": [ { "type": "unknown_error" } ] } |]
@@ -101,11 +102,11 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
                 Exception.module_ = Nothing,
                 Exception.stacktrace = Nothing,
                 Exception.threadId = Nothing,
-                Exception.type_ = Text.pack "example-exception",
+                Exception.type_ = Nothing,
                 Exception.value = Nothing
               }
           event = emptyEvent {Event.exception = [exception]}
-          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "exception": [ { "type": "example-exception" } ] } |]
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "exception": [ {} ] } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with an extra" $ do
@@ -129,8 +130,8 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with some modules" $ do
-      let event = emptyEvent {Event.modules = Map.fromList [(Text.pack "module-name", Text.pack "module-version")]}
-          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "modules": { "module-name": "module-version" } } |]
+      let event = emptyEvent {Event.modules = Map.fromList [(Text.pack "module-name", Nothing)]}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "modules": { "module-name": null } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a platform" $ do
@@ -149,8 +150,8 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with some tags" $ do
-      let event = emptyEvent {Event.tags = Map.fromList [(Text.pack "tag-key", Text.pack "tag-value")]}
-          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "tags": { "tag-key": "tag-value" } } |]
+      let event = emptyEvent {Event.tags = Map.fromList [(Text.pack "tag-key", Nothing)]}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "tags": { "tag-key": null } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a timestamp" $ do

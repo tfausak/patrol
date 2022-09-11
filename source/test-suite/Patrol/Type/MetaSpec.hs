@@ -4,7 +4,6 @@ module Patrol.Type.MetaSpec where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.QQ.Simple as Aeson
-import qualified Data.Text as Text
 import qualified Patrol.Type.Errno as Errno
 import qualified Patrol.Type.MachException as MachException
 import qualified Patrol.Type.Meta as Meta
@@ -32,7 +31,7 @@ spec = Hspec.describe "Patrol.Type.Meta" $ do
       let errno =
             Errno.Errno
               { Errno.name = Nothing,
-                Errno.number = 0
+                Errno.number = Just 0
               }
           meta = emptyMeta {Meta.errno = Just errno}
           json = [Aeson.aesonQQ| { "errno": { "number": 0 } } |]
@@ -41,33 +40,33 @@ spec = Hspec.describe "Patrol.Type.Meta" $ do
     Hspec.it "works with a mach exception" $ do
       let machException =
             MachException.MachException
-              { MachException.code = 1,
-                MachException.exception = 0,
-                MachException.subcode = 2,
+              { MachException.code = Just 0,
+                MachException.exception = Nothing,
+                MachException.subcode = Nothing,
                 MachException.name = Nothing
               }
           meta = emptyMeta {Meta.machException = Just machException}
-          json = [Aeson.aesonQQ| { "mach_exception": { "exception": 0, "code": 1, "subcode": 2 } } |]
+          json = [Aeson.aesonQQ| { "mach_exception": { "code": 0 } } |]
       Aeson.toJSON meta `Hspec.shouldBe` json
 
     Hspec.it "works with an NS error" $ do
       let nsError =
             NsError.NsError
-              { NsError.code = 0,
-                NsError.domain = Text.pack "example-domain"
+              { NsError.code = Just 0,
+                NsError.domain = Nothing
               }
           meta = emptyMeta {Meta.nsError = Just nsError}
-          json = [Aeson.aesonQQ| { "ns_error": { "code": 0, "domain": "example-domain" } } |]
+          json = [Aeson.aesonQQ| { "ns_error": { "code": 0 } } |]
       Aeson.toJSON meta `Hspec.shouldBe` json
 
     Hspec.it "works with a signal" $ do
       let signal =
             Signal.Signal
-              { Signal.code = Nothing,
+              { Signal.code = Just 0,
                 Signal.codeName = Nothing,
                 Signal.name = Nothing,
-                Signal.number = 0
+                Signal.number = Nothing
               }
           meta = emptyMeta {Meta.signal = Just signal}
-          json = [Aeson.aesonQQ| { "signal": { "number": 0 } } |]
+          json = [Aeson.aesonQQ| { "signal": { "code": 0 } } |]
       Aeson.toJSON meta `Hspec.shouldBe` json

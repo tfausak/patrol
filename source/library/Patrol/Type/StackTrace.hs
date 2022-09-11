@@ -7,6 +7,7 @@ import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Type.Frame as Frame
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/types/#stacktrace>
 data StackTrace = StackTrace
   { frames :: [Frame.Frame],
     registers :: Map.Map Text.Text Aeson.Value

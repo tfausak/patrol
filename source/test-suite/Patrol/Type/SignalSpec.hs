@@ -16,25 +16,30 @@ spec = Hspec.describe "Patrol.Type.Signal" $ do
             { Signal.code = Nothing,
               Signal.codeName = Nothing,
               Signal.name = Nothing,
-              Signal.number = 0
+              Signal.number = Nothing
             }
 
     Hspec.it "works" $ do
       let signal = emptySignal
-          json = [Aeson.aesonQQ| { "number": 0 } |]
+          json = [Aeson.aesonQQ| {} |]
       Aeson.toJSON signal `Hspec.shouldBe` json
 
     Hspec.it "works with a code" $ do
-      let signal = emptySignal {Signal.code = Just 1}
-          json = [Aeson.aesonQQ| { "number": 0, "code": 1 } |]
+      let signal = emptySignal {Signal.code = Just 0}
+          json = [Aeson.aesonQQ| { "code": 0 } |]
       Aeson.toJSON signal `Hspec.shouldBe` json
 
     Hspec.it "works with a code name" $ do
       let signal = emptySignal {Signal.codeName = Just $ Text.pack "example-code-name"}
-          json = [Aeson.aesonQQ| { "number": 0, "code_name": "example-code-name" } |]
+          json = [Aeson.aesonQQ| { "code_name": "example-code-name" } |]
       Aeson.toJSON signal `Hspec.shouldBe` json
 
     Hspec.it "works with a name" $ do
       let signal = emptySignal {Signal.name = Just $ Text.pack "example-name"}
-          json = [Aeson.aesonQQ| { "number": 0, "name": "example-name" } |]
+          json = [Aeson.aesonQQ| { "name": "example-name" } |]
+      Aeson.toJSON signal `Hspec.shouldBe` json
+
+    Hspec.it "works with a number" $ do
+      let signal = emptySignal {Signal.number = Just 0}
+          json = [Aeson.aesonQQ| { "number": 0 } |]
       Aeson.toJSON signal `Hspec.shouldBe` json

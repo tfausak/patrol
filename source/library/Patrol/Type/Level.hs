@@ -2,6 +2,7 @@ module Patrol.Type.Level where
 
 import qualified Data.Aeson as Aeson
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/types/#level>
 data Level
   = Debug
   | Info

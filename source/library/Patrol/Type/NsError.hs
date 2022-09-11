@@ -5,9 +5,10 @@ import qualified Data.Aeson.Key as Key
 import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/types/#nserror>
 data NsError = NsError
-  { code :: Int,
-    domain :: Text.Text
+  { code :: Maybe Int,
+    domain :: Maybe Text.Text
   }
   deriving (Eq, Show)
 

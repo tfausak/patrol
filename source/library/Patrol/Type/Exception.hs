@@ -9,12 +9,13 @@ import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Type.Mechanism as Mechanism
 import qualified Patrol.Type.StackTrace as StackTrace
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/types/#typedef-ValueClass>
 data Exception = Exception
   { mechanism :: Maybe Mechanism.Mechanism,
     module_ :: Maybe Text.Text,
     stacktrace :: Maybe StackTrace.StackTrace,
     threadId :: Maybe Text.Text,
-    type_ :: Text.Text,
+    type_ :: Maybe Text.Text,
     value :: Maybe Text.Text
   }
   deriving (Eq, Show)
@@ -39,6 +40,6 @@ fromSomeException (Catch.SomeException e) =
       module_ = Nothing,
       stacktrace = Nothing,
       threadId = Nothing,
-      type_ = Text.pack . show $ Typeable.typeOf e,
+      type_ = Just . Text.pack . show $ Typeable.typeOf e,
       value = Just . Text.pack $ Catch.displayException e
     }

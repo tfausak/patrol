@@ -5,11 +5,12 @@ import qualified Data.Aeson.Key as Key
 import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/types/#posixsignal>
 data Signal = Signal
   { code :: Maybe Int,
     codeName :: Maybe Text.Text,
     name :: Maybe Text.Text,
-    number :: Int
+    number :: Maybe Int
   }
   deriving (Eq, Show)
 

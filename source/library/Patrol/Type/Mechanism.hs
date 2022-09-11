@@ -2,12 +2,14 @@ module Patrol.Type.Mechanism where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Key as Key
+import qualified Data.Map as Map
 import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Type.Meta as Meta
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/types/#mechanism>
 data Mechanism = Mechanism
-  { data_ :: Aeson.Value,
+  { data_ :: Map.Map Text.Text Aeson.Value,
     description :: Maybe Text.Text,
     handled :: Maybe Bool,
     helpLink :: Maybe Text.Text,

@@ -4,7 +4,6 @@ module Patrol.Type.ErrorSpec where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.QQ.Simple as Aeson
-import qualified Data.Map as Map
 import qualified Data.Text as Text
 import qualified Patrol.Type.Error as Error
 import qualified Patrol.Type.ErrorType as ErrorType
@@ -15,8 +14,9 @@ spec = Hspec.describe "Patrol.Type.Error" $ do
   Hspec.describe "ToJSON" $ do
     let emptyError =
           Error.Error
-            { Error.type_ = ErrorType.UnknownError,
-              Error.value = Map.empty
+            { Error.name = Nothing,
+              Error.type_ = ErrorType.UnknownError,
+              Error.value = Aeson.Null
             }
 
     Hspec.it "works" $ do
@@ -24,7 +24,12 @@ spec = Hspec.describe "Patrol.Type.Error" $ do
           json = [Aeson.aesonQQ| { "type": "unknown_error" } |]
       Aeson.toJSON error_ `Hspec.shouldBe` json
 
-    Hspec.it "overrides the type" $ do
-      let error_ = emptyError {Error.value = Map.singleton (Text.pack "type") Aeson.Null}
-          json = [Aeson.aesonQQ| { "type": null } |]
+    Hspec.it "works with a name" $ do
+      let error_ = emptyError {Error.name = Just $ Text.pack "example-name"}
+          json = [Aeson.aesonQQ| { "type": "unknown_error", "name": "example-name" } |]
+      Aeson.toJSON error_ `Hspec.shouldBe` json
+
+    Hspec.it "works with a value" $ do
+      let error_ = emptyError {Error.value = Aeson.Bool True}
+          json = [Aeson.aesonQQ| { "type": "unknown_error", "value": true } |]
       Aeson.toJSON error_ `Hspec.shouldBe` json

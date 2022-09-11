@@ -8,6 +8,7 @@ import qualified Patrol.Type.MachException as MachException
 import qualified Patrol.Type.NsError as NsError
 import qualified Patrol.Type.Signal as Signal
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/types/#mechanismmeta>
 data Meta = Meta
   { errno :: Maybe Errno.Errno,
     machException :: Maybe MachException.MachException,

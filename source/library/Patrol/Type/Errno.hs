@@ -5,9 +5,10 @@ import qualified Data.Aeson.Key as Key
 import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/types/#cerror>
 data Errno = Errno
   { name :: Maybe Text.Text,
-    number :: Int
+    number :: Maybe Int
   }
   deriving (Eq, Show)
 

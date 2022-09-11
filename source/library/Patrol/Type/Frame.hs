@@ -7,6 +7,7 @@ import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Type.Platform as Platform
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/types/#frame>
 data Frame = Frame
   { absPath :: Maybe Text.Text,
     addrMode :: Maybe Text.Text,

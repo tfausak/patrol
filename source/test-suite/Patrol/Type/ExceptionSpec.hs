@@ -21,19 +21,19 @@ spec = Hspec.describe "Patrol.Type.Exception" $ do
               Exception.module_ = Nothing,
               Exception.stacktrace = Nothing,
               Exception.threadId = Nothing,
-              Exception.type_ = Text.pack "example-type",
+              Exception.type_ = Nothing,
               Exception.value = Nothing
             }
 
     Hspec.it "works" $ do
       let exception = emptyException
-          json = [Aeson.aesonQQ| { "type": "example-type" } |]
+          json = [Aeson.aesonQQ| {} |]
       Aeson.toJSON exception `Hspec.shouldBe` json
 
     Hspec.it "works with a mechanism" $ do
       let mechanism =
             Mechanism.Mechanism
-              { Mechanism.data_ = Aeson.Null,
+              { Mechanism.data_ = Map.empty,
                 Mechanism.description = Nothing,
                 Mechanism.handled = Nothing,
                 Mechanism.helpLink = Nothing,
@@ -42,12 +42,12 @@ spec = Hspec.describe "Patrol.Type.Exception" $ do
                 Mechanism.type_ = Text.pack "example-mechanism"
               }
           exception = emptyException {Exception.mechanism = Just mechanism}
-          json = [Aeson.aesonQQ| { "type": "example-type", "mechanism": { "type": "example-mechanism" } } |]
+          json = [Aeson.aesonQQ| { "mechanism": { "type": "example-mechanism" } } |]
       Aeson.toJSON exception `Hspec.shouldBe` json
 
     Hspec.it "works with a module" $ do
       let exception = emptyException {Exception.module_ = Just $ Text.pack "example-module"}
-          json = [Aeson.aesonQQ| { "type": "example-type", "module": "example-module" } |]
+          json = [Aeson.aesonQQ| { "module": "example-module" } |]
       Aeson.toJSON exception `Hspec.shouldBe` json
 
     Hspec.it "works with a stack trace" $ do
@@ -57,17 +57,22 @@ spec = Hspec.describe "Patrol.Type.Exception" $ do
                 StackTrace.registers = Map.singleton (Text.pack "example-register") Aeson.Null
               }
           exception = emptyException {Exception.stacktrace = Just stackTrace}
-          json = [Aeson.aesonQQ| { "type": "example-type", "stacktrace": { "registers": { "example-register": null } } } |]
+          json = [Aeson.aesonQQ| { "stacktrace": { "registers": { "example-register": null } } } |]
       Aeson.toJSON exception `Hspec.shouldBe` json
 
     Hspec.it "works with a thread ID" $ do
       let exception = emptyException {Exception.threadId = Just $ Text.pack "example-thread-id"}
-          json = [Aeson.aesonQQ| { "type": "example-type", "thread_id": "example-thread-id" } |]
+          json = [Aeson.aesonQQ| { "thread_id": "example-thread-id" } |]
+      Aeson.toJSON exception `Hspec.shouldBe` json
+
+    Hspec.it "works with a type" $ do
+      let exception = emptyException {Exception.type_ = Just $ Text.pack "example-type"}
+          json = [Aeson.aesonQQ| { "type": "example-type" } |]
       Aeson.toJSON exception `Hspec.shouldBe` json
 
     Hspec.it "works with a value" $ do
       let exception = emptyException {Exception.value = Just $ Text.pack "example-value"}
-          json = [Aeson.aesonQQ| { "type": "example-type", "value": "example-value" } |]
+          json = [Aeson.aesonQQ| { "value": "example-value" } |]
       Aeson.toJSON exception `Hspec.shouldBe` json
 
   Hspec.describe "fromSomeException" $ do
@@ -86,7 +91,7 @@ spec = Hspec.describe "Patrol.Type.Exception" $ do
       Exception.threadId exception `Hspec.shouldBe` Nothing
 
     Hspec.it "sets the type" $ do
-      Exception.type_ exception `Hspec.shouldBe` Text.pack "IOException"
+      Exception.type_ exception `Hspec.shouldBe` Just (Text.pack "IOException")
 
     Hspec.it "sets the value" $ do
       Exception.value exception `Hspec.shouldBe` Just (Text.pack "user error (example-exception)")

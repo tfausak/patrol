@@ -21,6 +21,7 @@ import qualified Patrol.Type.Exception as Exception
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Platform as Platform
 
+-- | <https://develop.sentry.dev/sdk/event-payloads/types/#event>
 data Event = Event
   { dist :: Maybe Text.Text,
     environment :: Maybe Text.Text,
@@ -31,14 +32,13 @@ data Event = Event
     fingerprint :: [Text.Text],
     level :: Maybe Level.Level,
     logger :: Maybe Text.Text,
-    modules :: Map.Map Text.Text Text.Text,
+    modules :: Map.Map Text.Text (Maybe Text.Text),
     platform :: Maybe Platform.Platform,
     release :: Maybe Text.Text,
     serverName :: Maybe Text.Text,
-    tags :: Map.Map Text.Text Text.Text,
+    tags :: Map.Map Text.Text (Maybe Text.Text),
     timestamp :: Maybe Time.UTCTime,
     transaction :: Maybe Text.Text
-    -- TODO: Add more fields.
   }
   deriving (Eq, Show)
 

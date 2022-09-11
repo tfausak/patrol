@@ -13,11 +13,21 @@ spec = Hspec.describe "Patrol.Type.NsError" $ do
   Hspec.describe "ToJSON" $ do
     let emptyNsError =
           NsError.NsError
-            { NsError.code = 0,
-              NsError.domain = Text.pack "example-domain"
+            { NsError.code = Nothing,
+              NsError.domain = Nothing
             }
 
     Hspec.it "works" $ do
       let nsError = emptyNsError
-          json = [Aeson.aesonQQ| { "code": 0, "domain": "example-domain" } |]
+          json = [Aeson.aesonQQ| {} |]
+      Aeson.toJSON nsError `Hspec.shouldBe` json
+
+    Hspec.it "works with a code" $ do
+      let nsError = emptyNsError {NsError.code = Just 0}
+          json = [Aeson.aesonQQ| { "code": 0 } |]
+      Aeson.toJSON nsError `Hspec.shouldBe` json
+
+    Hspec.it "works with a domain" $ do
+      let nsError = emptyNsError {NsError.domain = Just $ Text.pack "example-domain"}
+          json = [Aeson.aesonQQ| { "domain": "example-domain" } |]
       Aeson.toJSON nsError `Hspec.shouldBe` json
