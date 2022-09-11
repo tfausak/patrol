@@ -21,9 +21,9 @@ import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.EventProcessingError as EventProcessingError
 import qualified Patrol.Type.Exception as Exception
+import qualified Patrol.Type.ExceptionValue as ExceptionValue
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Platform as Platform
-import qualified Patrol.Type.ValueClass as ValueClass
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -85,7 +85,7 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "environment": "example-environment" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
-    Hspec.it "works with some errors" $ do
+    Hspec.it "works with an event processing error" $ do
       let eventProcessingError =
             EventProcessingError.EventProcessingError
               { EventProcessingError.name = Nothing,
@@ -97,26 +97,26 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with an exception" $ do
-      let valueClass =
-            ValueClass.ValueClass
-              { ValueClass.mechanism = Nothing,
-                ValueClass.module_ = Nothing,
-                ValueClass.stacktrace = Nothing,
-                ValueClass.threadId = Nothing,
-                ValueClass.type_ = Just $ Text.pack "example-type",
-                ValueClass.value = Nothing
+      let exceptionValue =
+            ExceptionValue.ExceptionValue
+              { ExceptionValue.mechanism = Nothing,
+                ExceptionValue.module_ = Nothing,
+                ExceptionValue.stacktrace = Nothing,
+                ExceptionValue.threadId = Nothing,
+                ExceptionValue.type_ = Just $ Text.pack "example-type",
+                ExceptionValue.value = Nothing
               }
           exception =
             Exception.Exception
-              { Exception.values = [valueClass]
+              { Exception.values = [exceptionValue]
               }
           event = emptyEvent {Event.exception = Just exception}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "exception": { "values": [ { "type": "example-type" } ] } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
-    Hspec.it "works with an extra" $ do
-      let event = emptyEvent {Event.extra = Map.singleton (Text.pack "example-extra") (Aeson.toJSON False)}
-          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "extra": { "example-extra": false } } |]
+    Hspec.it "works with some extra" $ do
+      let event = emptyEvent {Event.extra = Map.singleton (Text.pack "example-extra") (Aeson.Bool True)}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "extra": { "example-extra": true } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a fingerprint" $ do

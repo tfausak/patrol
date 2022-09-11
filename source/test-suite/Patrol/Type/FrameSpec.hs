@@ -52,8 +52,8 @@ spec = Hspec.describe "Patrol.Type.Frame" $ do
       Aeson.toJSON frame `Hspec.shouldBe` json
 
     Hspec.it "works with a colno" $ do
-      let frame = emptyFrame {Frame.colno = Just 1}
-          json = [Aeson.aesonQQ| { "colno": 1 } |]
+      let frame = emptyFrame {Frame.colno = Just 0}
+          json = [Aeson.aesonQQ| { "colno": 0 } |]
       Aeson.toJSON frame `Hspec.shouldBe` json
 
     Hspec.it "works with a context line" $ do
@@ -87,8 +87,8 @@ spec = Hspec.describe "Patrol.Type.Frame" $ do
       Aeson.toJSON frame `Hspec.shouldBe` json
 
     Hspec.it "works with a lineno" $ do
-      let frame = emptyFrame {Frame.lineno = Just 1}
-          json = [Aeson.aesonQQ| { "lineno": 1 } |]
+      let frame = emptyFrame {Frame.lineno = Just 0}
+          json = [Aeson.aesonQQ| { "lineno": 0 } |]
       Aeson.toJSON frame `Hspec.shouldBe` json
 
     Hspec.it "works with a module" $ do

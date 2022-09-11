@@ -77,6 +77,7 @@ library
     Patrol.Type.EventId
     Patrol.Type.EventProcessingError
     Patrol.Type.Exception
+    Patrol.Type.ExceptionValue
     Patrol.Type.Frame
     Patrol.Type.Level
     Patrol.Type.MachException
@@ -87,7 +88,6 @@ library
     Patrol.Type.PosixSignal
     Patrol.Type.Response
     Patrol.Type.Stacktrace
-    Patrol.Type.ValueClass
     Patrol.Version
   hs-source-dirs: source/library
   other-modules: Paths_patrol
@@ -111,6 +111,7 @@ test-suite patrol-test-suite
     Patrol.Type.EventProcessingErrorSpec
     Patrol.Type.EventSpec
     Patrol.Type.ExceptionSpec
+    Patrol.Type.ExceptionValueSpec
     Patrol.Type.FrameSpec
     Patrol.Type.LevelSpec
     Patrol.Type.MachExceptionSpec
@@ -121,6 +122,5 @@ test-suite patrol-test-suite
     Patrol.Type.PosixSignalSpec
     Patrol.Type.ResponseSpec
     Patrol.Type.StacktraceSpec
-    Patrol.Type.ValueClassSpec
     PatrolSpec
   type: exitcode-stdio-1.0

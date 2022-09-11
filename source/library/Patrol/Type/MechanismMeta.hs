@@ -18,12 +18,12 @@ data MechanismMeta = MechanismMeta
   deriving (Eq, Show)
 
 instance Aeson.ToJSON MechanismMeta where
-  toJSON meta =
+  toJSON mechanismMeta =
     Aeson.object $
       filter
         (not . Aeson.isEmpty . snd)
-        [ Key.fromString "errno" Aeson..= errno meta,
-          Key.fromString "mach_exception" Aeson..= machException meta,
-          Key.fromString "ns_error" Aeson..= nsError meta,
-          Key.fromString "signal" Aeson..= signal meta
+        [ Key.fromString "errno" Aeson..= errno mechanismMeta,
+          Key.fromString "mach_exception" Aeson..= machException mechanismMeta,
+          Key.fromString "ns_error" Aeson..= nsError mechanismMeta,
+          Key.fromString "signal" Aeson..= signal mechanismMeta
         ]

@@ -27,7 +27,7 @@ spec = Hspec.describe "Patrol.Type.MechanismMeta" $ do
           json = [Aeson.aesonQQ| {} |]
       Aeson.toJSON meta `Hspec.shouldBe` json
 
-    Hspec.it "works with an errno" $ do
+    Hspec.it "works with a C error" $ do
       let cError =
             CError.CError
               { CError.name = Nothing,

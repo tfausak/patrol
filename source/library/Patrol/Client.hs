@@ -18,6 +18,6 @@ store ::
 store manager dsn event = do
   request <- Event.intoRequest dsn event
   response <- IO.liftIO $ Client.httpLbs request manager
-  maybe (Catch.throwM $ Problem.Problem "invalid response body") pure
-    . Aeson.decode
+  either (Catch.throwM . Problem.Problem . mappend "invalid response body: ") pure
+    . Aeson.eitherDecode
     $ Client.responseBody response

@@ -13,10 +13,10 @@ data CError = CError
   deriving (Eq, Show)
 
 instance Aeson.ToJSON CError where
-  toJSON nsError =
+  toJSON cError =
     Aeson.object $
       filter
         (not . Aeson.isEmpty . snd)
-        [ Key.fromString "name" Aeson..= name nsError,
-          Key.fromString "number" Aeson..= number nsError
+        [ Key.fromString "name" Aeson..= name cError,
+          Key.fromString "number" Aeson..= number cError
         ]

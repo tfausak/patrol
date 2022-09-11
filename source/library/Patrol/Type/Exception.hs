@@ -3,11 +3,11 @@ module Patrol.Type.Exception where
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Key as Key
 import qualified Patrol.Extra.Aeson as Aeson
-import qualified Patrol.Type.ValueClass as ValueClass
+import qualified Patrol.Type.ExceptionValue as ExceptionValue
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#exception>
 newtype Exception = Exception
-  { values :: [ValueClass.ValueClass]
+  { values :: [ExceptionValue.ExceptionValue]
   }
   deriving (Eq, Show)
 
