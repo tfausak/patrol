@@ -6,7 +6,6 @@ module Patrol
     Patrol.Type.Event.Event,
     Patrol.Type.EventId.EventId,
     Patrol.Type.EventProcessingError.EventProcessingError,
-    Patrol.Type.Exception.Exception,
     Patrol.Type.Frame.Frame,
     Patrol.Type.Level.Level,
     Patrol.Type.MachException.MachException,
@@ -17,6 +16,7 @@ module Patrol
     Patrol.Type.PosixSignal.PosixSignal,
     Patrol.Type.Response.Response,
     Patrol.Type.Stacktrace.Stacktrace,
+    Patrol.Type.ValueClass.ValueClass,
   )
 where
 
@@ -27,7 +27,6 @@ import qualified Patrol.Type.ErrorType
 import qualified Patrol.Type.Event
 import qualified Patrol.Type.EventId
 import qualified Patrol.Type.EventProcessingError
-import qualified Patrol.Type.Exception
 import qualified Patrol.Type.Frame
 import qualified Patrol.Type.Level
 import qualified Patrol.Type.MachException
@@ -38,3 +37,4 @@ import qualified Patrol.Type.Platform
 import qualified Patrol.Type.PosixSignal
 import qualified Patrol.Type.Response
 import qualified Patrol.Type.Stacktrace
+import qualified Patrol.Type.ValueClass

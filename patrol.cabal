@@ -76,7 +76,7 @@ library
     Patrol.Type.Event
     Patrol.Type.EventId
     Patrol.Type.EventProcessingError
-    Patrol.Type.Exception
+    Patrol.Type.ValueClass
     Patrol.Type.Frame
     Patrol.Type.Level
     Patrol.Type.MachException
@@ -109,7 +109,7 @@ test-suite patrol-test-suite
     Patrol.Type.EventIdSpec
     Patrol.Type.EventProcessingErrorSpec
     Patrol.Type.EventSpec
-    Patrol.Type.ExceptionSpec
+    Patrol.Type.ValueClassSpec
     Patrol.Type.FrameSpec
     Patrol.Type.LevelSpec
     Patrol.Type.MachExceptionSpec

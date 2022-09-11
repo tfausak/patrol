@@ -10,7 +10,6 @@ import qualified Patrol.Type.ErrorTypeSpec
 import qualified Patrol.Type.EventIdSpec
 import qualified Patrol.Type.EventProcessingErrorSpec
 import qualified Patrol.Type.EventSpec
-import qualified Patrol.Type.ExceptionSpec
 import qualified Patrol.Type.FrameSpec
 import qualified Patrol.Type.LevelSpec
 import qualified Patrol.Type.MachExceptionSpec
@@ -21,6 +20,7 @@ import qualified Patrol.Type.PlatformSpec
 import qualified Patrol.Type.PosixSignalSpec
 import qualified Patrol.Type.ResponseSpec
 import qualified Patrol.Type.StacktraceSpec
+import qualified Patrol.Type.ValueClassSpec
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -35,7 +35,6 @@ spec = do
   Patrol.Type.EventIdSpec.spec
   Patrol.Type.EventProcessingErrorSpec.spec
   Patrol.Type.EventSpec.spec
-  Patrol.Type.ExceptionSpec.spec
   Patrol.Type.FrameSpec.spec
   Patrol.Type.LevelSpec.spec
   Patrol.Type.MachExceptionSpec.spec
@@ -46,3 +45,4 @@ spec = do
   Patrol.Type.PosixSignalSpec.spec
   Patrol.Type.ResponseSpec.spec
   Patrol.Type.StacktraceSpec.spec
+  Patrol.Type.ValueClassSpec.spec
