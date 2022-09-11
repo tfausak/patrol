@@ -1,7 +1,6 @@
 module Patrol.Type.Frame where
 
 import qualified Data.Aeson as Aeson
-import qualified Data.Aeson.Key as Key
 import qualified Data.Map as Map
 import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
@@ -36,23 +35,23 @@ instance Aeson.ToJSON Frame where
     Aeson.object $
       filter
         (not . Aeson.isEmpty . snd)
-        [ Key.fromString "abs_path" Aeson..= absPath frame,
-          Key.fromString "addr_mode" Aeson..= addrMode frame,
-          Key.fromString "colno" Aeson..= colno frame,
-          Key.fromString "context_line" Aeson..= contextLine frame,
-          Key.fromString "filename" Aeson..= filename frame,
-          Key.fromString "function" Aeson..= function frame,
-          Key.fromString "image_addr" Aeson..= imageAddr frame,
-          Key.fromString "in_app" Aeson..= inApp frame,
-          Key.fromString "instruction_addr" Aeson..= instructionAddr frame,
-          Key.fromString "lineno" Aeson..= lineno frame,
-          Key.fromString "module" Aeson..= module_ frame,
-          Key.fromString "package" Aeson..= package frame,
-          Key.fromString "platform" Aeson..= platform frame,
-          Key.fromString "post_context" Aeson..= postContext frame,
-          Key.fromString "pre_context" Aeson..= preContext frame,
-          Key.fromString "raw_function" Aeson..= rawFunction frame,
-          Key.fromString "stack_start" Aeson..= stackStart frame,
-          Key.fromString "symbol_addr" Aeson..= symbolAddr frame,
-          Key.fromString "vars" Aeson..= vars frame
+        [ Aeson.pair "abs_path" $ absPath frame,
+          Aeson.pair "addr_mode" $ addrMode frame,
+          Aeson.pair "colno" $ colno frame,
+          Aeson.pair "context_line" $ contextLine frame,
+          Aeson.pair "filename" $ filename frame,
+          Aeson.pair "function" $ function frame,
+          Aeson.pair "image_addr" $ imageAddr frame,
+          Aeson.pair "in_app" $ inApp frame,
+          Aeson.pair "instruction_addr" $ instructionAddr frame,
+          Aeson.pair "lineno" $ lineno frame,
+          Aeson.pair "module" $ module_ frame,
+          Aeson.pair "package" $ package frame,
+          Aeson.pair "platform" $ platform frame,
+          Aeson.pair "post_context" $ postContext frame,
+          Aeson.pair "pre_context" $ preContext frame,
+          Aeson.pair "raw_function" $ rawFunction frame,
+          Aeson.pair "stack_start" $ stackStart frame,
+          Aeson.pair "symbol_addr" $ symbolAddr frame,
+          Aeson.pair "vars" $ vars frame
         ]

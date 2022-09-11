@@ -1,7 +1,6 @@
 module Patrol.Type.NsError where
 
 import qualified Data.Aeson as Aeson
-import qualified Data.Aeson.Key as Key
 import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
 
@@ -17,6 +16,6 @@ instance Aeson.ToJSON NsError where
     Aeson.object $
       filter
         (not . Aeson.isEmpty . snd)
-        [ Key.fromString "code" Aeson..= code nsError,
-          Key.fromString "domain" Aeson..= domain nsError
+        [ Aeson.pair "code" $ code nsError,
+          Aeson.pair "domain" $ domain nsError
         ]

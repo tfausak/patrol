@@ -1,7 +1,6 @@
 module Patrol.Type.Mechanism where
 
 import qualified Data.Aeson as Aeson
-import qualified Data.Aeson.Key as Key
 import qualified Data.Map as Map
 import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
@@ -24,11 +23,11 @@ instance Aeson.ToJSON Mechanism where
     Aeson.object $
       filter
         (not . Aeson.isEmpty . snd)
-        [ Key.fromString "data" Aeson..= data_ mechanism,
-          Key.fromString "description" Aeson..= description mechanism,
-          Key.fromString "handled" Aeson..= handled mechanism,
-          Key.fromString "help_link" Aeson..= helpLink mechanism,
-          Key.fromString "meta" Aeson..= meta mechanism,
-          Key.fromString "synthetic" Aeson..= synthetic mechanism,
-          Key.fromString "type" Aeson..= type_ mechanism
+        [ Aeson.pair "data" $ data_ mechanism,
+          Aeson.pair "description" $ description mechanism,
+          Aeson.pair "handled" $ handled mechanism,
+          Aeson.pair "help_link" $ helpLink mechanism,
+          Aeson.pair "meta" $ meta mechanism,
+          Aeson.pair "synthetic" $ synthetic mechanism,
+          Aeson.pair "type" $ type_ mechanism
         ]

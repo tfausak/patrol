@@ -1,6 +1,7 @@
 module Patrol.Extra.AesonSpec where
 
 import qualified Data.Aeson as Aeson
+import qualified Data.Aeson.Key as Key
 import qualified Patrol.Extra.Aeson as Extra
 import qualified Test.Hspec as Hspec
 
@@ -24,3 +25,7 @@ spec = Hspec.describe "Patrol.Extra.Aeson" $ do
 
     Hspec.it "is true for an empty object" $ do
       Extra.isEmpty (Aeson.Object mempty) `Hspec.shouldBe` True
+
+  Hspec.describe "pair" $ do
+    Hspec.it "works" $ do
+      Extra.pair "key" False `Hspec.shouldBe` (Key.fromString "key", Aeson.Bool False)

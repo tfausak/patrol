@@ -2,7 +2,6 @@ module Patrol.Type.ExceptionValue where
 
 import qualified Control.Monad.Catch as Catch
 import qualified Data.Aeson as Aeson
-import qualified Data.Aeson.Key as Key
 import qualified Data.Text as Text
 import qualified Data.Typeable as Typeable
 import qualified Patrol.Extra.Aeson as Aeson
@@ -25,12 +24,12 @@ instance Aeson.ToJSON ExceptionValue where
     Aeson.object $
       filter
         (not . Aeson.isEmpty . snd)
-        [ Key.fromString "mechanism" Aeson..= mechanism exceptionValue,
-          Key.fromString "module" Aeson..= module_ exceptionValue,
-          Key.fromString "stacktrace" Aeson..= stacktrace exceptionValue,
-          Key.fromString "thread_id" Aeson..= threadId exceptionValue,
-          Key.fromString "type" Aeson..= type_ exceptionValue,
-          Key.fromString "value" Aeson..= value exceptionValue
+        [ Aeson.pair "mechanism" $ mechanism exceptionValue,
+          Aeson.pair "module" $ module_ exceptionValue,
+          Aeson.pair "stacktrace" $ stacktrace exceptionValue,
+          Aeson.pair "thread_id" $ threadId exceptionValue,
+          Aeson.pair "type" $ type_ exceptionValue,
+          Aeson.pair "value" $ value exceptionValue
         ]
 
 fromSomeException :: Catch.SomeException -> ExceptionValue

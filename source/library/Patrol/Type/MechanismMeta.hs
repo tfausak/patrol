@@ -1,7 +1,6 @@
 module Patrol.Type.MechanismMeta where
 
 import qualified Data.Aeson as Aeson
-import qualified Data.Aeson.Key as Key
 import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Type.CError as CError
 import qualified Patrol.Type.MachException as MachException
@@ -22,8 +21,8 @@ instance Aeson.ToJSON MechanismMeta where
     Aeson.object $
       filter
         (not . Aeson.isEmpty . snd)
-        [ Key.fromString "errno" Aeson..= errno mechanismMeta,
-          Key.fromString "mach_exception" Aeson..= machException mechanismMeta,
-          Key.fromString "ns_error" Aeson..= nsError mechanismMeta,
-          Key.fromString "signal" Aeson..= signal mechanismMeta
+        [ Aeson.pair "errno" $ errno mechanismMeta,
+          Aeson.pair "mach_exception" $ machException mechanismMeta,
+          Aeson.pair "ns_error" $ nsError mechanismMeta,
+          Aeson.pair "signal" $ signal mechanismMeta
         ]

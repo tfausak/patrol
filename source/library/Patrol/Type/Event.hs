@@ -3,7 +3,6 @@ module Patrol.Type.Event where
 import qualified Control.Monad.Catch as Catch
 import qualified Control.Monad.IO.Class as IO
 import qualified Data.Aeson as Aeson
-import qualified Data.Aeson.Key as Key
 import qualified Data.ByteString.Lazy as LazyByteString
 import qualified Data.Map as Map
 import qualified Data.Text as Text
@@ -59,22 +58,22 @@ instance Aeson.ToJSON Event where
     Aeson.object $
       filter
         (not . Aeson.isEmpty . snd)
-        [ Key.fromString "dist" Aeson..= dist event,
-          Key.fromString "environment" Aeson..= environment event,
-          Key.fromString "errors" Aeson..= errors event,
-          Key.fromString "exception" Aeson..= exception event,
-          Key.fromString "extra" Aeson..= extra event,
-          Key.fromString "event_id" Aeson..= eventId event,
-          Key.fromString "fingerprint" Aeson..= fingerprint event,
-          Key.fromString "level" Aeson..= level event,
-          Key.fromString "logger" Aeson..= logger event,
-          Key.fromString "modules" Aeson..= modules event,
-          Key.fromString "platform" Aeson..= platform event,
-          Key.fromString "release" Aeson..= release event,
-          Key.fromString "server_name" Aeson..= serverName event,
-          Key.fromString "tags" Aeson..= tags event,
-          Key.fromString "timestamp" Aeson..= timestamp event,
-          Key.fromString "transaction" Aeson..= transaction event
+        [ Aeson.pair "dist" $ dist event,
+          Aeson.pair "environment" $ environment event,
+          Aeson.pair "errors" $ errors event,
+          Aeson.pair "exception" $ exception event,
+          Aeson.pair "extra" $ extra event,
+          Aeson.pair "event_id" $ eventId event,
+          Aeson.pair "fingerprint" $ fingerprint event,
+          Aeson.pair "level" $ level event,
+          Aeson.pair "logger" $ logger event,
+          Aeson.pair "modules" $ modules event,
+          Aeson.pair "platform" $ platform event,
+          Aeson.pair "release" $ release event,
+          Aeson.pair "server_name" $ serverName event,
+          Aeson.pair "tags" $ tags event,
+          Aeson.pair "timestamp" $ timestamp event,
+          Aeson.pair "transaction" $ transaction event
         ]
 
 new :: IO.MonadIO io => io Event

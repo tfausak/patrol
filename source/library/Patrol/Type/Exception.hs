@@ -1,7 +1,6 @@
 module Patrol.Type.Exception where
 
 import qualified Data.Aeson as Aeson
-import qualified Data.Aeson.Key as Key
 import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Type.ExceptionValue as ExceptionValue
 
@@ -16,5 +15,5 @@ instance Aeson.ToJSON Exception where
     Aeson.object $
       filter
         (not . Aeson.isEmpty . snd)
-        [ Key.fromString "values" Aeson..= values exception
+        [ Aeson.pair "values" $ values exception
         ]

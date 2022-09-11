@@ -1,7 +1,6 @@
 module Patrol.Type.Stacktrace where
 
 import qualified Data.Aeson as Aeson
-import qualified Data.Aeson.Key as Key
 import qualified Data.Map as Map
 import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
@@ -19,6 +18,6 @@ instance Aeson.ToJSON Stacktrace where
     Aeson.object $
       filter
         (not . Aeson.isEmpty . snd)
-        [ Key.fromString "frames" Aeson..= frames stacktrace,
-          Key.fromString "registers" Aeson..= registers stacktrace
+        [ Aeson.pair "frames" $ frames stacktrace,
+          Aeson.pair "registers" $ registers stacktrace
         ]

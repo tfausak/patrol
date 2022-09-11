@@ -1,7 +1,6 @@
 module Patrol.Type.PosixSignal where
 
 import qualified Data.Aeson as Aeson
-import qualified Data.Aeson.Key as Key
 import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
 
@@ -19,8 +18,8 @@ instance Aeson.ToJSON PosixSignal where
     Aeson.object $
       filter
         (not . Aeson.isEmpty . snd)
-        [ Key.fromString "code" Aeson..= code posixSignal,
-          Key.fromString "code_name" Aeson..= codeName posixSignal,
-          Key.fromString "name" Aeson..= name posixSignal,
-          Key.fromString "number" Aeson..= number posixSignal
+        [ Aeson.pair "code" $ code posixSignal,
+          Aeson.pair "code_name" $ codeName posixSignal,
+          Aeson.pair "name" $ name posixSignal,
+          Aeson.pair "number" $ number posixSignal
         ]

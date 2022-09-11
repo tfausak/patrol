@@ -1,7 +1,6 @@
 module Patrol.Type.CError where
 
 import qualified Data.Aeson as Aeson
-import qualified Data.Aeson.Key as Key
 import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
 
@@ -17,6 +16,6 @@ instance Aeson.ToJSON CError where
     Aeson.object $
       filter
         (not . Aeson.isEmpty . snd)
-        [ Key.fromString "name" Aeson..= name cError,
-          Key.fromString "number" Aeson..= number cError
+        [ Aeson.pair "name" $ name cError,
+          Aeson.pair "number" $ number cError
         ]
