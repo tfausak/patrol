@@ -14,6 +14,7 @@ import qualified Patrol.Type.LevelSpec
 import qualified Patrol.Type.MachExceptionSpec
 import qualified Patrol.Type.MechanismSpec
 import qualified Patrol.Type.MetaSpec
+import qualified Patrol.Type.NsErrorSpec
 import qualified Patrol.Type.PlatformSpec
 import qualified Patrol.Type.ResponseSpec
 import qualified Patrol.Type.SignalSpec
@@ -35,6 +36,7 @@ spec = do
   Patrol.Type.MachExceptionSpec.spec
   Patrol.Type.MechanismSpec.spec
   Patrol.Type.MetaSpec.spec
+  Patrol.Type.NsErrorSpec.spec
   Patrol.Type.PlatformSpec.spec
   Patrol.Type.ResponseSpec.spec
   Patrol.Type.SignalSpec.spec

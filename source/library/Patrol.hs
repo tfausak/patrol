@@ -10,6 +10,7 @@ module Patrol
     Patrol.Type.MachException.MachException,
     Patrol.Type.Mechanism.Mechanism,
     Patrol.Type.Meta.Meta,
+    Patrol.Type.NsError.NsError,
     Patrol.Type.Platform.Platform,
     Patrol.Type.Response.Response,
     Patrol.Type.Signal.Signal,
@@ -27,6 +28,7 @@ import qualified Patrol.Type.Level
 import qualified Patrol.Type.MachException
 import qualified Patrol.Type.Mechanism
 import qualified Patrol.Type.Meta
+import qualified Patrol.Type.NsError
 import qualified Patrol.Type.Platform
 import qualified Patrol.Type.Response
 import qualified Patrol.Type.Signal

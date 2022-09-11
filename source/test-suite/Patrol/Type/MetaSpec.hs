@@ -4,8 +4,10 @@ module Patrol.Type.MetaSpec where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.QQ.Simple as Aeson
+import qualified Data.Text as Text
 import qualified Patrol.Type.MachException as MachException
 import qualified Patrol.Type.Meta as Meta
+import qualified Patrol.Type.NsError as NsError
 import qualified Patrol.Type.Signal as Signal
 import qualified Test.Hspec as Hspec
 
@@ -15,6 +17,7 @@ spec = Hspec.describe "Patrol.Type.Meta" $ do
     let emptyMeta =
           Meta.Meta
             { Meta.machException = Nothing,
+              Meta.nsError = Nothing,
               Meta.signal = Nothing
             }
 
@@ -33,6 +36,16 @@ spec = Hspec.describe "Patrol.Type.Meta" $ do
               }
           meta = emptyMeta {Meta.machException = Just machException}
           json = [Aeson.aesonQQ| { "mach_exception": { "exception": 0, "code": 1, "subcode": 2 } } |]
+      Aeson.toJSON meta `Hspec.shouldBe` json
+
+    Hspec.it "works with an NS error" $ do
+      let nsError =
+            NsError.NsError
+              { NsError.code = 0,
+                NsError.domain = Text.pack "example-domain"
+              }
+          meta = emptyMeta {Meta.nsError = Just nsError}
+          json = [Aeson.aesonQQ| { "ns_error": { "code": 0, "domain": "example-domain" } } |]
       Aeson.toJSON meta `Hspec.shouldBe` json
 
     Hspec.it "works with a signal" $ do
