@@ -4,23 +4,23 @@ import qualified Patrol.ClientSpec
 import qualified Patrol.ConstantSpec
 import qualified Patrol.Extra.AesonSpec
 import qualified Patrol.Extra.ListSpec
+import qualified Patrol.Type.CErrorSpec
 import qualified Patrol.Type.DsnSpec
-import qualified Patrol.Type.ErrnoSpec
-import qualified Patrol.Type.ErrorSpec
 import qualified Patrol.Type.ErrorTypeSpec
 import qualified Patrol.Type.EventIdSpec
+import qualified Patrol.Type.EventProcessingErrorSpec
 import qualified Patrol.Type.EventSpec
 import qualified Patrol.Type.ExceptionSpec
 import qualified Patrol.Type.FrameSpec
 import qualified Patrol.Type.LevelSpec
 import qualified Patrol.Type.MachExceptionSpec
+import qualified Patrol.Type.MechanismMetaSpec
 import qualified Patrol.Type.MechanismSpec
-import qualified Patrol.Type.MetaSpec
 import qualified Patrol.Type.NsErrorSpec
 import qualified Patrol.Type.PlatformSpec
+import qualified Patrol.Type.PosixSignalSpec
 import qualified Patrol.Type.ResponseSpec
-import qualified Patrol.Type.SignalSpec
-import qualified Patrol.Type.StackTraceSpec
+import qualified Patrol.Type.StacktraceSpec
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -29,20 +29,20 @@ spec = do
   Patrol.ConstantSpec.spec
   Patrol.Extra.AesonSpec.spec
   Patrol.Extra.ListSpec.spec
+  Patrol.Type.CErrorSpec.spec
   Patrol.Type.DsnSpec.spec
-  Patrol.Type.ErrnoSpec.spec
-  Patrol.Type.ErrorSpec.spec
   Patrol.Type.ErrorTypeSpec.spec
   Patrol.Type.EventIdSpec.spec
+  Patrol.Type.EventProcessingErrorSpec.spec
   Patrol.Type.EventSpec.spec
   Patrol.Type.ExceptionSpec.spec
   Patrol.Type.FrameSpec.spec
   Patrol.Type.LevelSpec.spec
   Patrol.Type.MachExceptionSpec.spec
+  Patrol.Type.MechanismMetaSpec.spec
   Patrol.Type.MechanismSpec.spec
-  Patrol.Type.MetaSpec.spec
   Patrol.Type.NsErrorSpec.spec
   Patrol.Type.PlatformSpec.spec
+  Patrol.Type.PosixSignalSpec.spec
   Patrol.Type.ResponseSpec.spec
-  Patrol.Type.SignalSpec.spec
-  Patrol.Type.StackTraceSpec.spec
+  Patrol.Type.StacktraceSpec.spec

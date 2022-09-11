@@ -1,25 +1,25 @@
 {-# LANGUAGE QuasiQuotes #-}
 
-module Patrol.Type.MetaSpec where
+module Patrol.Type.MechanismMetaSpec where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.QQ.Simple as Aeson
-import qualified Patrol.Type.Errno as Errno
+import qualified Patrol.Type.CError as CError
 import qualified Patrol.Type.MachException as MachException
-import qualified Patrol.Type.Meta as Meta
+import qualified Patrol.Type.MechanismMeta as MechanismMeta
 import qualified Patrol.Type.NsError as NsError
-import qualified Patrol.Type.Signal as Signal
+import qualified Patrol.Type.PosixSignal as PosixSignal
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
-spec = Hspec.describe "Patrol.Type.Meta" $ do
+spec = Hspec.describe "Patrol.Type.MechanismMeta" $ do
   Hspec.describe "ToJSON" $ do
     let emptyMeta =
-          Meta.Meta
-            { Meta.errno = Nothing,
-              Meta.machException = Nothing,
-              Meta.nsError = Nothing,
-              Meta.signal = Nothing
+          MechanismMeta.MechanismMeta
+            { MechanismMeta.errno = Nothing,
+              MechanismMeta.machException = Nothing,
+              MechanismMeta.nsError = Nothing,
+              MechanismMeta.signal = Nothing
             }
 
     Hspec.it "works" $ do
@@ -28,12 +28,12 @@ spec = Hspec.describe "Patrol.Type.Meta" $ do
       Aeson.toJSON meta `Hspec.shouldBe` json
 
     Hspec.it "works with an errno" $ do
-      let errno =
-            Errno.Errno
-              { Errno.name = Nothing,
-                Errno.number = Just 0
+      let cError =
+            CError.CError
+              { CError.name = Nothing,
+                CError.number = Just 0
               }
-          meta = emptyMeta {Meta.errno = Just errno}
+          meta = emptyMeta {MechanismMeta.errno = Just cError}
           json = [Aeson.aesonQQ| { "errno": { "number": 0 } } |]
       Aeson.toJSON meta `Hspec.shouldBe` json
 
@@ -45,7 +45,7 @@ spec = Hspec.describe "Patrol.Type.Meta" $ do
                 MachException.subcode = Nothing,
                 MachException.name = Nothing
               }
-          meta = emptyMeta {Meta.machException = Just machException}
+          meta = emptyMeta {MechanismMeta.machException = Just machException}
           json = [Aeson.aesonQQ| { "mach_exception": { "code": 0 } } |]
       Aeson.toJSON meta `Hspec.shouldBe` json
 
@@ -55,18 +55,18 @@ spec = Hspec.describe "Patrol.Type.Meta" $ do
               { NsError.code = Just 0,
                 NsError.domain = Nothing
               }
-          meta = emptyMeta {Meta.nsError = Just nsError}
+          meta = emptyMeta {MechanismMeta.nsError = Just nsError}
           json = [Aeson.aesonQQ| { "ns_error": { "code": 0 } } |]
       Aeson.toJSON meta `Hspec.shouldBe` json
 
     Hspec.it "works with a signal" $ do
-      let signal =
-            Signal.Signal
-              { Signal.code = Just 0,
-                Signal.codeName = Nothing,
-                Signal.name = Nothing,
-                Signal.number = Nothing
+      let posixSignal =
+            PosixSignal.PosixSignal
+              { PosixSignal.code = Just 0,
+                PosixSignal.codeName = Nothing,
+                PosixSignal.name = Nothing,
+                PosixSignal.number = Nothing
               }
-          meta = emptyMeta {Meta.signal = Just signal}
+          meta = emptyMeta {MechanismMeta.signal = Just posixSignal}
           json = [Aeson.aesonQQ| { "signal": { "code": 0 } } |]
       Aeson.toJSON meta `Hspec.shouldBe` json

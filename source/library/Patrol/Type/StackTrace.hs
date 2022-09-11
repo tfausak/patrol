@@ -1,4 +1,4 @@
-module Patrol.Type.StackTrace where
+module Patrol.Type.Stacktrace where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Key as Key
@@ -8,17 +8,17 @@ import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Type.Frame as Frame
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#stacktrace>
-data StackTrace = StackTrace
+data Stacktrace = Stacktrace
   { frames :: [Frame.Frame],
     registers :: Map.Map Text.Text Aeson.Value
   }
   deriving (Eq, Show)
 
-instance Aeson.ToJSON StackTrace where
-  toJSON stackTrace =
+instance Aeson.ToJSON Stacktrace where
+  toJSON stacktrace =
     Aeson.object $
       filter
         (not . Aeson.isEmpty . snd)
-        [ Key.fromString "frames" Aeson..= frames stackTrace,
-          Key.fromString "registers" Aeson..= registers stackTrace
+        [ Key.fromString "frames" Aeson..= frames stacktrace,
+          Key.fromString "registers" Aeson..= registers stacktrace
         ]

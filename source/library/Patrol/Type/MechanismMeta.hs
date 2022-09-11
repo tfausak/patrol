@@ -1,23 +1,23 @@
-module Patrol.Type.Meta where
+module Patrol.Type.MechanismMeta where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Key as Key
 import qualified Patrol.Extra.Aeson as Aeson
-import qualified Patrol.Type.Errno as Errno
+import qualified Patrol.Type.CError as CError
 import qualified Patrol.Type.MachException as MachException
 import qualified Patrol.Type.NsError as NsError
-import qualified Patrol.Type.Signal as Signal
+import qualified Patrol.Type.PosixSignal as PosixSignal
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#mechanismmeta>
-data Meta = Meta
-  { errno :: Maybe Errno.Errno,
+data MechanismMeta = MechanismMeta
+  { errno :: Maybe CError.CError,
     machException :: Maybe MachException.MachException,
     nsError :: Maybe NsError.NsError,
-    signal :: Maybe Signal.Signal
+    signal :: Maybe PosixSignal.PosixSignal
   }
   deriving (Eq, Show)
 
-instance Aeson.ToJSON Meta where
+instance Aeson.ToJSON MechanismMeta where
   toJSON meta =
     Aeson.object $
       filter

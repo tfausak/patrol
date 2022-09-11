@@ -6,9 +6,9 @@ import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.QQ.Simple as Aeson
 import qualified Data.Map as Map
 import qualified Data.Text as Text
-import qualified Patrol.Type.Errno as Errno
+import qualified Patrol.Type.CError as CError
 import qualified Patrol.Type.Mechanism as Mechanism
-import qualified Patrol.Type.Meta as Meta
+import qualified Patrol.Type.MechanismMeta as MechanismMeta
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -51,19 +51,19 @@ spec = Hspec.describe "Patrol.Type.Mechanism" $ do
       Aeson.toJSON mechanism `Hspec.shouldBe` json
 
     Hspec.it "works with some meta" $ do
-      let errno =
-            Errno.Errno
-              { Errno.name = Nothing,
-                Errno.number = Just 0
+      let cError =
+            CError.CError
+              { CError.name = Nothing,
+                CError.number = Just 0
               }
-          meta =
-            Meta.Meta
-              { Meta.errno = Just errno,
-                Meta.machException = Nothing,
-                Meta.nsError = Nothing,
-                Meta.signal = Nothing
+          mechanismMeta =
+            MechanismMeta.MechanismMeta
+              { MechanismMeta.errno = Just cError,
+                MechanismMeta.machException = Nothing,
+                MechanismMeta.nsError = Nothing,
+                MechanismMeta.signal = Nothing
               }
-          mechanism = emptyMechanism {Mechanism.meta = Just meta}
+          mechanism = emptyMechanism {Mechanism.meta = Just mechanismMeta}
           json = [Aeson.aesonQQ| { "type": "example-type", "meta": { "errno": { "number": 0 } } } |]
       Aeson.toJSON mechanism `Hspec.shouldBe` json
 

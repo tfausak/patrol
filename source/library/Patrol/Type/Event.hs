@@ -15,30 +15,42 @@ import qualified Patrol.Constant as Constant
 import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Extra.List as List
 import qualified Patrol.Type.Dsn as Dsn
-import qualified Patrol.Type.Error as Error
 import qualified Patrol.Type.EventId as EventId
+import qualified Patrol.Type.EventProcessingError as EventProcessingError
 import qualified Patrol.Type.Exception as Exception
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Platform as Platform
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#event>
 data Event = Event
-  { dist :: Maybe Text.Text,
+  { -- TODO: breadcrumbs
+    -- TODO: contexts
+    -- TODO: debug_meta
+    dist :: Maybe Text.Text,
     environment :: Maybe Text.Text,
-    errors :: [Error.Error],
+    errors :: [EventProcessingError.EventProcessingError],
     eventId :: EventId.EventId,
     exception :: [Exception.Exception],
     extra :: Map.Map Text.Text Aeson.Value,
     fingerprint :: [Text.Text],
     level :: Maybe Level.Level,
+    -- TODO: logentry
     logger :: Maybe Text.Text,
     modules :: Map.Map Text.Text (Maybe Text.Text),
     platform :: Maybe Platform.Platform,
     release :: Maybe Text.Text,
+    -- TODO: request
+    -- TODO: sdk
     serverName :: Maybe Text.Text,
     tags :: Map.Map Text.Text (Maybe Text.Text),
+    -- TODO: threads
+    -- TODO: time_spent
     timestamp :: Maybe Time.UTCTime,
     transaction :: Maybe Text.Text
+    -- TODO: transaction_info
+    -- TODO: type ("transaction" only)
+    -- TODO: user
+    -- TODO: version (always "7")
   }
   deriving (Eq, Show)
 

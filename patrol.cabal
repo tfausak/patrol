@@ -70,23 +70,23 @@ library
     Patrol.Exception.Problem
     Patrol.Extra.Aeson
     Patrol.Extra.List
+    Patrol.Type.CError
     Patrol.Type.Dsn
-    Patrol.Type.Errno
-    Patrol.Type.Error
     Patrol.Type.ErrorType
     Patrol.Type.Event
     Patrol.Type.EventId
+    Patrol.Type.EventProcessingError
     Patrol.Type.Exception
     Patrol.Type.Frame
     Patrol.Type.Level
     Patrol.Type.MachException
     Patrol.Type.Mechanism
-    Patrol.Type.Meta
+    Patrol.Type.MechanismMeta
     Patrol.Type.NsError
     Patrol.Type.Platform
+    Patrol.Type.PosixSignal
     Patrol.Type.Response
-    Patrol.Type.Signal
-    Patrol.Type.StackTrace
+    Patrol.Type.Stacktrace
     Patrol.Version
   hs-source-dirs: source/library
   other-modules: Paths_patrol
@@ -103,22 +103,22 @@ test-suite patrol-test-suite
     Patrol.ConstantSpec
     Patrol.Extra.AesonSpec
     Patrol.Extra.ListSpec
+    Patrol.Type.CErrorSpec
     Patrol.Type.DsnSpec
-    Patrol.Type.ErrnoSpec
-    Patrol.Type.ErrorSpec
     Patrol.Type.ErrorTypeSpec
     Patrol.Type.EventIdSpec
+    Patrol.Type.EventProcessingErrorSpec
     Patrol.Type.EventSpec
     Patrol.Type.ExceptionSpec
     Patrol.Type.FrameSpec
     Patrol.Type.LevelSpec
     Patrol.Type.MachExceptionSpec
+    Patrol.Type.MechanismMetaSpec
     Patrol.Type.MechanismSpec
-    Patrol.Type.MetaSpec
     Patrol.Type.NsErrorSpec
     Patrol.Type.PlatformSpec
+    Patrol.Type.PosixSignalSpec
     Patrol.Type.ResponseSpec
-    Patrol.Type.SignalSpec
-    Patrol.Type.StackTraceSpec
+    Patrol.Type.StacktraceSpec
     PatrolSpec
   type: exitcode-stdio-1.0

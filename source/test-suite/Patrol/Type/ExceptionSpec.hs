@@ -9,7 +9,7 @@ import qualified Data.Map as Map
 import qualified Data.Text as Text
 import qualified Patrol.Type.Exception as Exception
 import qualified Patrol.Type.Mechanism as Mechanism
-import qualified Patrol.Type.StackTrace as StackTrace
+import qualified Patrol.Type.Stacktrace as Stacktrace
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -51,12 +51,12 @@ spec = Hspec.describe "Patrol.Type.Exception" $ do
       Aeson.toJSON exception `Hspec.shouldBe` json
 
     Hspec.it "works with a stack trace" $ do
-      let stackTrace =
-            StackTrace.StackTrace
-              { StackTrace.frames = [],
-                StackTrace.registers = Map.singleton (Text.pack "example-register") Aeson.Null
+      let stacktrace =
+            Stacktrace.Stacktrace
+              { Stacktrace.frames = [],
+                Stacktrace.registers = Map.singleton (Text.pack "example-register") Aeson.Null
               }
-          exception = emptyException {Exception.stacktrace = Just stackTrace}
+          exception = emptyException {Exception.stacktrace = Just stacktrace}
           json = [Aeson.aesonQQ| { "stacktrace": { "registers": { "example-register": null } } } |]
       Aeson.toJSON exception `Hspec.shouldBe` json
 

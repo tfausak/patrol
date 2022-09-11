@@ -16,10 +16,10 @@ import qualified Network.HTTP.Types as Http
 import qualified Network.URI.Static as Uri
 import qualified Patrol.Constant as Constant
 import qualified Patrol.Type.Dsn as Dsn
-import qualified Patrol.Type.Error as Error
 import qualified Patrol.Type.ErrorType as ErrorType
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
+import qualified Patrol.Type.EventProcessingError as EventProcessingError
 import qualified Patrol.Type.Exception as Exception
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Platform as Platform
@@ -85,13 +85,13 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with some errors" $ do
-      let error_ =
-            Error.Error
-              { Error.name = Nothing,
-                Error.type_ = ErrorType.UnknownError,
-                Error.value = Aeson.Null
+      let eventProcessingError =
+            EventProcessingError.EventProcessingError
+              { EventProcessingError.name = Nothing,
+                EventProcessingError.type_ = ErrorType.UnknownError,
+                EventProcessingError.value = Aeson.Null
               }
-          event = emptyEvent {Event.errors = [error_]}
+          event = emptyEvent {Event.errors = [eventProcessingError]}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "errors": [ { "type": "unknown_error" } ] } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 

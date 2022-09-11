@@ -7,13 +7,13 @@ import qualified Data.Text as Text
 import qualified Data.Typeable as Typeable
 import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Type.Mechanism as Mechanism
-import qualified Patrol.Type.StackTrace as StackTrace
+import qualified Patrol.Type.Stacktrace as Stacktrace
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#typedef-ValueClass>
 data Exception = Exception
   { mechanism :: Maybe Mechanism.Mechanism,
     module_ :: Maybe Text.Text,
-    stacktrace :: Maybe StackTrace.StackTrace,
+    stacktrace :: Maybe Stacktrace.Stacktrace,
     threadId :: Maybe Text.Text,
     type_ :: Maybe Text.Text,
     value :: Maybe Text.Text

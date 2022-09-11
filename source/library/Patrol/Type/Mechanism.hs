@@ -5,7 +5,7 @@ import qualified Data.Aeson.Key as Key
 import qualified Data.Map as Map
 import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
-import qualified Patrol.Type.Meta as Meta
+import qualified Patrol.Type.MechanismMeta as MechanismMeta
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#mechanism>
 data Mechanism = Mechanism
@@ -13,7 +13,7 @@ data Mechanism = Mechanism
     description :: Maybe Text.Text,
     handled :: Maybe Bool,
     helpLink :: Maybe Text.Text,
-    meta :: Maybe Meta.Meta,
+    meta :: Maybe MechanismMeta.MechanismMeta,
     synthetic :: Maybe Bool,
     type_ :: Text.Text
   }

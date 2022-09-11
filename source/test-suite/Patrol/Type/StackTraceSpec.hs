@@ -1,28 +1,28 @@
 {-# LANGUAGE QuasiQuotes #-}
 
-module Patrol.Type.StackTraceSpec where
+module Patrol.Type.StacktraceSpec where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.QQ.Simple as Aeson
 import qualified Data.Map as Map
 import qualified Data.Text as Text
 import qualified Patrol.Type.Frame as Frame
-import qualified Patrol.Type.StackTrace as StackTrace
+import qualified Patrol.Type.Stacktrace as Stacktrace
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
-spec = Hspec.describe "Patrol.Type.StackTrace" $ do
+spec = Hspec.describe "Patrol.Type.Stacktrace" $ do
   Hspec.describe "ToJSON" $ do
-    let emptyStackTrace =
-          StackTrace.StackTrace
-            { StackTrace.frames = [],
-              StackTrace.registers = Map.empty
+    let emptyStacktrace =
+          Stacktrace.Stacktrace
+            { Stacktrace.frames = [],
+              Stacktrace.registers = Map.empty
             }
 
     Hspec.it "works" $ do
-      let stackTrace = emptyStackTrace
+      let stacktrace = emptyStacktrace
           json = [Aeson.aesonQQ| {} |]
-      Aeson.toJSON stackTrace `Hspec.shouldBe` json
+      Aeson.toJSON stacktrace `Hspec.shouldBe` json
 
     Hspec.it "works with a frame" $ do
       let frame =
@@ -47,11 +47,11 @@ spec = Hspec.describe "Patrol.Type.StackTrace" $ do
                 Frame.symbolAddr = Nothing,
                 Frame.vars = Map.empty
               }
-          stackTrace = emptyStackTrace {StackTrace.frames = [frame]}
+          stacktrace = emptyStacktrace {Stacktrace.frames = [frame]}
           json = [Aeson.aesonQQ| { "frames": [ {} ] } |]
-      Aeson.toJSON stackTrace `Hspec.shouldBe` json
+      Aeson.toJSON stacktrace `Hspec.shouldBe` json
 
     Hspec.it "works with a register" $ do
-      let stackTrace = emptyStackTrace {StackTrace.registers = Map.singleton (Text.pack "example-register") Aeson.Null}
+      let stacktrace = emptyStacktrace {Stacktrace.registers = Map.singleton (Text.pack "example-register") Aeson.Null}
           json = [Aeson.aesonQQ| { "registers": { "example-register": null } } |]
-      Aeson.toJSON stackTrace `Hspec.shouldBe` json
+      Aeson.toJSON stacktrace `Hspec.shouldBe` json
