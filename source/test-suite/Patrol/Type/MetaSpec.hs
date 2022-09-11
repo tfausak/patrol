@@ -5,6 +5,7 @@ module Patrol.Type.MetaSpec where
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.QQ.Simple as Aeson
 import qualified Data.Text as Text
+import qualified Patrol.Type.Errno as Errno
 import qualified Patrol.Type.MachException as MachException
 import qualified Patrol.Type.Meta as Meta
 import qualified Patrol.Type.NsError as NsError
@@ -16,7 +17,8 @@ spec = Hspec.describe "Patrol.Type.Meta" $ do
   Hspec.describe "ToJSON" $ do
     let emptyMeta =
           Meta.Meta
-            { Meta.machException = Nothing,
+            { Meta.errno = Nothing,
+              Meta.machException = Nothing,
               Meta.nsError = Nothing,
               Meta.signal = Nothing
             }
@@ -24,6 +26,16 @@ spec = Hspec.describe "Patrol.Type.Meta" $ do
     Hspec.it "works" $ do
       let meta = emptyMeta
           json = [Aeson.aesonQQ| {} |]
+      Aeson.toJSON meta `Hspec.shouldBe` json
+
+    Hspec.it "works with an errno" $ do
+      let errno =
+            Errno.Errno
+              { Errno.name = Nothing,
+                Errno.number = 0
+              }
+          meta = emptyMeta {Meta.errno = Just errno}
+          json = [Aeson.aesonQQ| { "errno": { "number": 0 } } |]
       Aeson.toJSON meta `Hspec.shouldBe` json
 
     Hspec.it "works with a mach exception" $ do

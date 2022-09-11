@@ -71,6 +71,7 @@ library
     Patrol.Extra.Aeson
     Patrol.Extra.List
     Patrol.Type.Dsn
+    Patrol.Type.Errno
     Patrol.Type.Error
     Patrol.Type.ErrorType
     Patrol.Type.Event
@@ -101,6 +102,7 @@ test-suite patrol-test-suite
     Patrol.Extra.AesonSpec
     Patrol.Extra.ListSpec
     Patrol.Type.DsnSpec
+    Patrol.Type.ErrnoSpec
     Patrol.Type.ErrorSpec
     Patrol.Type.ErrorTypeSpec
     Patrol.Type.EventIdSpec

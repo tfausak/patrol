@@ -5,6 +5,7 @@ import qualified Patrol.ConstantSpec
 import qualified Patrol.Extra.AesonSpec
 import qualified Patrol.Extra.ListSpec
 import qualified Patrol.Type.DsnSpec
+import qualified Patrol.Type.ErrnoSpec
 import qualified Patrol.Type.ErrorSpec
 import qualified Patrol.Type.ErrorTypeSpec
 import qualified Patrol.Type.EventIdSpec
@@ -27,6 +28,7 @@ spec = do
   Patrol.Extra.AesonSpec.spec
   Patrol.Extra.ListSpec.spec
   Patrol.Type.DsnSpec.spec
+  Patrol.Type.ErrnoSpec.spec
   Patrol.Type.ErrorSpec.spec
   Patrol.Type.ErrorTypeSpec.spec
   Patrol.Type.EventIdSpec.spec

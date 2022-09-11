@@ -1,6 +1,7 @@
 module Patrol
   ( Patrol.Exception.Problem.Problem,
     Patrol.Type.Dsn.Dsn,
+    Patrol.Type.Errno.Errno,
     Patrol.Type.Error.Error,
     Patrol.Type.ErrorType.ErrorType,
     Patrol.Type.Event.Event,
@@ -19,6 +20,7 @@ where
 
 import qualified Patrol.Exception.Problem
 import qualified Patrol.Type.Dsn
+import qualified Patrol.Type.Errno
 import qualified Patrol.Type.Error
 import qualified Patrol.Type.ErrorType
 import qualified Patrol.Type.Event
