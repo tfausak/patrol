@@ -20,6 +20,7 @@ import qualified Patrol.Type.ErrorType as ErrorType
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.EventProcessingError as EventProcessingError
+import qualified Patrol.Type.Exception as Exception
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Platform as Platform
 import qualified Patrol.Type.ValueClass as ValueClass
@@ -55,7 +56,7 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
               Event.environment = Nothing,
               Event.errors = [],
               Event.eventId = EventId.fromUuid Uuid.nil,
-              Event.exception = [],
+              Event.exception = Nothing,
               Event.extra = Map.empty,
               Event.fingerprint = [],
               Event.level = Nothing,
@@ -102,11 +103,15 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
                 ValueClass.module_ = Nothing,
                 ValueClass.stacktrace = Nothing,
                 ValueClass.threadId = Nothing,
-                ValueClass.type_ = Nothing,
+                ValueClass.type_ = Just $ Text.pack "example-type",
                 ValueClass.value = Nothing
               }
-          event = emptyEvent {Event.exception = [valueClass]}
-          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "exception": [ {} ] } |]
+          exception =
+            Exception.Exception
+              { Exception.values = [valueClass]
+              }
+          event = emptyEvent {Event.exception = Just exception}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "exception": { "values": [ { "type": "example-type" } ] } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with an extra" $ do

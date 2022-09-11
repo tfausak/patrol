@@ -17,9 +17,9 @@ import qualified Patrol.Extra.List as List
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.EventProcessingError as EventProcessingError
+import qualified Patrol.Type.Exception as Exception
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Platform as Platform
-import qualified Patrol.Type.ValueClass as ValueClass
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#event>
 data Event = Event
@@ -30,7 +30,7 @@ data Event = Event
     environment :: Maybe Text.Text,
     errors :: [EventProcessingError.EventProcessingError],
     eventId :: EventId.EventId,
-    exception :: [ValueClass.ValueClass],
+    exception :: Maybe Exception.Exception,
     extra :: Map.Map Text.Text Aeson.Value,
     fingerprint :: [Text.Text],
     level :: Maybe Level.Level,
@@ -87,7 +87,7 @@ new = do
         environment = Just $ Text.pack "production",
         errors = [],
         eventId = theEventId,
-        exception = [],
+        exception = Nothing,
         extra = Map.empty,
         fingerprint = [],
         level = Just Level.Error,
