@@ -3,6 +3,7 @@ module Patrol.Type.Frame where
 import qualified Data.Aeson as Aeson
 import qualified Data.Map as Map
 import qualified Data.Text as Text
+import qualified GHC.Stack as Stack
 import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Type.Platform as Platform
 
@@ -53,3 +54,27 @@ instance Aeson.ToJSON Frame where
         Aeson.pair "symbol_addr" $ symbolAddr frame,
         Aeson.pair "vars" $ vars frame
       ]
+
+fromSrcLoc :: Stack.SrcLoc -> Frame
+fromSrcLoc srcLoc =
+  Frame
+    { absPath = Nothing,
+      addrMode = Nothing,
+      colno = Just $ Stack.srcLocStartCol srcLoc,
+      contextLine = Nothing,
+      filename = Just . Text.pack $ Stack.srcLocFile srcLoc,
+      function = Nothing,
+      imageAddr = Nothing,
+      inApp = Nothing,
+      instructionAddr = Nothing,
+      lineno = Just $ Stack.srcLocStartLine srcLoc,
+      module_ = Just . Text.pack $ Stack.srcLocModule srcLoc,
+      package = Just . Text.pack $ Stack.srcLocPackage srcLoc,
+      platform = Nothing,
+      postContext = [],
+      preContext = [],
+      rawFunction = Nothing,
+      stackStart = Nothing,
+      symbolAddr = Nothing,
+      vars = Map.empty
+    }

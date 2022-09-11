@@ -6,36 +6,37 @@ import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.QQ.Simple as Aeson
 import qualified Data.Map as Map
 import qualified Data.Text as Text
+import qualified GHC.Stack as Stack
 import qualified Patrol.Type.Frame as Frame
 import qualified Patrol.Type.Platform as Platform
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
 spec = Hspec.describe "Patrol.Type.Frame" $ do
-  Hspec.describe "ToJSON" $ do
-    let emptyFrame =
-          Frame.Frame
-            { Frame.absPath = Nothing,
-              Frame.addrMode = Nothing,
-              Frame.colno = Nothing,
-              Frame.contextLine = Nothing,
-              Frame.filename = Nothing,
-              Frame.function = Nothing,
-              Frame.imageAddr = Nothing,
-              Frame.inApp = Nothing,
-              Frame.instructionAddr = Nothing,
-              Frame.lineno = Nothing,
-              Frame.module_ = Nothing,
-              Frame.package = Nothing,
-              Frame.platform = Nothing,
-              Frame.postContext = [],
-              Frame.preContext = [],
-              Frame.rawFunction = Nothing,
-              Frame.stackStart = Nothing,
-              Frame.symbolAddr = Nothing,
-              Frame.vars = Map.empty
-            }
+  let emptyFrame =
+        Frame.Frame
+          { Frame.absPath = Nothing,
+            Frame.addrMode = Nothing,
+            Frame.colno = Nothing,
+            Frame.contextLine = Nothing,
+            Frame.filename = Nothing,
+            Frame.function = Nothing,
+            Frame.imageAddr = Nothing,
+            Frame.inApp = Nothing,
+            Frame.instructionAddr = Nothing,
+            Frame.lineno = Nothing,
+            Frame.module_ = Nothing,
+            Frame.package = Nothing,
+            Frame.platform = Nothing,
+            Frame.postContext = [],
+            Frame.preContext = [],
+            Frame.rawFunction = Nothing,
+            Frame.stackStart = Nothing,
+            Frame.symbolAddr = Nothing,
+            Frame.vars = Map.empty
+          }
 
+  Hspec.describe "ToJSON" $ do
     Hspec.it "works" $ do
       let frame = emptyFrame
           json = [Aeson.aesonQQ| {} |]
@@ -135,3 +136,25 @@ spec = Hspec.describe "Patrol.Type.Frame" $ do
       let frame = emptyFrame {Frame.vars = Map.singleton (Text.pack "example-var") Aeson.Null}
           json = [Aeson.aesonQQ| { "vars": { "example-var": null } } |]
       Aeson.toJSON frame `Hspec.shouldBe` json
+
+  Hspec.describe "fromSrcLoc" $ do
+    Hspec.it "works" $ do
+      let srcLoc =
+            Stack.SrcLoc
+              { Stack.srcLocEndCol = 3,
+                Stack.srcLocEndLine = 4,
+                Stack.srcLocFile = "example-file",
+                Stack.srcLocModule = "example-module",
+                Stack.srcLocPackage = "example-package",
+                Stack.srcLocStartCol = 1,
+                Stack.srcLocStartLine = 2
+              }
+          frame =
+            emptyFrame
+              { Frame.colno = Just 1,
+                Frame.filename = Just $ Text.pack "example-file",
+                Frame.lineno = Just 2,
+                Frame.module_ = Just $ Text.pack "example-module",
+                Frame.package = Just $ Text.pack "example-package"
+              }
+      Frame.fromSrcLoc srcLoc `Hspec.shouldBe` frame
