@@ -5,9 +5,11 @@ module Patrol.Type.ExceptionSpec where
 import qualified Control.Monad.Catch as Catch
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.QQ.Simple as Aeson
+import qualified Data.Map as Map
 import qualified Data.Text as Text
 import qualified Patrol.Type.Exception as Exception
 import qualified Patrol.Type.Mechanism as Mechanism
+import qualified Patrol.Type.StackTrace as StackTrace
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -17,6 +19,7 @@ spec = Hspec.describe "Patrol.Type.Exception" $ do
           Exception.Exception
             { Exception.mechanism = Nothing,
               Exception.module_ = Nothing,
+              Exception.stacktrace = Nothing,
               Exception.threadId = Nothing,
               Exception.type_ = Text.pack "example-type",
               Exception.value = Nothing
@@ -47,6 +50,16 @@ spec = Hspec.describe "Patrol.Type.Exception" $ do
           json = [Aeson.aesonQQ| { "type": "example-type", "module": "example-module" } |]
       Aeson.toJSON exception `Hspec.shouldBe` json
 
+    Hspec.it "works with a stack trace" $ do
+      let stackTrace =
+            StackTrace.StackTrace
+              { StackTrace.frames = [],
+                StackTrace.registers = Map.singleton (Text.pack "example-register") Aeson.Null
+              }
+          exception = emptyException {Exception.stacktrace = Just stackTrace}
+          json = [Aeson.aesonQQ| { "type": "example-type", "stacktrace": { "registers": { "example-register": null } } } |]
+      Aeson.toJSON exception `Hspec.shouldBe` json
+
     Hspec.it "works with a thread ID" $ do
       let exception = emptyException {Exception.threadId = Just $ Text.pack "example-thread-id"}
           json = [Aeson.aesonQQ| { "type": "example-type", "thread_id": "example-thread-id" } |]
@@ -60,8 +73,14 @@ spec = Hspec.describe "Patrol.Type.Exception" $ do
   Hspec.describe "fromSomeException" $ do
     let exception = Exception.fromSomeException . Catch.toException $ userError "example-exception"
 
+    Hspec.it "does not set the mechanism" $ do
+      Exception.mechanism exception `Hspec.shouldBe` Nothing
+
     Hspec.it "does not set the module" $ do
       Exception.module_ exception `Hspec.shouldBe` Nothing
+
+    Hspec.it "does not set the stack trace" $ do
+      Exception.stacktrace exception `Hspec.shouldBe` Nothing
 
     Hspec.it "does not set the thread ID" $ do
       Exception.threadId exception `Hspec.shouldBe` Nothing

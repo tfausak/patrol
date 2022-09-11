@@ -99,6 +99,7 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
             Exception.Exception
               { Exception.mechanism = Nothing,
                 Exception.module_ = Nothing,
+                Exception.stacktrace = Nothing,
                 Exception.threadId = Nothing,
                 Exception.type_ = Text.pack "example-exception",
                 Exception.value = Nothing

@@ -7,6 +7,7 @@ module Patrol
     Patrol.Type.Event.Event,
     Patrol.Type.EventId.EventId,
     Patrol.Type.Exception.Exception,
+    Patrol.Type.Frame.Frame,
     Patrol.Type.Level.Level,
     Patrol.Type.MachException.MachException,
     Patrol.Type.Mechanism.Mechanism,
@@ -15,6 +16,7 @@ module Patrol
     Patrol.Type.Platform.Platform,
     Patrol.Type.Response.Response,
     Patrol.Type.Signal.Signal,
+    Patrol.Type.StackTrace.StackTrace,
   )
 where
 
@@ -26,6 +28,7 @@ import qualified Patrol.Type.ErrorType
 import qualified Patrol.Type.Event
 import qualified Patrol.Type.EventId
 import qualified Patrol.Type.Exception
+import qualified Patrol.Type.Frame
 import qualified Patrol.Type.Level
 import qualified Patrol.Type.MachException
 import qualified Patrol.Type.Mechanism
@@ -34,3 +37,4 @@ import qualified Patrol.Type.NsError
 import qualified Patrol.Type.Platform
 import qualified Patrol.Type.Response
 import qualified Patrol.Type.Signal
+import qualified Patrol.Type.StackTrace
