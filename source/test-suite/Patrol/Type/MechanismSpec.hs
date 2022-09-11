@@ -59,7 +59,8 @@ spec = Hspec.describe "Patrol.Type.Mechanism" $ do
               }
           meta =
             Meta.Meta
-              { Meta.signal = Just signal
+              { Meta.machException = Nothing,
+                Meta.signal = Just signal
               }
           mechanism = emptyMechanism {Mechanism.meta = Just meta}
           json = [Aeson.aesonQQ| { "type": "example-type", "meta": { "signal": { "number": 0 } } } |]

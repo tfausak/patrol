@@ -77,6 +77,7 @@ library
     Patrol.Type.EventId
     Patrol.Type.Exception
     Patrol.Type.Level
+    Patrol.Type.MachException
     Patrol.Type.Mechanism
     Patrol.Type.Meta
     Patrol.Type.Platform
@@ -105,6 +106,7 @@ test-suite patrol-test-suite
     Patrol.Type.EventSpec
     Patrol.Type.ExceptionSpec
     Patrol.Type.LevelSpec
+    Patrol.Type.MachExceptionSpec
     Patrol.Type.MechanismSpec
     Patrol.Type.MetaSpec
     Patrol.Type.PlatformSpec

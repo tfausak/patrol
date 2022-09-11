@@ -11,6 +11,7 @@ import qualified Patrol.Type.EventIdSpec
 import qualified Patrol.Type.EventSpec
 import qualified Patrol.Type.ExceptionSpec
 import qualified Patrol.Type.LevelSpec
+import qualified Patrol.Type.MachExceptionSpec
 import qualified Patrol.Type.MechanismSpec
 import qualified Patrol.Type.MetaSpec
 import qualified Patrol.Type.PlatformSpec
@@ -31,6 +32,7 @@ spec = do
   Patrol.Type.EventSpec.spec
   Patrol.Type.ExceptionSpec.spec
   Patrol.Type.LevelSpec.spec
+  Patrol.Type.MachExceptionSpec.spec
   Patrol.Type.MechanismSpec.spec
   Patrol.Type.MetaSpec.spec
   Patrol.Type.PlatformSpec.spec
