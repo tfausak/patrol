@@ -18,11 +18,9 @@ data MechanismMeta = MechanismMeta
 
 instance Aeson.ToJSON MechanismMeta where
   toJSON mechanismMeta =
-    Aeson.object $
-      filter
-        (not . Aeson.isEmpty . snd)
-        [ Aeson.pair "errno" $ errno mechanismMeta,
-          Aeson.pair "mach_exception" $ machException mechanismMeta,
-          Aeson.pair "ns_error" $ nsError mechanismMeta,
-          Aeson.pair "signal" $ signal mechanismMeta
-        ]
+    Aeson.intoObject
+      [ Aeson.pair "errno" $ errno mechanismMeta,
+        Aeson.pair "mach_exception" $ machException mechanismMeta,
+        Aeson.pair "ns_error" $ nsError mechanismMeta,
+        Aeson.pair "signal" $ signal mechanismMeta
+      ]

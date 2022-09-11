@@ -13,9 +13,7 @@ data CError = CError
 
 instance Aeson.ToJSON CError where
   toJSON cError =
-    Aeson.object $
-      filter
-        (not . Aeson.isEmpty . snd)
-        [ Aeson.pair "name" $ name cError,
-          Aeson.pair "number" $ number cError
-        ]
+    Aeson.intoObject
+      [ Aeson.pair "name" $ name cError,
+        Aeson.pair "number" $ number cError
+      ]

@@ -12,8 +12,6 @@ newtype Exception = Exception
 
 instance Aeson.ToJSON Exception where
   toJSON exception =
-    Aeson.object $
-      filter
-        (not . Aeson.isEmpty . snd)
-        [ Aeson.pair "values" $ values exception
-        ]
+    Aeson.intoObject
+      [ Aeson.pair "values" $ values exception
+      ]

@@ -20,14 +20,12 @@ data Mechanism = Mechanism
 
 instance Aeson.ToJSON Mechanism where
   toJSON mechanism =
-    Aeson.object $
-      filter
-        (not . Aeson.isEmpty . snd)
-        [ Aeson.pair "data" $ data_ mechanism,
-          Aeson.pair "description" $ description mechanism,
-          Aeson.pair "handled" $ handled mechanism,
-          Aeson.pair "help_link" $ helpLink mechanism,
-          Aeson.pair "meta" $ meta mechanism,
-          Aeson.pair "synthetic" $ synthetic mechanism,
-          Aeson.pair "type" $ type_ mechanism
-        ]
+    Aeson.intoObject
+      [ Aeson.pair "data" $ data_ mechanism,
+        Aeson.pair "description" $ description mechanism,
+        Aeson.pair "handled" $ handled mechanism,
+        Aeson.pair "help_link" $ helpLink mechanism,
+        Aeson.pair "meta" $ meta mechanism,
+        Aeson.pair "synthetic" $ synthetic mechanism,
+        Aeson.pair "type" $ type_ mechanism
+      ]

@@ -1,12 +1,38 @@
+{-# LANGUAGE QuasiQuotes #-}
+
 module Patrol.Extra.AesonSpec where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Key as Key
+import qualified Data.Aeson.QQ.Simple as Aeson
+import qualified Data.Map as Map
 import qualified Patrol.Extra.Aeson as Extra
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
 spec = Hspec.describe "Patrol.Extra.Aeson" $ do
+  Hspec.describe "intoObject" $ do
+    Hspec.it "works with an empty object" $ do
+      Extra.intoObject [] `Hspec.shouldBe` [Aeson.aesonQQ| {} |]
+
+    Hspec.it "strips null" $ do
+      Extra.intoObject [Extra.pair "k" Aeson.Null] `Hspec.shouldBe` [Aeson.aesonQQ| {} |]
+
+    Hspec.it "does not strip false" $ do
+      Extra.intoObject [Extra.pair "k" False] `Hspec.shouldBe` [Aeson.aesonQQ| { "k": false } |]
+
+    Hspec.it "does not strip zero" $ do
+      Extra.intoObject [Extra.pair "k" (0 :: Int)] `Hspec.shouldBe` [Aeson.aesonQQ| { "k": 0 } |]
+
+    Hspec.it "does not strip empty string" $ do
+      Extra.intoObject [Extra.pair "k" ""] `Hspec.shouldBe` [Aeson.aesonQQ| { "k": "" } |]
+
+    Hspec.it "strips empty array" $ do
+      Extra.intoObject [Extra.pair "k" (mempty :: [Int])] `Hspec.shouldBe` [Aeson.aesonQQ| {} |]
+
+    Hspec.it "strips empty object" $ do
+      Extra.intoObject [Extra.pair "k" (mempty :: Map.Map String Int)] `Hspec.shouldBe` [Aeson.aesonQQ| {} |]
+
   Hspec.describe "isEmpty" $ do
     Hspec.it "is true for null" $ do
       Extra.isEmpty Aeson.Null `Hspec.shouldBe` True

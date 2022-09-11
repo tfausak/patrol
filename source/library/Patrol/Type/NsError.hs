@@ -13,9 +13,7 @@ data NsError = NsError
 
 instance Aeson.ToJSON NsError where
   toJSON nsError =
-    Aeson.object $
-      filter
-        (not . Aeson.isEmpty . snd)
-        [ Aeson.pair "code" $ code nsError,
-          Aeson.pair "domain" $ domain nsError
-        ]
+    Aeson.intoObject
+      [ Aeson.pair "code" $ code nsError,
+        Aeson.pair "domain" $ domain nsError
+      ]

@@ -15,10 +15,8 @@ data EventProcessingError = EventProcessingError
 
 instance Aeson.ToJSON EventProcessingError where
   toJSON eventProcessingError =
-    Aeson.object $
-      filter
-        (not . Aeson.isEmpty . snd)
-        [ Aeson.pair "name" $ name eventProcessingError,
-          Aeson.pair "type" $ type_ eventProcessingError,
-          Aeson.pair "value" $ value eventProcessingError
-        ]
+    Aeson.intoObject
+      [ Aeson.pair "name" $ name eventProcessingError,
+        Aeson.pair "type" $ type_ eventProcessingError,
+        Aeson.pair "value" $ value eventProcessingError
+      ]

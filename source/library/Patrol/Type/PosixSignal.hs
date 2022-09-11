@@ -15,11 +15,9 @@ data PosixSignal = PosixSignal
 
 instance Aeson.ToJSON PosixSignal where
   toJSON posixSignal =
-    Aeson.object $
-      filter
-        (not . Aeson.isEmpty . snd)
-        [ Aeson.pair "code" $ code posixSignal,
-          Aeson.pair "code_name" $ codeName posixSignal,
-          Aeson.pair "name" $ name posixSignal,
-          Aeson.pair "number" $ number posixSignal
-        ]
+    Aeson.intoObject
+      [ Aeson.pair "code" $ code posixSignal,
+        Aeson.pair "code_name" $ codeName posixSignal,
+        Aeson.pair "name" $ name posixSignal,
+        Aeson.pair "number" $ number posixSignal
+      ]

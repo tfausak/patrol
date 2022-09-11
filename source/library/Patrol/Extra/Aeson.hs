@@ -4,6 +4,9 @@ import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Key as Key
 import qualified Data.Aeson.Types as Aeson
 
+intoObject :: [Aeson.Pair] -> Aeson.Value
+intoObject = Aeson.object . filter (not . isEmpty . snd)
+
 isEmpty :: Aeson.Value -> Bool
 isEmpty value = case value of
   Aeson.Array array -> null array

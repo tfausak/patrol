@@ -21,16 +21,14 @@ data ExceptionValue = ExceptionValue
 
 instance Aeson.ToJSON ExceptionValue where
   toJSON exceptionValue =
-    Aeson.object $
-      filter
-        (not . Aeson.isEmpty . snd)
-        [ Aeson.pair "mechanism" $ mechanism exceptionValue,
-          Aeson.pair "module" $ module_ exceptionValue,
-          Aeson.pair "stacktrace" $ stacktrace exceptionValue,
-          Aeson.pair "thread_id" $ threadId exceptionValue,
-          Aeson.pair "type" $ type_ exceptionValue,
-          Aeson.pair "value" $ value exceptionValue
-        ]
+    Aeson.intoObject
+      [ Aeson.pair "mechanism" $ mechanism exceptionValue,
+        Aeson.pair "module" $ module_ exceptionValue,
+        Aeson.pair "stacktrace" $ stacktrace exceptionValue,
+        Aeson.pair "thread_id" $ threadId exceptionValue,
+        Aeson.pair "type" $ type_ exceptionValue,
+        Aeson.pair "value" $ value exceptionValue
+      ]
 
 fromSomeException :: Catch.SomeException -> ExceptionValue
 fromSomeException (Catch.SomeException e) =

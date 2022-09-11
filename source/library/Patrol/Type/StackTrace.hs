@@ -15,9 +15,7 @@ data Stacktrace = Stacktrace
 
 instance Aeson.ToJSON Stacktrace where
   toJSON stacktrace =
-    Aeson.object $
-      filter
-        (not . Aeson.isEmpty . snd)
-        [ Aeson.pair "frames" $ frames stacktrace,
-          Aeson.pair "registers" $ registers stacktrace
-        ]
+    Aeson.intoObject
+      [ Aeson.pair "frames" $ frames stacktrace,
+        Aeson.pair "registers" $ registers stacktrace
+      ]

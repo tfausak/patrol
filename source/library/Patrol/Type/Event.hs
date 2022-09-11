@@ -55,26 +55,24 @@ data Event = Event
 
 instance Aeson.ToJSON Event where
   toJSON event =
-    Aeson.object $
-      filter
-        (not . Aeson.isEmpty . snd)
-        [ Aeson.pair "dist" $ dist event,
-          Aeson.pair "environment" $ environment event,
-          Aeson.pair "errors" $ errors event,
-          Aeson.pair "exception" $ exception event,
-          Aeson.pair "extra" $ extra event,
-          Aeson.pair "event_id" $ eventId event,
-          Aeson.pair "fingerprint" $ fingerprint event,
-          Aeson.pair "level" $ level event,
-          Aeson.pair "logger" $ logger event,
-          Aeson.pair "modules" $ modules event,
-          Aeson.pair "platform" $ platform event,
-          Aeson.pair "release" $ release event,
-          Aeson.pair "server_name" $ serverName event,
-          Aeson.pair "tags" $ tags event,
-          Aeson.pair "timestamp" $ timestamp event,
-          Aeson.pair "transaction" $ transaction event
-        ]
+    Aeson.intoObject
+      [ Aeson.pair "dist" $ dist event,
+        Aeson.pair "environment" $ environment event,
+        Aeson.pair "errors" $ errors event,
+        Aeson.pair "exception" $ exception event,
+        Aeson.pair "extra" $ extra event,
+        Aeson.pair "event_id" $ eventId event,
+        Aeson.pair "fingerprint" $ fingerprint event,
+        Aeson.pair "level" $ level event,
+        Aeson.pair "logger" $ logger event,
+        Aeson.pair "modules" $ modules event,
+        Aeson.pair "platform" $ platform event,
+        Aeson.pair "release" $ release event,
+        Aeson.pair "server_name" $ serverName event,
+        Aeson.pair "tags" $ tags event,
+        Aeson.pair "timestamp" $ timestamp event,
+        Aeson.pair "transaction" $ transaction event
+      ]
 
 new :: IO.MonadIO io => io Event
 new = do

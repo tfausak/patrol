@@ -15,11 +15,9 @@ data MachException = MachException
 
 instance Aeson.ToJSON MachException where
   toJSON machException =
-    Aeson.object $
-      filter
-        (not . Aeson.isEmpty . snd)
-        [ Aeson.pair "code" $ code machException,
-          Aeson.pair "exception" $ exception machException,
-          Aeson.pair "name" $ name machException,
-          Aeson.pair "subcode" $ subcode machException
-        ]
+    Aeson.intoObject
+      [ Aeson.pair "code" $ code machException,
+        Aeson.pair "exception" $ exception machException,
+        Aeson.pair "name" $ name machException,
+        Aeson.pair "subcode" $ subcode machException
+      ]
