@@ -12,26 +12,16 @@ import qualified Test.Hspec as Hspec
 spec :: Hspec.Spec
 spec = Hspec.describe "Patrol.Type.Exception" $ do
   Hspec.describe "ToJSON" $ do
-    let emptyException =
-          Exception.Exception
-            { Exception.values = []
-            }
-
     Hspec.it "works" $ do
-      let exception = emptyException
+      let exception = Exception.empty
           json = [Aeson.aesonQQ| {} |]
       Aeson.toJSON exception `Hspec.shouldBe` json
 
     Hspec.it "works with a value" $ do
       let exceptionValue =
-            ExceptionValue.ExceptionValue
-              { ExceptionValue.mechanism = Nothing,
-                ExceptionValue.module_ = Nothing,
-                ExceptionValue.stacktrace = Nothing,
-                ExceptionValue.threadId = Nothing,
-                ExceptionValue.type_ = Just $ Text.pack "example-type",
-                ExceptionValue.value = Nothing
+            ExceptionValue.empty
+              { ExceptionValue.type_ = Just $ Text.pack "example-type"
               }
-          exception = emptyException {Exception.values = [exceptionValue]}
+          exception = Exception.empty {Exception.values = [exceptionValue]}
           json = [Aeson.aesonQQ| { "values": [ { "type": "example-type" } ] } |]
       Aeson.toJSON exception `Hspec.shouldBe` json

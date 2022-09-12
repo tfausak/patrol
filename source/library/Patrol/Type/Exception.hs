@@ -15,3 +15,9 @@ instance Aeson.ToJSON Exception where
     Aeson.intoObject
       [ Aeson.pair "values" $ values exception
       ]
+
+empty :: Exception
+empty =
+  Exception
+    { values = []
+    }

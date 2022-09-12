@@ -21,3 +21,12 @@ instance Aeson.ToJSON PosixSignal where
         Aeson.pair "name" $ name posixSignal,
         Aeson.pair "number" $ number posixSignal
       ]
+
+empty :: PosixSignal
+empty =
+  PosixSignal
+    { code = Nothing,
+      codeName = Nothing,
+      name = Nothing,
+      number = Nothing
+    }

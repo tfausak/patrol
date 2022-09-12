@@ -20,3 +20,11 @@ instance Aeson.ToJSON EventProcessingError where
         Aeson.pair "type" $ type_ eventProcessingError,
         Aeson.pair "value" $ value eventProcessingError
       ]
+
+empty :: EventProcessingError
+empty =
+  EventProcessingError
+    { name = Nothing,
+      type_ = ErrorType.UnknownError,
+      value = Aeson.Null
+    }

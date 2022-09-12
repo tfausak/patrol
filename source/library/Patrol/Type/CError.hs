@@ -17,3 +17,10 @@ instance Aeson.ToJSON CError where
       [ Aeson.pair "name" $ name cError,
         Aeson.pair "number" $ number cError
       ]
+
+empty :: CError
+empty =
+  CError
+    { name = Nothing,
+      number = Nothing
+    }

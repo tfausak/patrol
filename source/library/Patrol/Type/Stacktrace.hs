@@ -21,6 +21,13 @@ instance Aeson.ToJSON Stacktrace where
         Aeson.pair "registers" $ registers stacktrace
       ]
 
+empty :: Stacktrace
+empty =
+  Stacktrace
+    { frames = [],
+      registers = Map.empty
+    }
+
 fromCallStack :: Stack.CallStack -> Stacktrace
 fromCallStack =
   let intoFrame string srcLoc =

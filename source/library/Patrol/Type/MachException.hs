@@ -21,3 +21,12 @@ instance Aeson.ToJSON MachException where
         Aeson.pair "name" $ name machException,
         Aeson.pair "subcode" $ subcode machException
       ]
+
+empty :: MachException
+empty =
+  MachException
+    { code = Nothing,
+      exception = Nothing,
+      name = Nothing,
+      subcode = Nothing
+    }

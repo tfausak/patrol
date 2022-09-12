@@ -13,54 +13,27 @@ import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
 spec = Hspec.describe "Patrol.Type.Stacktrace" $ do
-  let emptyStacktrace =
-        Stacktrace.Stacktrace
-          { Stacktrace.frames = [],
-            Stacktrace.registers = Map.empty
-          }
-
   Hspec.describe "ToJSON" $ do
     Hspec.it "works" $ do
-      let stacktrace = emptyStacktrace
+      let stacktrace = Stacktrace.empty
           json = [Aeson.aesonQQ| {} |]
       Aeson.toJSON stacktrace `Hspec.shouldBe` json
 
     Hspec.it "works with a frame" $ do
-      let frame =
-            Frame.Frame
-              { Frame.absPath = Nothing,
-                Frame.addrMode = Nothing,
-                Frame.colno = Nothing,
-                Frame.contextLine = Nothing,
-                Frame.filename = Nothing,
-                Frame.function = Nothing,
-                Frame.imageAddr = Nothing,
-                Frame.inApp = Nothing,
-                Frame.instructionAddr = Nothing,
-                Frame.lineno = Nothing,
-                Frame.module_ = Nothing,
-                Frame.package = Nothing,
-                Frame.platform = Nothing,
-                Frame.postContext = [],
-                Frame.preContext = [],
-                Frame.rawFunction = Nothing,
-                Frame.stackStart = Nothing,
-                Frame.symbolAddr = Nothing,
-                Frame.vars = Map.empty
-              }
-          stacktrace = emptyStacktrace {Stacktrace.frames = [frame]}
+      let frame = Frame.empty
+          stacktrace = Stacktrace.empty {Stacktrace.frames = [frame]}
           json = [Aeson.aesonQQ| { "frames": [ {} ] } |]
       Aeson.toJSON stacktrace `Hspec.shouldBe` json
 
     Hspec.it "works with some registers" $ do
-      let stacktrace = emptyStacktrace {Stacktrace.registers = Map.singleton (Text.pack "example-register") Aeson.Null}
+      let stacktrace = Stacktrace.empty {Stacktrace.registers = Map.singleton (Text.pack "example-register") Aeson.Null}
           json = [Aeson.aesonQQ| { "registers": { "example-register": null } } |]
       Aeson.toJSON stacktrace `Hspec.shouldBe` json
 
   Hspec.describe "fromCallStack" $ do
     Hspec.it "works with an empty call stack" $ do
       let callStack = Stack.emptyCallStack
-          stacktrace = emptyStacktrace
+          stacktrace = Stacktrace.empty
       Stacktrace.fromCallStack callStack `Hspec.shouldBe` stacktrace
 
     Hspec.it "works with a single call site" $ do
@@ -83,7 +56,7 @@ spec = Hspec.describe "Patrol.Type.Stacktrace" $ do
               { Frame.function = Just $ Text.pack "example-function"
               }
           stacktrace =
-            emptyStacktrace
+            Stacktrace.empty
               { Stacktrace.frames = [frame]
               }
       Stacktrace.fromCallStack callStack `Hspec.shouldBe` stacktrace
@@ -123,7 +96,7 @@ spec = Hspec.describe "Patrol.Type.Stacktrace" $ do
               { Frame.function = Just $ Text.pack "example-function-2"
               }
           stacktrace =
-            emptyStacktrace
+            Stacktrace.empty
               { Stacktrace.frames = [frame2, frame1]
               }
       Stacktrace.fromCallStack callStack `Hspec.shouldBe` stacktrace

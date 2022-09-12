@@ -15,63 +15,40 @@ import qualified Test.Hspec as Hspec
 spec :: Hspec.Spec
 spec = Hspec.describe "Patrol.Type.ExceptionValue" $ do
   Hspec.describe "ToJSON" $ do
-    let emptyExceptionValue =
-          ExceptionValue.ExceptionValue
-            { ExceptionValue.mechanism = Nothing,
-              ExceptionValue.module_ = Nothing,
-              ExceptionValue.stacktrace = Nothing,
-              ExceptionValue.threadId = Nothing,
-              ExceptionValue.type_ = Nothing,
-              ExceptionValue.value = Nothing
-            }
-
     Hspec.it "works" $ do
-      let exceptionValue = emptyExceptionValue
+      let exceptionValue = ExceptionValue.empty
           json = [Aeson.aesonQQ| {} |]
       Aeson.toJSON exceptionValue `Hspec.shouldBe` json
 
     Hspec.it "works with a mechanism" $ do
-      let mechanism =
-            Mechanism.Mechanism
-              { Mechanism.data_ = Map.empty,
-                Mechanism.description = Nothing,
-                Mechanism.handled = Nothing,
-                Mechanism.helpLink = Nothing,
-                Mechanism.meta = Nothing,
-                Mechanism.synthetic = Nothing,
-                Mechanism.type_ = Text.pack "example-mechanism"
-              }
-          exceptionValue = emptyExceptionValue {ExceptionValue.mechanism = Just mechanism}
+      let mechanism = Mechanism.empty {Mechanism.type_ = Text.pack "example-mechanism"}
+          exceptionValue = ExceptionValue.empty {ExceptionValue.mechanism = Just mechanism}
           json = [Aeson.aesonQQ| { "mechanism": { "type": "example-mechanism" } } |]
       Aeson.toJSON exceptionValue `Hspec.shouldBe` json
 
     Hspec.it "works with a module" $ do
-      let exceptionValue = emptyExceptionValue {ExceptionValue.module_ = Just $ Text.pack "example-module"}
+      let exceptionValue = ExceptionValue.empty {ExceptionValue.module_ = Just $ Text.pack "example-module"}
           json = [Aeson.aesonQQ| { "module": "example-module" } |]
       Aeson.toJSON exceptionValue `Hspec.shouldBe` json
 
     Hspec.it "works with a stack trace" $ do
-      let stacktrace =
-            Stacktrace.Stacktrace
-              { Stacktrace.frames = [],
-                Stacktrace.registers = Map.singleton (Text.pack "example-register") Aeson.Null
-              }
-          exceptionValue = emptyExceptionValue {ExceptionValue.stacktrace = Just stacktrace}
+      let stacktrace = Stacktrace.empty {Stacktrace.registers = Map.singleton (Text.pack "example-register") Aeson.Null}
+          exceptionValue = ExceptionValue.empty {ExceptionValue.stacktrace = Just stacktrace}
           json = [Aeson.aesonQQ| { "stacktrace": { "registers": { "example-register": null } } } |]
       Aeson.toJSON exceptionValue `Hspec.shouldBe` json
 
     Hspec.it "works with a thread ID" $ do
-      let exceptionValue = emptyExceptionValue {ExceptionValue.threadId = Just $ Text.pack "example-thread-id"}
+      let exceptionValue = ExceptionValue.empty {ExceptionValue.threadId = Just $ Text.pack "example-thread-id"}
           json = [Aeson.aesonQQ| { "thread_id": "example-thread-id" } |]
       Aeson.toJSON exceptionValue `Hspec.shouldBe` json
 
     Hspec.it "works with a type" $ do
-      let exceptionValue = emptyExceptionValue {ExceptionValue.type_ = Just $ Text.pack "example-type"}
+      let exceptionValue = ExceptionValue.empty {ExceptionValue.type_ = Just $ Text.pack "example-type"}
           json = [Aeson.aesonQQ| { "type": "example-type" } |]
       Aeson.toJSON exceptionValue `Hspec.shouldBe` json
 
     Hspec.it "works with a value" $ do
-      let exceptionValue = emptyExceptionValue {ExceptionValue.value = Just $ Text.pack "example-value"}
+      let exceptionValue = ExceptionValue.empty {ExceptionValue.value = Just $ Text.pack "example-value"}
           json = [Aeson.aesonQQ| { "value": "example-value" } |]
       Aeson.toJSON exceptionValue `Hspec.shouldBe` json
 

@@ -74,28 +74,38 @@ instance Aeson.ToJSON Event where
         Aeson.pair "transaction" $ transaction event
       ]
 
+empty :: Event
+empty =
+  Event
+    { dist = Nothing,
+      environment = Nothing,
+      errors = [],
+      eventId = EventId.empty,
+      exception = Nothing,
+      extra = Map.empty,
+      fingerprint = [],
+      level = Nothing,
+      logger = Nothing,
+      modules = Map.empty,
+      platform = Nothing,
+      release = Nothing,
+      serverName = Nothing,
+      tags = Map.empty,
+      timestamp = Nothing,
+      transaction = Nothing
+    }
+
 new :: IO.MonadIO io => io Event
 new = do
   theEventId <- EventId.random
   theTimestamp <- IO.liftIO Time.getCurrentTime
   pure
-    Event
-      { dist = Nothing,
-        environment = Just $ Text.pack "production",
-        errors = [],
+    empty
+      { environment = Just $ Text.pack "production",
         eventId = theEventId,
-        exception = Nothing,
-        extra = Map.empty,
-        fingerprint = [],
         level = Just Level.Error,
-        logger = Nothing,
-        modules = Map.empty,
         platform = Just Platform.Haskell,
-        release = Nothing,
-        serverName = Nothing,
-        tags = Map.empty,
-        timestamp = Just theTimestamp,
-        transaction = Nothing
+        timestamp = Just theTimestamp
       }
 
 intoRequest :: Catch.MonadThrow m => Dsn.Dsn -> Event -> m Client.Request

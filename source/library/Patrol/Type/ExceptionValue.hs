@@ -30,13 +30,20 @@ instance Aeson.ToJSON ExceptionValue where
         Aeson.pair "value" $ value exceptionValue
       ]
 
-fromSomeException :: Catch.SomeException -> ExceptionValue
-fromSomeException (Catch.SomeException e) =
+empty :: ExceptionValue
+empty =
   ExceptionValue
     { mechanism = Nothing,
       module_ = Nothing,
       stacktrace = Nothing,
       threadId = Nothing,
-      type_ = Just . Text.pack . show $ Typeable.typeOf e,
+      type_ = Nothing,
+      value = Nothing
+    }
+
+fromSomeException :: Catch.SomeException -> ExceptionValue
+fromSomeException (Catch.SomeException e) =
+  empty
+    { type_ = Just . Text.pack . show $ Typeable.typeOf e,
       value = Just . Text.pack $ Catch.displayException e
     }

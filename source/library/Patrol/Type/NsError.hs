@@ -17,3 +17,10 @@ instance Aeson.ToJSON NsError where
       [ Aeson.pair "code" $ code nsError,
         Aeson.pair "domain" $ domain nsError
       ]
+
+empty :: NsError
+empty =
+  NsError
+    { code = Nothing,
+      domain = Nothing
+    }

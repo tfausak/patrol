@@ -55,21 +55,21 @@ instance Aeson.ToJSON Frame where
         Aeson.pair "vars" $ vars frame
       ]
 
-fromSrcLoc :: Stack.SrcLoc -> Frame
-fromSrcLoc srcLoc =
+empty :: Frame
+empty =
   Frame
     { absPath = Nothing,
       addrMode = Nothing,
-      colno = Just $ Stack.srcLocStartCol srcLoc,
+      colno = Nothing,
       contextLine = Nothing,
-      filename = Just . Text.pack $ Stack.srcLocFile srcLoc,
+      filename = Nothing,
       function = Nothing,
       imageAddr = Nothing,
       inApp = Nothing,
       instructionAddr = Nothing,
-      lineno = Just $ Stack.srcLocStartLine srcLoc,
-      module_ = Just . Text.pack $ Stack.srcLocModule srcLoc,
-      package = Just . Text.pack $ Stack.srcLocPackage srcLoc,
+      lineno = Nothing,
+      module_ = Nothing,
+      package = Nothing,
       platform = Nothing,
       postContext = [],
       preContext = [],
@@ -77,4 +77,14 @@ fromSrcLoc srcLoc =
       stackStart = Nothing,
       symbolAddr = Nothing,
       vars = Map.empty
+    }
+
+fromSrcLoc :: Stack.SrcLoc -> Frame
+fromSrcLoc srcLoc =
+  empty
+    { colno = Just $ Stack.srcLocStartCol srcLoc,
+      filename = Just . Text.pack $ Stack.srcLocFile srcLoc,
+      lineno = Just $ Stack.srcLocStartLine srcLoc,
+      module_ = Just . Text.pack $ Stack.srcLocModule srcLoc,
+      package = Just . Text.pack $ Stack.srcLocPackage srcLoc
     }

@@ -24,6 +24,9 @@ instance Aeson.FromJSON EventId where
 instance Aeson.ToJSON EventId where
   toJSON = Aeson.toJSON . intoText
 
+empty :: EventId
+empty = fromUuid Uuid.nil
+
 fromUuid :: Uuid.UUID -> EventId
 fromUuid = EventId
 

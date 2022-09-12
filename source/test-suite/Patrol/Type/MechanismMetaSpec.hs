@@ -14,59 +14,34 @@ import qualified Test.Hspec as Hspec
 spec :: Hspec.Spec
 spec = Hspec.describe "Patrol.Type.MechanismMeta" $ do
   Hspec.describe "ToJSON" $ do
-    let emptyMeta =
-          MechanismMeta.MechanismMeta
-            { MechanismMeta.errno = Nothing,
-              MechanismMeta.machException = Nothing,
-              MechanismMeta.nsError = Nothing,
-              MechanismMeta.signal = Nothing
-            }
-
     Hspec.it "works" $ do
-      let meta = emptyMeta
+      let mechanismMeta = MechanismMeta.empty
           json = [Aeson.aesonQQ| {} |]
-      Aeson.toJSON meta `Hspec.shouldBe` json
+      Aeson.toJSON mechanismMeta `Hspec.shouldBe` json
 
     Hspec.it "works with a C error" $ do
-      let cError =
-            CError.CError
-              { CError.name = Nothing,
-                CError.number = Just 0
-              }
-          meta = emptyMeta {MechanismMeta.errno = Just cError}
+      let cError = CError.empty {CError.number = Just 0}
+          mechanismMeta = MechanismMeta.empty {MechanismMeta.errno = Just cError}
           json = [Aeson.aesonQQ| { "errno": { "number": 0 } } |]
-      Aeson.toJSON meta `Hspec.shouldBe` json
+      Aeson.toJSON mechanismMeta `Hspec.shouldBe` json
 
     Hspec.it "works with a mach exception" $ do
       let machException =
-            MachException.MachException
-              { MachException.code = Just 0,
-                MachException.exception = Nothing,
-                MachException.subcode = Nothing,
-                MachException.name = Nothing
+            MachException.empty
+              { MachException.code = Just 0
               }
-          meta = emptyMeta {MechanismMeta.machException = Just machException}
+          mechanismMeta = MechanismMeta.empty {MechanismMeta.machException = Just machException}
           json = [Aeson.aesonQQ| { "mach_exception": { "code": 0 } } |]
-      Aeson.toJSON meta `Hspec.shouldBe` json
+      Aeson.toJSON mechanismMeta `Hspec.shouldBe` json
 
     Hspec.it "works with an NS error" $ do
-      let nsError =
-            NsError.NsError
-              { NsError.code = Just 0,
-                NsError.domain = Nothing
-              }
-          meta = emptyMeta {MechanismMeta.nsError = Just nsError}
+      let nsError = NsError.empty {NsError.code = Just 0}
+          mechanismMeta = MechanismMeta.empty {MechanismMeta.nsError = Just nsError}
           json = [Aeson.aesonQQ| { "ns_error": { "code": 0 } } |]
-      Aeson.toJSON meta `Hspec.shouldBe` json
+      Aeson.toJSON mechanismMeta `Hspec.shouldBe` json
 
     Hspec.it "works with a signal" $ do
-      let posixSignal =
-            PosixSignal.PosixSignal
-              { PosixSignal.code = Just 0,
-                PosixSignal.codeName = Nothing,
-                PosixSignal.name = Nothing,
-                PosixSignal.number = Nothing
-              }
-          meta = emptyMeta {MechanismMeta.signal = Just posixSignal}
+      let posixSignal = PosixSignal.empty {PosixSignal.code = Just 0}
+          mechanismMeta = MechanismMeta.empty {MechanismMeta.signal = Just posixSignal}
           json = [Aeson.aesonQQ| { "signal": { "code": 0 } } |]
-      Aeson.toJSON meta `Hspec.shouldBe` json
+      Aeson.toJSON mechanismMeta `Hspec.shouldBe` json

@@ -29,3 +29,15 @@ instance Aeson.ToJSON Mechanism where
         Aeson.pair "synthetic" $ synthetic mechanism,
         Aeson.pair "type" $ type_ mechanism
       ]
+
+empty :: Mechanism
+empty =
+  Mechanism
+    { data_ = Map.empty,
+      description = Nothing,
+      handled = Nothing,
+      helpLink = Nothing,
+      meta = Nothing,
+      synthetic = Nothing,
+      type_ = Text.pack "generic"
+    }

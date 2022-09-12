@@ -7,6 +7,7 @@ import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.QQ.Simple as Aeson
 import qualified Data.Text as Text
 import qualified Data.UUID as Uuid
+import qualified Data.UUID.V4 as Uuid
 import qualified Patrol.Type.EventId as EventId
 import qualified Test.Hspec as Hspec
 
@@ -14,18 +15,18 @@ spec :: Hspec.Spec
 spec = Hspec.describe "Patrol.Type.EventId" $ do
   Hspec.describe "fromUuid" $ do
     Hspec.it "converts from UUID" $ do
-      let uuid = Uuid.nil
-      EventId.fromUuid Uuid.nil `Hspec.shouldBe` EventId.EventId uuid
+      uuid <- Uuid.nextRandom
+      EventId.fromUuid uuid `Hspec.shouldBe` EventId.EventId uuid
 
   Hspec.describe "intoUuid" $ do
     Hspec.it "converts into UUID" $ do
-      let uuid = Uuid.nil
+      uuid <- Uuid.nextRandom
       EventId.intoUuid (EventId.fromUuid uuid) `Hspec.shouldBe` uuid
 
   Hspec.describe "random" $ do
     Hspec.it "generates a non-nil UUID" $ do
       eventId <- EventId.random
-      eventId `Hspec.shouldNotBe` EventId.fromUuid Uuid.nil
+      eventId `Hspec.shouldNotBe` EventId.empty
 
   Hspec.describe "intoText" $ do
     Hspec.it "converts into text" $ do

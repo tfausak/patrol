@@ -24,3 +24,12 @@ instance Aeson.ToJSON MechanismMeta where
         Aeson.pair "ns_error" $ nsError mechanismMeta,
         Aeson.pair "signal" $ signal mechanismMeta
       ]
+
+empty :: MechanismMeta
+empty =
+  MechanismMeta
+    { errno = Nothing,
+      machException = Nothing,
+      nsError = Nothing,
+      signal = Nothing
+    }
