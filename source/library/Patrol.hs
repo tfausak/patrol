@@ -1,5 +1,8 @@
 module Patrol
   ( Patrol.Exception.Problem.Problem,
+    Patrol.Type.Breadcrumb.Breadcrumb,
+    Patrol.Type.Breadcrumbs.Breadcrumbs,
+    Patrol.Type.BreadcrumbType.BreadcrumbType,
     Patrol.Type.CError.CError,
     Patrol.Type.Dsn.Dsn,
     Patrol.Type.ErrorType.ErrorType,
@@ -22,6 +25,9 @@ module Patrol
 where
 
 import qualified Patrol.Exception.Problem
+import qualified Patrol.Type.Breadcrumb
+import qualified Patrol.Type.BreadcrumbType
+import qualified Patrol.Type.Breadcrumbs
 import qualified Patrol.Type.CError
 import qualified Patrol.Type.Dsn
 import qualified Patrol.Type.ErrorType

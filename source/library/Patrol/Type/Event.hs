@@ -13,6 +13,7 @@ import qualified Network.HTTP.Types as Http
 import qualified Patrol.Constant as Constant
 import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Extra.List as List
+import qualified Patrol.Type.Breadcrumbs as Breadcrumbs
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.EventProcessingError as EventProcessingError
@@ -22,7 +23,7 @@ import qualified Patrol.Type.Platform as Platform
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#event>
 data Event = Event
-  { -- TODO: breadcrumbs
+  { breadcrumbs :: Maybe Breadcrumbs.Breadcrumbs,
     -- TODO: contexts
     -- TODO: debug_meta
     dist :: Maybe Text.Text,
@@ -56,7 +57,8 @@ data Event = Event
 instance Aeson.ToJSON Event where
   toJSON event =
     Aeson.intoObject
-      [ Aeson.pair "dist" $ dist event,
+      [ Aeson.pair "breadcrumbs" $ breadcrumbs event,
+        Aeson.pair "dist" $ dist event,
         Aeson.pair "environment" $ environment event,
         Aeson.pair "errors" $ errors event,
         Aeson.pair "exception" $ exception event,
@@ -77,7 +79,8 @@ instance Aeson.ToJSON Event where
 empty :: Event
 empty =
   Event
-    { dist = Nothing,
+    { breadcrumbs = Nothing,
+      dist = Nothing,
       environment = Nothing,
       errors = [],
       eventId = EventId.empty,

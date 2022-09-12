@@ -4,6 +4,9 @@ import qualified Patrol.ClientSpec
 import qualified Patrol.ConstantSpec
 import qualified Patrol.Extra.AesonSpec
 import qualified Patrol.Extra.ListSpec
+import qualified Patrol.Type.BreadcrumbSpec
+import qualified Patrol.Type.BreadcrumbTypeSpec
+import qualified Patrol.Type.BreadcrumbsSpec
 import qualified Patrol.Type.CErrorSpec
 import qualified Patrol.Type.DsnSpec
 import qualified Patrol.Type.ErrorTypeSpec
@@ -30,6 +33,9 @@ spec = do
   Patrol.ConstantSpec.spec
   Patrol.Extra.AesonSpec.spec
   Patrol.Extra.ListSpec.spec
+  Patrol.Type.BreadcrumbSpec.spec
+  Patrol.Type.BreadcrumbsSpec.spec
+  Patrol.Type.BreadcrumbTypeSpec.spec
   Patrol.Type.CErrorSpec.spec
   Patrol.Type.DsnSpec.spec
   Patrol.Type.ErrorTypeSpec.spec

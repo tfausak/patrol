@@ -14,6 +14,8 @@ import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
 import qualified Network.URI.Static as Uri
 import qualified Patrol.Constant as Constant
+import qualified Patrol.Type.Breadcrumb as Breadcrumb
+import qualified Patrol.Type.Breadcrumbs as Breadcrumbs
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
@@ -51,6 +53,13 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "works" $ do
       let event = Event.empty
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with a breadcrumb" $ do
+      let breadcrumb = Breadcrumb.empty {Breadcrumb.category = Just $ Text.pack "example-category"}
+          breadcrumbs = Breadcrumbs.empty {Breadcrumbs.values = [breadcrumb]}
+          event = Event.empty {Event.breadcrumbs = Just breadcrumbs}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "breadcrumbs": { "values": [ { "category": "example-category" } ] } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a dist" $ do

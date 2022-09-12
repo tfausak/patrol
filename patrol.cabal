@@ -70,6 +70,9 @@ library
     Patrol.Exception.Problem
     Patrol.Extra.Aeson
     Patrol.Extra.List
+    Patrol.Type.Breadcrumb
+    Patrol.Type.Breadcrumbs
+    Patrol.Type.BreadcrumbType
     Patrol.Type.CError
     Patrol.Type.Dsn
     Patrol.Type.ErrorType
@@ -104,6 +107,9 @@ test-suite patrol-test-suite
     Patrol.ConstantSpec
     Patrol.Extra.AesonSpec
     Patrol.Extra.ListSpec
+    Patrol.Type.BreadcrumbSpec
+    Patrol.Type.BreadcrumbsSpec
+    Patrol.Type.BreadcrumbTypeSpec
     Patrol.Type.CErrorSpec
     Patrol.Type.DsnSpec
     Patrol.Type.ErrorTypeSpec
