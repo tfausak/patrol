@@ -21,7 +21,7 @@ spec = Hspec.describe "Patrol.Type.ExceptionValue" $ do
       Aeson.toJSON exceptionValue `Hspec.shouldBe` json
 
     Hspec.it "works with a mechanism" $ do
-      let mechanism = Mechanism.empty {Mechanism.type_ = Text.pack "example-mechanism"}
+      let mechanism = Mechanism.empty {Mechanism.type_ = Just $ Text.pack "example-mechanism"}
           exceptionValue = ExceptionValue.empty {ExceptionValue.mechanism = Just mechanism}
           json = [Aeson.aesonQQ| { "mechanism": { "type": "example-mechanism" } } |]
       Aeson.toJSON exceptionValue `Hspec.shouldBe` json

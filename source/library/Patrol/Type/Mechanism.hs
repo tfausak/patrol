@@ -14,7 +14,7 @@ data Mechanism = Mechanism
     helpLink :: Maybe Text.Text,
     meta :: Maybe MechanismMeta.MechanismMeta,
     synthetic :: Maybe Bool,
-    type_ :: Text.Text
+    type_ :: Maybe Text.Text
   }
   deriving (Eq, Show)
 
@@ -39,5 +39,5 @@ empty =
       helpLink = Nothing,
       meta = Nothing,
       synthetic = Nothing,
-      type_ = Text.pack "generic"
+      type_ = Nothing
     }
