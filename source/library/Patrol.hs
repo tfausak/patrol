@@ -6,7 +6,7 @@ module Patrol
     Patrol.Type.Event.Event,
     Patrol.Type.EventId.EventId,
     Patrol.Type.EventProcessingError.EventProcessingError,
-    Patrol.Type.Exception.Exception,
+    Patrol.Type.Exceptions.Exceptions,
     Patrol.Type.ExceptionValue.ExceptionValue,
     Patrol.Type.Frame.Frame,
     Patrol.Type.Level.Level,
@@ -28,8 +28,8 @@ import qualified Patrol.Type.ErrorType
 import qualified Patrol.Type.Event
 import qualified Patrol.Type.EventId
 import qualified Patrol.Type.EventProcessingError
-import qualified Patrol.Type.Exception
 import qualified Patrol.Type.ExceptionValue
+import qualified Patrol.Type.Exceptions
 import qualified Patrol.Type.Frame
 import qualified Patrol.Type.Level
 import qualified Patrol.Type.MachException

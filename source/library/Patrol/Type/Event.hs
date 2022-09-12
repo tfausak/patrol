@@ -16,7 +16,7 @@ import qualified Patrol.Extra.List as List
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.EventProcessingError as EventProcessingError
-import qualified Patrol.Type.Exception as Exception
+import qualified Patrol.Type.Exceptions as Exceptions
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Platform as Platform
 
@@ -29,7 +29,7 @@ data Event = Event
     environment :: Maybe Text.Text,
     errors :: [EventProcessingError.EventProcessingError],
     eventId :: EventId.EventId,
-    exception :: Maybe Exception.Exception,
+    exception :: Maybe Exceptions.Exceptions,
     extra :: Map.Map Text.Text Aeson.Value,
     fingerprint :: [Text.Text],
     level :: Maybe Level.Level,
