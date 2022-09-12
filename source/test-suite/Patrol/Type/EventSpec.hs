@@ -18,7 +18,7 @@ import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.EventProcessingError as EventProcessingError
-import qualified Patrol.Type.ExceptionValue as ExceptionValue
+import qualified Patrol.Type.Exception as Exception
 import qualified Patrol.Type.Exceptions as Exceptions
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.Platform as Platform
@@ -70,13 +70,13 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with an exception" $ do
-      let exceptionValue =
-            ExceptionValue.empty
-              { ExceptionValue.type_ = Just $ Text.pack "example-type"
+      let exception =
+            Exception.empty
+              { Exception.type_ = Just $ Text.pack "example-type"
               }
           exceptions =
             Exceptions.empty
-              { Exceptions.values = [exceptionValue]
+              { Exceptions.values = [exception]
               }
           event = Event.empty {Event.exception = Just exceptions}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "exception": { "values": [ { "type": "example-type" } ] } } |]

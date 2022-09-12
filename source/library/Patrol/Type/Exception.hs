@@ -1,4 +1,4 @@
-module Patrol.Type.ExceptionValue where
+module Patrol.Type.Exception where
 
 import qualified Control.Monad.Catch as Catch
 import qualified Data.Aeson as Aeson
@@ -9,7 +9,7 @@ import qualified Patrol.Type.Mechanism as Mechanism
 import qualified Patrol.Type.Stacktrace as Stacktrace
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#typedef-ExceptionValue>
-data ExceptionValue = ExceptionValue
+data Exception = Exception
   { mechanism :: Maybe Mechanism.Mechanism,
     module_ :: Maybe Text.Text,
     stacktrace :: Maybe Stacktrace.Stacktrace,
@@ -19,20 +19,20 @@ data ExceptionValue = ExceptionValue
   }
   deriving (Eq, Show)
 
-instance Aeson.ToJSON ExceptionValue where
-  toJSON exceptionValue =
+instance Aeson.ToJSON Exception where
+  toJSON exception =
     Aeson.intoObject
-      [ Aeson.pair "mechanism" $ mechanism exceptionValue,
-        Aeson.pair "module" $ module_ exceptionValue,
-        Aeson.pair "stacktrace" $ stacktrace exceptionValue,
-        Aeson.pair "thread_id" $ threadId exceptionValue,
-        Aeson.pair "type" $ type_ exceptionValue,
-        Aeson.pair "value" $ value exceptionValue
+      [ Aeson.pair "mechanism" $ mechanism exception,
+        Aeson.pair "module" $ module_ exception,
+        Aeson.pair "stacktrace" $ stacktrace exception,
+        Aeson.pair "thread_id" $ threadId exception,
+        Aeson.pair "type" $ type_ exception,
+        Aeson.pair "value" $ value exception
       ]
 
-empty :: ExceptionValue
+empty :: Exception
 empty =
-  ExceptionValue
+  Exception
     { mechanism = Nothing,
       module_ = Nothing,
       stacktrace = Nothing,
@@ -41,7 +41,7 @@ empty =
       value = Nothing
     }
 
-fromSomeException :: Catch.SomeException -> ExceptionValue
+fromSomeException :: Catch.SomeException -> Exception
 fromSomeException (Catch.SomeException e) =
   empty
     { type_ = Just . Text.pack . show $ Typeable.typeOf e,
