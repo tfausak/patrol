@@ -23,6 +23,7 @@ import qualified Patrol.Type.EventProcessingError as EventProcessingError
 import qualified Patrol.Type.Exception as Exception
 import qualified Patrol.Type.Exceptions as Exceptions
 import qualified Patrol.Type.Level as Level
+import qualified Patrol.Type.LogEntry as LogEntry
 import qualified Patrol.Type.Platform as Platform
 import qualified Test.Hspec as Hspec
 
@@ -104,6 +105,12 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "works with a level" $ do
       let event = Event.empty {Event.level = Just Level.Error}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "level": "error" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with a log entry" $ do
+      let logEntry = LogEntry.empty {LogEntry.message = Just $ Text.pack "example-message"}
+          event = Event.empty {Event.logentry = Just logEntry}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "logentry": { "message": "example-message" } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a logger" $ do

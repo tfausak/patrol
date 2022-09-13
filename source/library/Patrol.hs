@@ -13,6 +13,7 @@ module Patrol
     Patrol.Type.Exceptions.Exceptions,
     Patrol.Type.Frame.Frame,
     Patrol.Type.Level.Level,
+    Patrol.Type.LogEntry.LogEntry,
     Patrol.Type.MachException.MachException,
     Patrol.Type.Mechanism.Mechanism,
     Patrol.Type.MechanismMeta.MechanismMeta,
@@ -38,6 +39,7 @@ import qualified Patrol.Type.Exception
 import qualified Patrol.Type.Exceptions
 import qualified Patrol.Type.Frame
 import qualified Patrol.Type.Level
+import qualified Patrol.Type.LogEntry
 import qualified Patrol.Type.MachException
 import qualified Patrol.Type.Mechanism
 import qualified Patrol.Type.MechanismMeta

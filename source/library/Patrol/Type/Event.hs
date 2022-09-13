@@ -19,6 +19,7 @@ import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.EventProcessingError as EventProcessingError
 import qualified Patrol.Type.Exceptions as Exceptions
 import qualified Patrol.Type.Level as Level
+import qualified Patrol.Type.LogEntry as LogEntry
 import qualified Patrol.Type.Platform as Platform
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#event>
@@ -34,7 +35,7 @@ data Event = Event
     extra :: Map.Map Text.Text Aeson.Value,
     fingerprint :: [Text.Text],
     level :: Maybe Level.Level,
-    -- TODO: logentry
+    logentry :: Maybe LogEntry.LogEntry,
     logger :: Maybe Text.Text,
     modules :: Map.Map Text.Text (Maybe Text.Text),
     platform :: Maybe Platform.Platform,
@@ -66,6 +67,7 @@ instance Aeson.ToJSON Event where
         Aeson.pair "event_id" $ eventId event,
         Aeson.pair "fingerprint" $ fingerprint event,
         Aeson.pair "level" $ level event,
+        Aeson.pair "logentry" $ logentry event,
         Aeson.pair "logger" $ logger event,
         Aeson.pair "modules" $ modules event,
         Aeson.pair "platform" $ platform event,
@@ -88,6 +90,7 @@ empty =
       extra = Map.empty,
       fingerprint = [],
       level = Nothing,
+      logentry = Nothing,
       logger = Nothing,
       modules = Map.empty,
       platform = Nothing,

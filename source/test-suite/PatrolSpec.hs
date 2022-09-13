@@ -17,6 +17,7 @@ import qualified Patrol.Type.ExceptionSpec
 import qualified Patrol.Type.ExceptionsSpec
 import qualified Patrol.Type.FrameSpec
 import qualified Patrol.Type.LevelSpec
+import qualified Patrol.Type.LogEntrySpec
 import qualified Patrol.Type.MachExceptionSpec
 import qualified Patrol.Type.MechanismMetaSpec
 import qualified Patrol.Type.MechanismSpec
@@ -46,6 +47,7 @@ spec = do
   Patrol.Type.ExceptionsSpec.spec
   Patrol.Type.FrameSpec.spec
   Patrol.Type.LevelSpec.spec
+  Patrol.Type.LogEntrySpec.spec
   Patrol.Type.MachExceptionSpec.spec
   Patrol.Type.MechanismMetaSpec.spec
   Patrol.Type.MechanismSpec.spec
