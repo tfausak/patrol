@@ -16,6 +16,7 @@ import qualified Patrol.Type.EventSpec
 import qualified Patrol.Type.ExceptionSpec
 import qualified Patrol.Type.ExceptionsSpec
 import qualified Patrol.Type.FrameSpec
+import qualified Patrol.Type.GeoSpec
 import qualified Patrol.Type.LevelSpec
 import qualified Patrol.Type.LogEntrySpec
 import qualified Patrol.Type.MachExceptionSpec
@@ -26,6 +27,7 @@ import qualified Patrol.Type.PlatformSpec
 import qualified Patrol.Type.PosixSignalSpec
 import qualified Patrol.Type.ResponseSpec
 import qualified Patrol.Type.StacktraceSpec
+import qualified Patrol.Type.UserSpec
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -46,6 +48,7 @@ spec = do
   Patrol.Type.ExceptionSpec.spec
   Patrol.Type.ExceptionsSpec.spec
   Patrol.Type.FrameSpec.spec
+  Patrol.Type.GeoSpec.spec
   Patrol.Type.LevelSpec.spec
   Patrol.Type.LogEntrySpec.spec
   Patrol.Type.MachExceptionSpec.spec
@@ -56,3 +59,4 @@ spec = do
   Patrol.Type.PosixSignalSpec.spec
   Patrol.Type.ResponseSpec.spec
   Patrol.Type.StacktraceSpec.spec
+  Patrol.Type.UserSpec.spec

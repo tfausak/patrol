@@ -82,6 +82,7 @@ library
     Patrol.Type.Exception
     Patrol.Type.Exceptions
     Patrol.Type.Frame
+    Patrol.Type.Geo
     Patrol.Type.Level
     Patrol.Type.LogEntry
     Patrol.Type.MachException
@@ -92,6 +93,7 @@ library
     Patrol.Type.PosixSignal
     Patrol.Type.Response
     Patrol.Type.Stacktrace
+    Patrol.Type.User
     Patrol.Version
   hs-source-dirs: source/library
   other-modules: Paths_patrol
@@ -120,6 +122,7 @@ test-suite patrol-test-suite
     Patrol.Type.ExceptionSpec
     Patrol.Type.ExceptionsSpec
     Patrol.Type.FrameSpec
+    Patrol.Type.GeoSpec
     Patrol.Type.LevelSpec
     Patrol.Type.LogEntrySpec
     Patrol.Type.MachExceptionSpec
@@ -130,5 +133,6 @@ test-suite patrol-test-suite
     Patrol.Type.PosixSignalSpec
     Patrol.Type.ResponseSpec
     Patrol.Type.StacktraceSpec
+    Patrol.Type.UserSpec
     PatrolSpec
   type: exitcode-stdio-1.0

@@ -8,7 +8,7 @@ import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Type.Mechanism as Mechanism
 import qualified Patrol.Type.Stacktrace as Stacktrace
 
--- | <https://develop.sentry.dev/sdk/event-payloads/types/#typedef-ExceptionValue>
+-- | <https://develop.sentry.dev/sdk/event-payloads/types/#valueclass>
 data Exception = Exception
   { mechanism :: Maybe Mechanism.Mechanism,
     module_ :: Maybe Text.Text,

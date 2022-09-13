@@ -4,7 +4,7 @@ import qualified Data.Aeson as Aeson
 import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
 
--- | <https://develop.sentry.dev/sdk/event-payloads/types/#typedef-LogEntry>
+-- | <https://develop.sentry.dev/sdk/event-payloads/types/#logentry>
 data LogEntry = LogEntry
   { formatted :: Maybe Text.Text,
     message :: Maybe Text.Text,
