@@ -47,11 +47,11 @@ data Event = Event
     -- TODO: threads
     -- TODO: time_spent
     timestamp :: Maybe Time.UTCTime,
-    transaction :: Maybe Text.Text
+    transaction :: Maybe Text.Text,
     -- TODO: transaction_info
     -- TODO: type ("transaction" only)
     -- TODO: user
-    -- TODO: version (always "7")
+    version :: Maybe Text.Text
   }
   deriving (Eq, Show)
 
@@ -75,7 +75,8 @@ instance Aeson.ToJSON Event where
         Aeson.pair "server_name" $ serverName event,
         Aeson.pair "tags" $ tags event,
         Aeson.pair "timestamp" $ timestamp event,
-        Aeson.pair "transaction" $ transaction event
+        Aeson.pair "transaction" $ transaction event,
+        Aeson.pair "version" $ version event
       ]
 
 empty :: Event
@@ -98,7 +99,8 @@ empty =
       serverName = Nothing,
       tags = Map.empty,
       timestamp = Nothing,
-      transaction = Nothing
+      transaction = Nothing,
+      version = Nothing
     }
 
 new :: IO.MonadIO io => io Event
@@ -111,7 +113,8 @@ new = do
         eventId = theEventId,
         level = Just Level.Error,
         platform = Just Platform.Haskell,
-        timestamp = Just theTimestamp
+        timestamp = Just theTimestamp,
+        version = Just Constant.sentryVersion
       }
 
 intoRequest :: Catch.MonadThrow m => Dsn.Dsn -> Event -> m Client.Request

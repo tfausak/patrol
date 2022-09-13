@@ -50,6 +50,10 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       event <- Event.new
       Event.environment event `Hspec.shouldBe` Just (Text.pack "production")
 
+    Hspec.it "sets the version" $ do
+      event <- Event.new
+      Event.version event `Hspec.shouldBe` Just Constant.sentryVersion
+
   Hspec.describe "ToJSON" $ do
     Hspec.it "works" $ do
       let event = Event.empty
@@ -151,6 +155,11 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "works with a transaction" $ do
       let event = Event.empty {Event.transaction = Just $ Text.pack "example-transaction"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "transaction": "example-transaction" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with a version" $ do
+      let event = Event.empty {Event.version = Just $ Text.pack "example-version"}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "version": "example-version" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
   Hspec.describe "intoRequest" $ do
