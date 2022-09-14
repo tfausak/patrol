@@ -28,6 +28,8 @@ import qualified Patrol.Type.PlatformSpec
 import qualified Patrol.Type.PosixSignalSpec
 import qualified Patrol.Type.ResponseSpec
 import qualified Patrol.Type.StacktraceSpec
+import qualified Patrol.Type.TransactionInfoSpec
+import qualified Patrol.Type.TransactionSourceSpec
 import qualified Patrol.Type.UserSpec
 import qualified Test.Hspec as Hspec
 
@@ -61,4 +63,6 @@ spec = do
   Patrol.Type.PosixSignalSpec.spec
   Patrol.Type.ResponseSpec.spec
   Patrol.Type.StacktraceSpec.spec
+  Patrol.Type.TransactionInfoSpec.spec
+  Patrol.Type.TransactionSourceSpec.spec
   Patrol.Type.UserSpec.spec

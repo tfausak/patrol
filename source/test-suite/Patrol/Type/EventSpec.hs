@@ -26,6 +26,7 @@ import qualified Patrol.Type.Exceptions as Exceptions
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.LogEntry as LogEntry
 import qualified Patrol.Type.Platform as Platform
+import qualified Patrol.Type.TransactionInfo as TransactionInfo
 import qualified Patrol.Type.User as User
 import qualified Test.Hspec as Hspec
 
@@ -161,6 +162,12 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "works with a transaction" $ do
       let event = Event.empty {Event.transaction = Just $ Text.pack "example-transaction"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "transaction": "example-transaction" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with some transaction info" $ do
+      let transactionInfo = TransactionInfo.empty {TransactionInfo.original = Just $ Text.pack "example-original"}
+          event = Event.empty {Event.transactionInfo = Just transactionInfo}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "transaction_info": { "original": "example-original" } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a type" $ do

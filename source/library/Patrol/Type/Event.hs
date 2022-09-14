@@ -22,6 +22,7 @@ import qualified Patrol.Type.Exceptions as Exceptions
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.LogEntry as LogEntry
 import qualified Patrol.Type.Platform as Platform
+import qualified Patrol.Type.TransactionInfo as TransactionInfo
 import qualified Patrol.Type.User as User
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#event>
@@ -50,7 +51,7 @@ data Event = Event
     -- TODO: time_spent
     timestamp :: Maybe Time.UTCTime,
     transaction :: Maybe Text.Text,
-    -- TODO: transaction_info
+    transactionInfo :: Maybe TransactionInfo.TransactionInfo,
     type_ :: Maybe EventType.EventType,
     user :: Maybe User.User,
     version :: Maybe Text.Text
@@ -78,6 +79,7 @@ instance Aeson.ToJSON Event where
         Aeson.pair "tags" $ tags event,
         Aeson.pair "timestamp" $ timestamp event,
         Aeson.pair "transaction" $ transaction event,
+        Aeson.pair "transaction_info" $ transactionInfo event,
         Aeson.pair "type" $ type_ event,
         Aeson.pair "user" $ user event,
         Aeson.pair "version" $ version event
@@ -104,6 +106,7 @@ empty =
       tags = Map.empty,
       timestamp = Nothing,
       transaction = Nothing,
+      transactionInfo = Nothing,
       type_ = Nothing,
       user = Nothing,
       version = Nothing
