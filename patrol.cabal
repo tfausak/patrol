@@ -94,6 +94,8 @@ library
     Patrol.Type.PosixSignal
     Patrol.Type.Response
     Patrol.Type.Stacktrace
+    Patrol.Type.Thread
+    Patrol.Type.Threads
     Patrol.Type.TransactionInfo
     Patrol.Type.TransactionSource
     Patrol.Type.User
@@ -137,6 +139,8 @@ test-suite patrol-test-suite
     Patrol.Type.PosixSignalSpec
     Patrol.Type.ResponseSpec
     Patrol.Type.StacktraceSpec
+    Patrol.Type.ThreadSpec
+    Patrol.Type.ThreadsSpec
     Patrol.Type.TransactionInfoSpec
     Patrol.Type.TransactionSourceSpec
     Patrol.Type.UserSpec

@@ -24,6 +24,8 @@ module Patrol
     Patrol.Type.PosixSignal.PosixSignal,
     Patrol.Type.Response.Response,
     Patrol.Type.Stacktrace.Stacktrace,
+    Patrol.Type.Thread.Thread,
+    Patrol.Type.Threads.Threads,
     Patrol.Type.TransactionInfo.TransactionInfo,
     Patrol.Type.TransactionSource.TransactionSource,
     Patrol.Type.User.User,
@@ -55,6 +57,8 @@ import qualified Patrol.Type.Platform
 import qualified Patrol.Type.PosixSignal
 import qualified Patrol.Type.Response
 import qualified Patrol.Type.Stacktrace
+import qualified Patrol.Type.Thread
+import qualified Patrol.Type.Threads
 import qualified Patrol.Type.TransactionInfo
 import qualified Patrol.Type.TransactionSource
 import qualified Patrol.Type.User

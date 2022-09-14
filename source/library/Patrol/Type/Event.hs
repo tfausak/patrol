@@ -22,6 +22,7 @@ import qualified Patrol.Type.Exceptions as Exceptions
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.LogEntry as LogEntry
 import qualified Patrol.Type.Platform as Platform
+import qualified Patrol.Type.Threads as Threads
 import qualified Patrol.Type.TransactionInfo as TransactionInfo
 import qualified Patrol.Type.User as User
 
@@ -47,7 +48,7 @@ data Event = Event
     -- TODO: sdk
     serverName :: Maybe Text.Text,
     tags :: Map.Map Text.Text (Maybe Text.Text),
-    -- TODO: threads
+    threads :: Maybe Threads.Threads,
     timeSpent :: Maybe Time.NominalDiffTime,
     timestamp :: Maybe Time.UTCTime,
     transaction :: Maybe Text.Text,
@@ -77,6 +78,7 @@ instance Aeson.ToJSON Event where
         Aeson.pair "release" $ release event,
         Aeson.pair "server_name" $ serverName event,
         Aeson.pair "tags" $ tags event,
+        Aeson.pair "threads" $ threads event,
         Aeson.pair "time_spent" $ timeSpent event,
         Aeson.pair "timestamp" $ timestamp event,
         Aeson.pair "transaction" $ transaction event,
@@ -105,6 +107,7 @@ empty =
       release = Nothing,
       serverName = Nothing,
       tags = Map.empty,
+      threads = Nothing,
       timeSpent = Nothing,
       timestamp = Nothing,
       transaction = Nothing,

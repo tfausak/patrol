@@ -28,6 +28,7 @@ import qualified Patrol.Type.PlatformSpec
 import qualified Patrol.Type.PosixSignalSpec
 import qualified Patrol.Type.ResponseSpec
 import qualified Patrol.Type.StacktraceSpec
+import qualified Patrol.Type.ThreadSpec
 import qualified Patrol.Type.TransactionInfoSpec
 import qualified Patrol.Type.TransactionSourceSpec
 import qualified Patrol.Type.UserSpec
@@ -63,6 +64,7 @@ spec = do
   Patrol.Type.PosixSignalSpec.spec
   Patrol.Type.ResponseSpec.spec
   Patrol.Type.StacktraceSpec.spec
+  Patrol.Type.ThreadSpec.spec
   Patrol.Type.TransactionInfoSpec.spec
   Patrol.Type.TransactionSourceSpec.spec
   Patrol.Type.UserSpec.spec
