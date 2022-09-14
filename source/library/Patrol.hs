@@ -4,6 +4,7 @@ module Patrol
     Patrol.Type.Breadcrumbs.Breadcrumbs,
     Patrol.Type.BreadcrumbType.BreadcrumbType,
     Patrol.Type.CError.CError,
+    Patrol.Type.DebugMeta.DebugMeta,
     Patrol.Type.Dsn.Dsn,
     Patrol.Type.ErrorType.ErrorType,
     Patrol.Type.Event.Event,
@@ -25,6 +26,7 @@ module Patrol
     Patrol.Type.Request.Request,
     Patrol.Type.Response.Response,
     Patrol.Type.Stacktrace.Stacktrace,
+    Patrol.Type.SystemSdkInfo.SystemSdkInfo,
     Patrol.Type.Thread.Thread,
     Patrol.Type.Threads.Threads,
     Patrol.Type.TransactionInfo.TransactionInfo,
@@ -38,6 +40,7 @@ import qualified Patrol.Type.Breadcrumb
 import qualified Patrol.Type.BreadcrumbType
 import qualified Patrol.Type.Breadcrumbs
 import qualified Patrol.Type.CError
+import qualified Patrol.Type.DebugMeta
 import qualified Patrol.Type.Dsn
 import qualified Patrol.Type.ErrorType
 import qualified Patrol.Type.Event
@@ -59,6 +62,7 @@ import qualified Patrol.Type.PosixSignal
 import qualified Patrol.Type.Request
 import qualified Patrol.Type.Response
 import qualified Patrol.Type.Stacktrace
+import qualified Patrol.Type.SystemSdkInfo
 import qualified Patrol.Type.Thread
 import qualified Patrol.Type.Threads
 import qualified Patrol.Type.TransactionInfo

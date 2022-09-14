@@ -17,6 +17,7 @@ import qualified Patrol.Constant as Constant
 import qualified Patrol.Type.Breadcrumb as Breadcrumb
 import qualified Patrol.Type.Breadcrumbs as Breadcrumbs
 import qualified Patrol.Type.ClientSdkInfo as ClientSdkInfo
+import qualified Patrol.Type.DebugMeta as DebugMeta
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
@@ -74,6 +75,13 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
           breadcrumbs = Breadcrumbs.empty {Breadcrumbs.values = [breadcrumb]}
           event = Event.empty {Event.breadcrumbs = Just breadcrumbs}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "breadcrumbs": { "values": [ { "category": "example-category" } ] } } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with some debug meta" $ do
+      let image = Map.singleton (Text.pack "example-image") $ Aeson.Bool True
+          debugMeta = DebugMeta.empty {DebugMeta.images = [image]}
+          event = Event.empty {Event.debugMeta = Just debugMeta}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "debug_meta": { "images": [ { "example-image": true } ] } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a dist" $ do

@@ -76,6 +76,7 @@ library
     Patrol.Type.CError
     Patrol.Type.ClientSdkInfo
     Patrol.Type.ClientSdkPackage
+    Patrol.Type.DebugMeta
     Patrol.Type.Dsn
     Patrol.Type.ErrorType
     Patrol.Type.Event
@@ -97,6 +98,7 @@ library
     Patrol.Type.Request
     Patrol.Type.Response
     Patrol.Type.Stacktrace
+    Patrol.Type.SystemSdkInfo
     Patrol.Type.Thread
     Patrol.Type.Threads
     Patrol.Type.TransactionInfo
@@ -124,6 +126,7 @@ test-suite patrol-test-suite
     Patrol.Type.CErrorSpec
     Patrol.Type.ClientSdkInfoSpec
     Patrol.Type.ClientSdkPackageSpec
+    Patrol.Type.DebugMetaSpec
     Patrol.Type.DsnSpec
     Patrol.Type.ErrorTypeSpec
     Patrol.Type.EventIdSpec
@@ -145,6 +148,7 @@ test-suite patrol-test-suite
     Patrol.Type.RequestSpec
     Patrol.Type.ResponseSpec
     Patrol.Type.StacktraceSpec
+    Patrol.Type.SystemSdkInfoSpec
     Patrol.Type.ThreadSpec
     Patrol.Type.ThreadsSpec
     Patrol.Type.TransactionInfoSpec

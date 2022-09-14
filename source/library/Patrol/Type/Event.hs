@@ -15,6 +15,7 @@ import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Extra.List as List
 import qualified Patrol.Type.Breadcrumbs as Breadcrumbs
 import qualified Patrol.Type.ClientSdkInfo as ClientSdkInfo
+import qualified Patrol.Type.DebugMeta as DebugMeta
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.EventProcessingError as EventProcessingError
@@ -32,7 +33,7 @@ import qualified Patrol.Type.User as User
 data Event = Event
   { breadcrumbs :: Maybe Breadcrumbs.Breadcrumbs,
     -- TODO: contexts
-    -- TODO: debug_meta
+    debugMeta :: Maybe DebugMeta.DebugMeta,
     dist :: Maybe Text.Text,
     environment :: Maybe Text.Text,
     errors :: [EventProcessingError.EventProcessingError],
@@ -65,6 +66,7 @@ instance Aeson.ToJSON Event where
   toJSON event =
     Aeson.intoObject
       [ Aeson.pair "breadcrumbs" $ breadcrumbs event,
+        Aeson.pair "debug_meta" $ debugMeta event,
         Aeson.pair "dist" $ dist event,
         Aeson.pair "environment" $ environment event,
         Aeson.pair "errors" $ errors event,
@@ -96,6 +98,7 @@ empty :: Event
 empty =
   Event
     { breadcrumbs = Nothing,
+      debugMeta = Nothing,
       dist = Nothing,
       environment = Nothing,
       errors = [],
