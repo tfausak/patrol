@@ -17,6 +17,7 @@ import qualified Patrol.Type.Breadcrumbs as Breadcrumbs
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.EventProcessingError as EventProcessingError
+import qualified Patrol.Type.EventType as EventType
 import qualified Patrol.Type.Exceptions as Exceptions
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.LogEntry as LogEntry
@@ -50,7 +51,7 @@ data Event = Event
     timestamp :: Maybe Time.UTCTime,
     transaction :: Maybe Text.Text,
     -- TODO: transaction_info
-    -- TODO: type ("transaction" only)
+    type_ :: Maybe EventType.EventType,
     user :: Maybe User.User,
     version :: Maybe Text.Text
   }
@@ -77,6 +78,7 @@ instance Aeson.ToJSON Event where
         Aeson.pair "tags" $ tags event,
         Aeson.pair "timestamp" $ timestamp event,
         Aeson.pair "transaction" $ transaction event,
+        Aeson.pair "type" $ type_ event,
         Aeson.pair "user" $ user event,
         Aeson.pair "version" $ version event
       ]
@@ -102,6 +104,7 @@ empty =
       tags = Map.empty,
       timestamp = Nothing,
       transaction = Nothing,
+      type_ = Nothing,
       user = Nothing,
       version = Nothing
     }
@@ -117,6 +120,7 @@ new = do
         level = Just Level.Error,
         platform = Just Platform.Haskell,
         timestamp = Just theTimestamp,
+        type_ = Just EventType.Default,
         version = Just Constant.sentryVersion
       }
 

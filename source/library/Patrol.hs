@@ -9,6 +9,7 @@ module Patrol
     Patrol.Type.Event.Event,
     Patrol.Type.EventId.EventId,
     Patrol.Type.EventProcessingError.EventProcessingError,
+    Patrol.Type.EventType.EventType,
     Patrol.Type.Exception.Exception,
     Patrol.Type.Exceptions.Exceptions,
     Patrol.Type.Frame.Frame,
@@ -37,6 +38,7 @@ import qualified Patrol.Type.ErrorType
 import qualified Patrol.Type.Event
 import qualified Patrol.Type.EventId
 import qualified Patrol.Type.EventProcessingError
+import qualified Patrol.Type.EventType
 import qualified Patrol.Type.Exception
 import qualified Patrol.Type.Exceptions
 import qualified Patrol.Type.Frame

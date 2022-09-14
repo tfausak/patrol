@@ -13,6 +13,7 @@ import qualified Patrol.Type.ErrorTypeSpec
 import qualified Patrol.Type.EventIdSpec
 import qualified Patrol.Type.EventProcessingErrorSpec
 import qualified Patrol.Type.EventSpec
+import qualified Patrol.Type.EventTypeSpec
 import qualified Patrol.Type.ExceptionSpec
 import qualified Patrol.Type.ExceptionsSpec
 import qualified Patrol.Type.FrameSpec
@@ -45,6 +46,7 @@ spec = do
   Patrol.Type.EventIdSpec.spec
   Patrol.Type.EventProcessingErrorSpec.spec
   Patrol.Type.EventSpec.spec
+  Patrol.Type.EventTypeSpec.spec
   Patrol.Type.ExceptionSpec.spec
   Patrol.Type.ExceptionsSpec.spec
   Patrol.Type.FrameSpec.spec

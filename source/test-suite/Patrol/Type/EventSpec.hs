@@ -20,6 +20,7 @@ import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.EventProcessingError as EventProcessingError
+import qualified Patrol.Type.EventType as EventType
 import qualified Patrol.Type.Exception as Exception
 import qualified Patrol.Type.Exceptions as Exceptions
 import qualified Patrol.Type.Level as Level
@@ -54,6 +55,10 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "sets the version" $ do
       event <- Event.new
       Event.version event `Hspec.shouldBe` Just Constant.sentryVersion
+
+    Hspec.it "sets the type" $ do
+      event <- Event.new
+      Event.type_ event `Hspec.shouldBe` Just EventType.Default
 
   Hspec.describe "ToJSON" $ do
     Hspec.it "works" $ do
@@ -156,6 +161,11 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "works with a transaction" $ do
       let event = Event.empty {Event.transaction = Just $ Text.pack "example-transaction"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "transaction": "example-transaction" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with a type" $ do
+      let event = Event.empty {Event.type_ = Just EventType.Default}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "type": "default" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a user" $ do
