@@ -77,6 +77,13 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "breadcrumbs": { "values": [ { "category": "example-category" } ] } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
+    Hspec.it "works with a context" $ do
+      let context = Map.singleton (Text.pack "example-key") $ Aeson.Bool True
+          contexts = Map.singleton (Text.pack "example-context") context
+          event = Event.empty {Event.contexts = contexts}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "contexts": { "example-context": { "example-key": true } } } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
     Hspec.it "works with some debug meta" $ do
       let image = Map.singleton (Text.pack "example-image") $ Aeson.Bool True
           debugMeta = DebugMeta.empty {DebugMeta.images = [image]}

@@ -32,7 +32,7 @@ import qualified Patrol.Type.User as User
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#event>
 data Event = Event
   { breadcrumbs :: Maybe Breadcrumbs.Breadcrumbs,
-    -- TODO: contexts
+    contexts :: Map.Map Text.Text (Map.Map Text.Text Aeson.Value),
     debugMeta :: Maybe DebugMeta.DebugMeta,
     dist :: Maybe Text.Text,
     environment :: Maybe Text.Text,
@@ -66,6 +66,7 @@ instance Aeson.ToJSON Event where
   toJSON event =
     Aeson.intoObject
       [ Aeson.pair "breadcrumbs" $ breadcrumbs event,
+        Aeson.pair "contexts" $ contexts event,
         Aeson.pair "debug_meta" $ debugMeta event,
         Aeson.pair "dist" $ dist event,
         Aeson.pair "environment" $ environment event,
@@ -98,6 +99,7 @@ empty :: Event
 empty =
   Event
     { breadcrumbs = Nothing,
+      contexts = Map.empty,
       debugMeta = Nothing,
       dist = Nothing,
       environment = Nothing,
