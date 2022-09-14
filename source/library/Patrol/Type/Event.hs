@@ -14,6 +14,7 @@ import qualified Patrol.Constant as Constant
 import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Extra.List as List
 import qualified Patrol.Type.Breadcrumbs as Breadcrumbs
+import qualified Patrol.Type.ClientSdkInfo as ClientSdkInfo
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.EventProcessingError as EventProcessingError
@@ -46,7 +47,7 @@ data Event = Event
     platform :: Maybe Platform.Platform,
     release :: Maybe Text.Text,
     request :: Maybe Request.Request,
-    -- TODO: sdk
+    sdk :: Maybe ClientSdkInfo.ClientSdkInfo,
     serverName :: Maybe Text.Text,
     tags :: Map.Map Text.Text (Maybe Text.Text),
     threads :: Maybe Threads.Threads,
@@ -78,6 +79,7 @@ instance Aeson.ToJSON Event where
         Aeson.pair "platform" $ platform event,
         Aeson.pair "release" $ release event,
         Aeson.pair "request" $ request event,
+        Aeson.pair "sdk" $ sdk event,
         Aeson.pair "server_name" $ serverName event,
         Aeson.pair "tags" $ tags event,
         Aeson.pair "threads" $ threads event,
@@ -108,6 +110,7 @@ empty =
       platform = Nothing,
       release = Nothing,
       request = Nothing,
+      sdk = Nothing,
       serverName = Nothing,
       tags = Map.empty,
       threads = Nothing,

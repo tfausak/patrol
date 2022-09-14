@@ -16,6 +16,7 @@ import qualified Network.URI.Static as Uri
 import qualified Patrol.Constant as Constant
 import qualified Patrol.Type.Breadcrumb as Breadcrumb
 import qualified Patrol.Type.Breadcrumbs as Breadcrumbs
+import qualified Patrol.Type.ClientSdkInfo as ClientSdkInfo
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.EventId as EventId
@@ -149,6 +150,12 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       let request = Request.empty {Request.fragment = Just $ Text.pack "example-fragment"}
           event = Event.empty {Event.request = Just request}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "request": { "fragment": "example-fragment" } } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with an SDK" $ do
+      let clientSdkInfo = ClientSdkInfo.empty {ClientSdkInfo.name = Just $ Text.pack "example-name"}
+          event = Event.empty {Event.sdk = Just clientSdkInfo}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "sdk": { "name": "example-name" } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a server name" $ do

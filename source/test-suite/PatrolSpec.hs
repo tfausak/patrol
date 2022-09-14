@@ -8,6 +8,8 @@ import qualified Patrol.Type.BreadcrumbSpec
 import qualified Patrol.Type.BreadcrumbTypeSpec
 import qualified Patrol.Type.BreadcrumbsSpec
 import qualified Patrol.Type.CErrorSpec
+import qualified Patrol.Type.ClientSdkInfoSpec
+import qualified Patrol.Type.ClientSdkPackageSpec
 import qualified Patrol.Type.DsnSpec
 import qualified Patrol.Type.ErrorTypeSpec
 import qualified Patrol.Type.EventIdSpec
@@ -45,6 +47,8 @@ spec = do
   Patrol.Type.BreadcrumbsSpec.spec
   Patrol.Type.BreadcrumbTypeSpec.spec
   Patrol.Type.CErrorSpec.spec
+  Patrol.Type.ClientSdkInfoSpec.spec
+  Patrol.Type.ClientSdkPackageSpec.spec
   Patrol.Type.DsnSpec.spec
   Patrol.Type.ErrorTypeSpec.spec
   Patrol.Type.EventIdSpec.spec

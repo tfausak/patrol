@@ -74,6 +74,8 @@ library
     Patrol.Type.Breadcrumbs
     Patrol.Type.BreadcrumbType
     Patrol.Type.CError
+    Patrol.Type.ClientSdkInfo
+    Patrol.Type.ClientSdkPackage
     Patrol.Type.Dsn
     Patrol.Type.ErrorType
     Patrol.Type.Event
@@ -120,6 +122,8 @@ test-suite patrol-test-suite
     Patrol.Type.BreadcrumbsSpec
     Patrol.Type.BreadcrumbTypeSpec
     Patrol.Type.CErrorSpec
+    Patrol.Type.ClientSdkInfoSpec
+    Patrol.Type.ClientSdkPackageSpec
     Patrol.Type.DsnSpec
     Patrol.Type.ErrorTypeSpec
     Patrol.Type.EventIdSpec
