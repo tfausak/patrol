@@ -48,7 +48,7 @@ data Event = Event
     serverName :: Maybe Text.Text,
     tags :: Map.Map Text.Text (Maybe Text.Text),
     -- TODO: threads
-    -- TODO: time_spent
+    timeSpent :: Maybe Time.NominalDiffTime,
     timestamp :: Maybe Time.UTCTime,
     transaction :: Maybe Text.Text,
     transactionInfo :: Maybe TransactionInfo.TransactionInfo,
@@ -77,6 +77,7 @@ instance Aeson.ToJSON Event where
         Aeson.pair "release" $ release event,
         Aeson.pair "server_name" $ serverName event,
         Aeson.pair "tags" $ tags event,
+        Aeson.pair "time_spent" $ timeSpent event,
         Aeson.pair "timestamp" $ timestamp event,
         Aeson.pair "transaction" $ transaction event,
         Aeson.pair "transaction_info" $ transactionInfo event,
@@ -104,6 +105,7 @@ empty =
       release = Nothing,
       serverName = Nothing,
       tags = Map.empty,
+      timeSpent = Nothing,
       timestamp = Nothing,
       transaction = Nothing,
       transactionInfo = Nothing,

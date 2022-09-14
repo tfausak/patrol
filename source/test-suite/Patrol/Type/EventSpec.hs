@@ -154,6 +154,11 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "tags": { "tag-key": null } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
+    Hspec.it "works with a time spent" $ do
+      let event = Event.empty {Event.timeSpent = Just 1.2}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "time_spent": 1.2 } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
     Hspec.it "works with a timestamp" $ do
       let event = Event.empty {Event.timestamp = Just $ Time.UTCTime (Time.fromGregorian 1970 1 1) 0}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "timestamp": "1970-01-01T00:00:00Z" } |]
