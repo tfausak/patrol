@@ -26,6 +26,7 @@ import qualified Patrol.Type.Exceptions as Exceptions
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.LogEntry as LogEntry
 import qualified Patrol.Type.Platform as Platform
+import qualified Patrol.Type.Request as Request
 import qualified Patrol.Type.TransactionInfo as TransactionInfo
 import qualified Patrol.Type.User as User
 import qualified Test.Hspec as Hspec
@@ -142,6 +143,12 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
     Hspec.it "works with a release" $ do
       let event = Event.empty {Event.release = Just $ Text.pack "example-release"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "release": "example-release" } |]
+      Aeson.toJSON event `Hspec.shouldBe` json
+
+    Hspec.it "works with a request" $ do
+      let request = Request.empty {Request.fragment = Just $ Text.pack "example-fragment"}
+          event = Event.empty {Event.request = Just request}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "request": { "fragment": "example-fragment" } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a server name" $ do

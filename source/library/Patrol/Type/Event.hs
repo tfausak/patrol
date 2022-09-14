@@ -22,6 +22,7 @@ import qualified Patrol.Type.Exceptions as Exceptions
 import qualified Patrol.Type.Level as Level
 import qualified Patrol.Type.LogEntry as LogEntry
 import qualified Patrol.Type.Platform as Platform
+import qualified Patrol.Type.Request as Request
 import qualified Patrol.Type.Threads as Threads
 import qualified Patrol.Type.TransactionInfo as TransactionInfo
 import qualified Patrol.Type.User as User
@@ -44,7 +45,7 @@ data Event = Event
     modules :: Map.Map Text.Text (Maybe Text.Text),
     platform :: Maybe Platform.Platform,
     release :: Maybe Text.Text,
-    -- TODO: request
+    request :: Maybe Request.Request,
     -- TODO: sdk
     serverName :: Maybe Text.Text,
     tags :: Map.Map Text.Text (Maybe Text.Text),
@@ -76,6 +77,7 @@ instance Aeson.ToJSON Event where
         Aeson.pair "modules" $ modules event,
         Aeson.pair "platform" $ platform event,
         Aeson.pair "release" $ release event,
+        Aeson.pair "request" $ request event,
         Aeson.pair "server_name" $ serverName event,
         Aeson.pair "tags" $ tags event,
         Aeson.pair "threads" $ threads event,
@@ -105,6 +107,7 @@ empty =
       modules = Map.empty,
       platform = Nothing,
       release = Nothing,
+      request = Nothing,
       serverName = Nothing,
       tags = Map.empty,
       threads = Nothing,
@@ -134,7 +137,7 @@ new = do
 
 intoRequest :: Catch.MonadThrow m => Dsn.Dsn -> Event -> m Client.Request
 intoRequest dsn event = do
-  request <-
+  theRequest <-
     Client.parseUrlThrow
       . Text.unpack
       $ mconcat
@@ -147,7 +150,7 @@ intoRequest dsn event = do
           Dsn.projectId dsn,
           Text.pack "/store/"
         ]
-  let oldHeaders = Client.requestHeaders request
+  let oldHeaders = Client.requestHeaders theRequest
       authorization = Dsn.intoAuthorization dsn
       newHeaders =
         [ (Http.hContentType, Constant.applicationJson),
@@ -155,7 +158,7 @@ intoRequest dsn event = do
           (Constant.xSentryAuth, authorization)
         ]
   pure
-    request
+    theRequest
       { Client.method = Http.methodPost,
         Client.requestBody = Client.RequestBodyBS . LazyByteString.toStrict $ Aeson.encode event,
         Client.requestHeaders = List.insertAll newHeaders oldHeaders

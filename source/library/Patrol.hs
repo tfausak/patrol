@@ -22,6 +22,7 @@ module Patrol
     Patrol.Type.NsError.NsError,
     Patrol.Type.Platform.Platform,
     Patrol.Type.PosixSignal.PosixSignal,
+    Patrol.Type.Request.Request,
     Patrol.Type.Response.Response,
     Patrol.Type.Stacktrace.Stacktrace,
     Patrol.Type.Thread.Thread,
@@ -55,6 +56,7 @@ import qualified Patrol.Type.MechanismMeta
 import qualified Patrol.Type.NsError
 import qualified Patrol.Type.Platform
 import qualified Patrol.Type.PosixSignal
+import qualified Patrol.Type.Request
 import qualified Patrol.Type.Response
 import qualified Patrol.Type.Stacktrace
 import qualified Patrol.Type.Thread

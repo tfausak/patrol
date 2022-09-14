@@ -26,6 +26,7 @@ import qualified Patrol.Type.MechanismSpec
 import qualified Patrol.Type.NsErrorSpec
 import qualified Patrol.Type.PlatformSpec
 import qualified Patrol.Type.PosixSignalSpec
+import qualified Patrol.Type.RequestSpec
 import qualified Patrol.Type.ResponseSpec
 import qualified Patrol.Type.StacktraceSpec
 import qualified Patrol.Type.ThreadSpec
@@ -62,6 +63,7 @@ spec = do
   Patrol.Type.NsErrorSpec.spec
   Patrol.Type.PlatformSpec.spec
   Patrol.Type.PosixSignalSpec.spec
+  Patrol.Type.RequestSpec.spec
   Patrol.Type.ResponseSpec.spec
   Patrol.Type.StacktraceSpec.spec
   Patrol.Type.ThreadSpec.spec
