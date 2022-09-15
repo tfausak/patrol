@@ -26,8 +26,8 @@ spec = Hspec.describe "Patrol.Type.Stacktrace" $ do
       Aeson.toJSON stacktrace `Hspec.shouldBe` json
 
     Hspec.it "works with some registers" $ do
-      let stacktrace = Stacktrace.empty {Stacktrace.registers = Map.singleton (Text.pack "example-register") Aeson.Null}
-          json = [Aeson.aesonQQ| { "registers": { "example-register": null } } |]
+      let stacktrace = Stacktrace.empty {Stacktrace.registers = Map.singleton (Text.pack "example-key") $ Text.pack "example-value"}
+          json = [Aeson.aesonQQ| { "registers": { "example-key": "example-value" } } |]
       Aeson.toJSON stacktrace `Hspec.shouldBe` json
 
   Hspec.describe "fromCallStack" $ do

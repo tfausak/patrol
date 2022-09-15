@@ -32,9 +32,9 @@ spec = Hspec.describe "Patrol.Type.Exception" $ do
       Aeson.toJSON exception `Hspec.shouldBe` json
 
     Hspec.it "works with a stack trace" $ do
-      let stacktrace = Stacktrace.empty {Stacktrace.registers = Map.singleton (Text.pack "example-register") Aeson.Null}
+      let stacktrace = Stacktrace.empty {Stacktrace.registers = Map.singleton (Text.pack "example-key") $ Text.pack "example-value"}
           exception = Exception.empty {Exception.stacktrace = Just stacktrace}
-          json = [Aeson.aesonQQ| { "stacktrace": { "registers": { "example-register": null } } } |]
+          json = [Aeson.aesonQQ| { "stacktrace": { "registers": { "example-key": "example-value" } } } |]
       Aeson.toJSON exception `Hspec.shouldBe` json
 
     Hspec.it "works with a thread ID" $ do

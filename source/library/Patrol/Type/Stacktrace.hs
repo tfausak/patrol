@@ -10,7 +10,7 @@ import qualified Patrol.Type.Frame as Frame
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#stacktrace>
 data Stacktrace = Stacktrace
   { frames :: [Frame.Frame],
-    registers :: Map.Map Text.Text Aeson.Value
+    registers :: Map.Map Text.Text Text.Text
   }
   deriving (Eq, Show)
 

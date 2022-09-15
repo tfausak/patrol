@@ -39,7 +39,7 @@ spec = Hspec.describe "Patrol.Type.Thread" $ do
       Aeson.toJSON thread `Hspec.shouldBe` json
 
     Hspec.it "works with a stack trace" $ do
-      let stacktrace = Stacktrace.empty {Stacktrace.registers = Map.singleton (Text.pack "example-register") (Aeson.Bool True)}
+      let stacktrace = Stacktrace.empty {Stacktrace.registers = Map.singleton (Text.pack "example-key") $ Text.pack "example-value"}
           thread = Thread.empty {Thread.stacktrace = Just stacktrace}
-          json = [Aeson.aesonQQ| { "stacktrace": { "registers": { "example-register": true } } } |]
+          json = [Aeson.aesonQQ| { "stacktrace": { "registers": { "example-key": "example-value" } } } |]
       Aeson.toJSON thread `Hspec.shouldBe` json
