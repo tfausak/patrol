@@ -1,5 +1,6 @@
 module Patrol
   ( Patrol.Exception.Problem.Problem,
+    Patrol.Type.AppleDebugImage.AppleDebugImage,
     Patrol.Type.Breadcrumb.Breadcrumb,
     Patrol.Type.Breadcrumbs.Breadcrumbs,
     Patrol.Type.BreadcrumbType.BreadcrumbType,
@@ -40,6 +41,7 @@ module Patrol
 where
 
 import qualified Patrol.Exception.Problem
+import qualified Patrol.Type.AppleDebugImage
 import qualified Patrol.Type.Breadcrumb
 import qualified Patrol.Type.BreadcrumbType
 import qualified Patrol.Type.Breadcrumbs
