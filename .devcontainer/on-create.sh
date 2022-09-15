@@ -1,9 +1,11 @@
 #! /usr/bin/env sh
 set -o errexit -o xtrace
 
-cabal update
+cabal --ignore-project update
 
 if ! test -f cabal.project.local
 then
-  cabal configure --enable-tests --jobs --test-show-details direct
+  cabal configure --disable-optimization --enable-tests --jobs --test-show-details direct
 fi
+
+cabal update
