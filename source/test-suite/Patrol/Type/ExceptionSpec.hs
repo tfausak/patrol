@@ -21,13 +21,13 @@ spec = Hspec.describe "Patrol.Type.Exception" $ do
       Aeson.toJSON exception `Hspec.shouldBe` json
 
     Hspec.it "works with a mechanism" $ do
-      let mechanism = Mechanism.empty {Mechanism.type_ = Just $ Text.pack "example-mechanism"}
+      let mechanism = Mechanism.empty {Mechanism.type_ = Text.pack "example-mechanism"}
           exception = Exception.empty {Exception.mechanism = Just mechanism}
           json = [Aeson.aesonQQ| { "mechanism": { "type": "example-mechanism" } } |]
       Aeson.toJSON exception `Hspec.shouldBe` json
 
     Hspec.it "works with a module" $ do
-      let exception = Exception.empty {Exception.module_ = Just $ Text.pack "example-module"}
+      let exception = Exception.empty {Exception.module_ = Text.pack "example-module"}
           json = [Aeson.aesonQQ| { "module": "example-module" } |]
       Aeson.toJSON exception `Hspec.shouldBe` json
 
@@ -38,37 +38,25 @@ spec = Hspec.describe "Patrol.Type.Exception" $ do
       Aeson.toJSON exception `Hspec.shouldBe` json
 
     Hspec.it "works with a thread ID" $ do
-      let exception = Exception.empty {Exception.threadId = Just $ Text.pack "example-thread-id"}
+      let exception = Exception.empty {Exception.threadId = Text.pack "example-thread-id"}
           json = [Aeson.aesonQQ| { "thread_id": "example-thread-id" } |]
       Aeson.toJSON exception `Hspec.shouldBe` json
 
     Hspec.it "works with a type" $ do
-      let exception = Exception.empty {Exception.type_ = Just $ Text.pack "example-type"}
+      let exception = Exception.empty {Exception.type_ = Text.pack "example-type"}
           json = [Aeson.aesonQQ| { "type": "example-type" } |]
       Aeson.toJSON exception `Hspec.shouldBe` json
 
     Hspec.it "works with a value" $ do
-      let exception = Exception.empty {Exception.value = Just $ Text.pack "example-value"}
+      let exception = Exception.empty {Exception.value = Text.pack "example-value"}
           json = [Aeson.aesonQQ| { "value": "example-value" } |]
       Aeson.toJSON exception `Hspec.shouldBe` json
 
   Hspec.describe "fromSomeException" $ do
     let exception = Exception.fromSomeException . Catch.toException $ userError "example-exception-value"
 
-    Hspec.it "does not set the mechanism" $ do
-      Exception.mechanism exception `Hspec.shouldBe` Nothing
-
-    Hspec.it "does not set the module" $ do
-      Exception.module_ exception `Hspec.shouldBe` Nothing
-
-    Hspec.it "does not set the stack trace" $ do
-      Exception.stacktrace exception `Hspec.shouldBe` Nothing
-
-    Hspec.it "does not set the thread ID" $ do
-      Exception.threadId exception `Hspec.shouldBe` Nothing
-
     Hspec.it "sets the type" $ do
-      Exception.type_ exception `Hspec.shouldBe` Just (Text.pack "IOException")
+      Exception.type_ exception `Hspec.shouldBe` Text.pack "IOException"
 
     Hspec.it "sets the value" $ do
-      Exception.value exception `Hspec.shouldBe` Just (Text.pack "user error (example-exception-value)")
+      Exception.value exception `Hspec.shouldBe` Text.pack "user error (example-exception-value)"

@@ -9,13 +9,13 @@ import qualified Patrol.Type.Geo as Geo
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#user>
 data User = User
   { data_ :: Map.Map Text.Text Aeson.Value,
-    email :: Maybe Text.Text,
+    email :: Text.Text,
     geo :: Maybe Geo.Geo,
-    id :: Maybe Text.Text,
-    ipAddress :: Maybe Text.Text,
-    name :: Maybe Text.Text,
-    segment :: Maybe Text.Text,
-    username :: Maybe Text.Text
+    id :: Text.Text,
+    ipAddress :: Text.Text,
+    name :: Text.Text,
+    segment :: Text.Text,
+    username :: Text.Text
   }
   deriving (Eq, Show)
 
@@ -36,11 +36,11 @@ empty :: User
 empty =
   User
     { data_ = Map.empty,
-      email = Nothing,
+      email = Text.empty,
       geo = Nothing,
-      Patrol.Type.User.id = Nothing,
-      ipAddress = Nothing,
-      name = Nothing,
-      segment = Nothing,
-      username = Nothing
+      Patrol.Type.User.id = Text.empty,
+      ipAddress = Text.empty,
+      name = Text.empty,
+      segment = Text.empty,
+      username = Text.empty
     }

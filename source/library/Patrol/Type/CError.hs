@@ -6,7 +6,7 @@ import qualified Patrol.Extra.Aeson as Aeson
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#cerror>
 data CError = CError
-  { name :: Maybe Text.Text,
+  { name :: Text.Text,
     number :: Maybe Int
   }
   deriving (Eq, Show)
@@ -21,6 +21,6 @@ instance Aeson.ToJSON CError where
 empty :: CError
 empty =
   CError
-    { name = Nothing,
+    { name = Text.empty,
       number = Nothing
     }

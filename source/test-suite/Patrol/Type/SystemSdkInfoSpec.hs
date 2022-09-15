@@ -17,7 +17,7 @@ spec = Hspec.describe "Patrol.Type.SystemSdkInfo" $ do
       Aeson.toJSON systemSdkInfo `Hspec.shouldBe` json
 
     Hspec.it "works with an SDK name" $ do
-      let systemSdkInfo = SystemSdkInfo.empty {SystemSdkInfo.sdkName = Just $ Text.pack "example-sdk-name"}
+      let systemSdkInfo = SystemSdkInfo.empty {SystemSdkInfo.sdkName = Text.pack "example-sdk-name"}
           json = [Aeson.aesonQQ| { "sdk_name": "example-sdk-name" } |]
       Aeson.toJSON systemSdkInfo `Hspec.shouldBe` json
 

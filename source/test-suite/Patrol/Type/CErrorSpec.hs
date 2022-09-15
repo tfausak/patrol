@@ -17,7 +17,7 @@ spec = Hspec.describe "Patrol.Type.CError" $ do
       Aeson.toJSON cError `Hspec.shouldBe` json
 
     Hspec.it "works with a name" $ do
-      let cError = CError.empty {CError.name = Just $ Text.pack "example-name"}
+      let cError = CError.empty {CError.name = Text.pack "example-name"}
           json = [Aeson.aesonQQ| { "name": "example-name" } |]
       Aeson.toJSON cError `Hspec.shouldBe` json
 

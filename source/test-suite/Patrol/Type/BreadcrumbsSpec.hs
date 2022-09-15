@@ -18,7 +18,7 @@ spec = Hspec.describe "Patrol.Type.Breadcrumbs" $ do
       Aeson.toJSON breadcrumbs `Hspec.shouldBe` json
 
     Hspec.it "works with a value" $ do
-      let breadcrumb = Breadcrumb.empty {Breadcrumb.category = Just $ Text.pack "example-category"}
+      let breadcrumb = Breadcrumb.empty {Breadcrumb.category = Text.pack "example-category"}
           breadcrumbs = Breadcrumbs.empty {Breadcrumbs.values = [breadcrumb]}
           json = [Aeson.aesonQQ| { "values": [ { "category": "example-category" } ] } |]
       Aeson.toJSON breadcrumbs `Hspec.shouldBe` json

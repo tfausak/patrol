@@ -7,8 +7,8 @@ import qualified Patrol.Extra.Aeson as Aeson
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#posixsignal>
 data PosixSignal = PosixSignal
   { code :: Maybe Int,
-    codeName :: Maybe Text.Text,
-    name :: Maybe Text.Text,
+    codeName :: Text.Text,
+    name :: Text.Text,
     number :: Maybe Int
   }
   deriving (Eq, Show)
@@ -26,7 +26,7 @@ empty :: PosixSignal
 empty =
   PosixSignal
     { code = Nothing,
-      codeName = Nothing,
-      name = Nothing,
+      codeName = Text.empty,
+      name = Text.empty,
       number = Nothing
     }

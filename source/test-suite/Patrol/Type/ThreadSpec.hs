@@ -29,12 +29,12 @@ spec = Hspec.describe "Patrol.Type.Thread" $ do
       Aeson.toJSON thread `Hspec.shouldBe` json
 
     Hspec.it "works with an ID" $ do
-      let thread = Thread.empty {Thread.id = Just $ Text.pack "example-id"}
+      let thread = Thread.empty {Thread.id = Text.pack "example-id"}
           json = [Aeson.aesonQQ| { "id": "example-id" } |]
       Aeson.toJSON thread `Hspec.shouldBe` json
 
     Hspec.it "works with a name" $ do
-      let thread = Thread.empty {Thread.name = Just $ Text.pack "example-name"}
+      let thread = Thread.empty {Thread.name = Text.pack "example-name"}
           json = [Aeson.aesonQQ| { "name": "example-name" } |]
       Aeson.toJSON thread `Hspec.shouldBe` json
 

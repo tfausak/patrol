@@ -6,9 +6,9 @@ import qualified Patrol.Extra.Aeson as Aeson
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#geo>
 data Geo = Geo
-  { city :: Maybe Text.Text,
-    countryCode :: Maybe Text.Text,
-    region :: Maybe Text.Text
+  { city :: Text.Text,
+    countryCode :: Text.Text,
+    region :: Text.Text
   }
   deriving (Eq, Show)
 
@@ -23,7 +23,7 @@ instance Aeson.ToJSON Geo where
 empty :: Geo
 empty =
   Geo
-    { city = Nothing,
-      countryCode = Nothing,
-      region = Nothing
+    { city = Text.empty,
+      countryCode = Text.empty,
+      region = Text.empty
     }

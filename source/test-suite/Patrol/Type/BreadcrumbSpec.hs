@@ -22,7 +22,7 @@ spec = Hspec.describe "Patrol.Type.Breadcrumb" $ do
       Aeson.toJSON breadcrumb `Hspec.shouldBe` json
 
     Hspec.it "works with a category" $ do
-      let breadcrumb = Breadcrumb.empty {Breadcrumb.category = Just $ Text.pack "example-category"}
+      let breadcrumb = Breadcrumb.empty {Breadcrumb.category = Text.pack "example-category"}
           json = [Aeson.aesonQQ| { "category": "example-category" } |]
       Aeson.toJSON breadcrumb `Hspec.shouldBe` json
 
@@ -42,7 +42,7 @@ spec = Hspec.describe "Patrol.Type.Breadcrumb" $ do
       Aeson.toJSON breadcrumb `Hspec.shouldBe` json
 
     Hspec.it "works with a message" $ do
-      let breadcrumb = Breadcrumb.empty {Breadcrumb.message = Just $ Text.pack "example-message"}
+      let breadcrumb = Breadcrumb.empty {Breadcrumb.message = Text.pack "example-message"}
           json = [Aeson.aesonQQ| { "message": "example-message" } |]
       Aeson.toJSON breadcrumb `Hspec.shouldBe` json
 

@@ -20,12 +20,12 @@ spec = Hspec.describe "Patrol.Type.Frame" $ do
       Aeson.toJSON frame `Hspec.shouldBe` json
 
     Hspec.it "works with an abs path" $ do
-      let frame = Frame.empty {Frame.absPath = Just $ Text.pack "example-abs-path"}
+      let frame = Frame.empty {Frame.absPath = Text.pack "example-abs-path"}
           json = [Aeson.aesonQQ| { "abs_path": "example-abs-path" } |]
       Aeson.toJSON frame `Hspec.shouldBe` json
 
     Hspec.it "works with an addr mode" $ do
-      let frame = Frame.empty {Frame.addrMode = Just $ Text.pack "example-addr-mode"}
+      let frame = Frame.empty {Frame.addrMode = Text.pack "example-addr-mode"}
           json = [Aeson.aesonQQ| { "addr_mode": "example-addr-mode" } |]
       Aeson.toJSON frame `Hspec.shouldBe` json
 
@@ -35,22 +35,22 @@ spec = Hspec.describe "Patrol.Type.Frame" $ do
       Aeson.toJSON frame `Hspec.shouldBe` json
 
     Hspec.it "works with a context line" $ do
-      let frame = Frame.empty {Frame.contextLine = Just $ Text.pack "example-context-line"}
+      let frame = Frame.empty {Frame.contextLine = Text.pack "example-context-line"}
           json = [Aeson.aesonQQ| { "context_line": "example-context-line" } |]
       Aeson.toJSON frame `Hspec.shouldBe` json
 
     Hspec.it "works with a filename" $ do
-      let frame = Frame.empty {Frame.filename = Just $ Text.pack "example-filename"}
+      let frame = Frame.empty {Frame.filename = Text.pack "example-filename"}
           json = [Aeson.aesonQQ| { "filename": "example-filename" } |]
       Aeson.toJSON frame `Hspec.shouldBe` json
 
     Hspec.it "works with a function" $ do
-      let frame = Frame.empty {Frame.function = Just $ Text.pack "example-function"}
+      let frame = Frame.empty {Frame.function = Text.pack "example-function"}
           json = [Aeson.aesonQQ| { "function": "example-function" } |]
       Aeson.toJSON frame `Hspec.shouldBe` json
 
     Hspec.it "works with an image addr" $ do
-      let frame = Frame.empty {Frame.imageAddr = Just $ Text.pack "example-image-addr"}
+      let frame = Frame.empty {Frame.imageAddr = Text.pack "example-image-addr"}
           json = [Aeson.aesonQQ| { "image_addr": "example-image-addr" } |]
       Aeson.toJSON frame `Hspec.shouldBe` json
 
@@ -60,7 +60,7 @@ spec = Hspec.describe "Patrol.Type.Frame" $ do
       Aeson.toJSON frame `Hspec.shouldBe` json
 
     Hspec.it "works with an instruction addr" $ do
-      let frame = Frame.empty {Frame.instructionAddr = Just $ Text.pack "example-instruction-addr"}
+      let frame = Frame.empty {Frame.instructionAddr = Text.pack "example-instruction-addr"}
           json = [Aeson.aesonQQ| { "instruction_addr": "example-instruction-addr" } |]
       Aeson.toJSON frame `Hspec.shouldBe` json
 
@@ -70,12 +70,12 @@ spec = Hspec.describe "Patrol.Type.Frame" $ do
       Aeson.toJSON frame `Hspec.shouldBe` json
 
     Hspec.it "works with a module" $ do
-      let frame = Frame.empty {Frame.module_ = Just $ Text.pack "example-module"}
+      let frame = Frame.empty {Frame.module_ = Text.pack "example-module"}
           json = [Aeson.aesonQQ| { "module": "example-module" } |]
       Aeson.toJSON frame `Hspec.shouldBe` json
 
     Hspec.it "works with a package" $ do
-      let frame = Frame.empty {Frame.package = Just $ Text.pack "example-package"}
+      let frame = Frame.empty {Frame.package = Text.pack "example-package"}
           json = [Aeson.aesonQQ| { "package": "example-package" } |]
       Aeson.toJSON frame `Hspec.shouldBe` json
 
@@ -95,7 +95,7 @@ spec = Hspec.describe "Patrol.Type.Frame" $ do
       Aeson.toJSON frame `Hspec.shouldBe` json
 
     Hspec.it "works with a raw function" $ do
-      let frame = Frame.empty {Frame.rawFunction = Just $ Text.pack "example-raw-function"}
+      let frame = Frame.empty {Frame.rawFunction = Text.pack "example-raw-function"}
           json = [Aeson.aesonQQ| { "raw_function": "example-raw-function" } |]
       Aeson.toJSON frame `Hspec.shouldBe` json
 
@@ -105,7 +105,7 @@ spec = Hspec.describe "Patrol.Type.Frame" $ do
       Aeson.toJSON frame `Hspec.shouldBe` json
 
     Hspec.it "works with a symbol addr" $ do
-      let frame = Frame.empty {Frame.symbolAddr = Just $ Text.pack "example-symbol-addr"}
+      let frame = Frame.empty {Frame.symbolAddr = Text.pack "example-symbol-addr"}
           json = [Aeson.aesonQQ| { "symbol_addr": "example-symbol-addr" } |]
       Aeson.toJSON frame `Hspec.shouldBe` json
 
@@ -129,9 +129,9 @@ spec = Hspec.describe "Patrol.Type.Frame" $ do
           frame =
             Frame.empty
               { Frame.colno = Just 1,
-                Frame.filename = Just $ Text.pack "example-file",
+                Frame.filename = Text.pack "example-file",
                 Frame.lineno = Just 2,
-                Frame.module_ = Just $ Text.pack "example-module",
-                Frame.package = Just $ Text.pack "example-package"
+                Frame.module_ = Text.pack "example-module",
+                Frame.package = Text.pack "example-package"
               }
       Frame.fromSrcLoc srcLoc `Hspec.shouldBe` frame

@@ -25,7 +25,7 @@ spec = Hspec.describe "Patrol.Type.Mechanism" $ do
       Aeson.toJSON mechanism `Hspec.shouldBe` json
 
     Hspec.it "works with a description" $ do
-      let mechanism = Mechanism.empty {Mechanism.description = Just $ Text.pack "example-description"}
+      let mechanism = Mechanism.empty {Mechanism.description = Text.pack "example-description"}
           json = [Aeson.aesonQQ| { "description": "example-description" } |]
       Aeson.toJSON mechanism `Hspec.shouldBe` json
 
@@ -35,7 +35,7 @@ spec = Hspec.describe "Patrol.Type.Mechanism" $ do
       Aeson.toJSON mechanism `Hspec.shouldBe` json
 
     Hspec.it "works with a help link" $ do
-      let mechanism = Mechanism.empty {Mechanism.helpLink = Just $ Text.pack "example-help-link"}
+      let mechanism = Mechanism.empty {Mechanism.helpLink = Text.pack "example-help-link"}
           json = [Aeson.aesonQQ| { "help_link": "example-help-link" } |]
       Aeson.toJSON mechanism `Hspec.shouldBe` json
 
@@ -52,6 +52,6 @@ spec = Hspec.describe "Patrol.Type.Mechanism" $ do
       Aeson.toJSON mechanism `Hspec.shouldBe` json
 
     Hspec.it "works with a type" $ do
-      let mechanism = Mechanism.empty {Mechanism.type_ = Just $ Text.pack "example-type"}
+      let mechanism = Mechanism.empty {Mechanism.type_ = Text.pack "example-type"}
           json = [Aeson.aesonQQ| { "type": "example-type" } |]
       Aeson.toJSON mechanism `Hspec.shouldBe` json

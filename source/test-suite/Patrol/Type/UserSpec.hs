@@ -24,37 +24,37 @@ spec = Hspec.describe "Patrol.Type.User" $ do
       Aeson.toJSON user `Hspec.shouldBe` json
 
     Hspec.it "works with an email" $ do
-      let user = User.empty {User.email = Just $ Text.pack "example-email"}
+      let user = User.empty {User.email = Text.pack "example-email"}
           json = [Aeson.aesonQQ| { "email": "example-email" } |]
       Aeson.toJSON user `Hspec.shouldBe` json
 
     Hspec.it "works with a geo" $ do
-      let geo = Geo.empty {Geo.city = Just $ Text.pack "example-city"}
+      let geo = Geo.empty {Geo.city = Text.pack "example-city"}
           user = User.empty {User.geo = Just geo}
           json = [Aeson.aesonQQ| { "geo": { "city": "example-city" } } |]
       Aeson.toJSON user `Hspec.shouldBe` json
 
     Hspec.it "works with an id" $ do
-      let user = User.empty {User.id = Just $ Text.pack "example-id"}
+      let user = User.empty {User.id = Text.pack "example-id"}
           json = [Aeson.aesonQQ| { "id": "example-id" } |]
       Aeson.toJSON user `Hspec.shouldBe` json
 
     Hspec.it "works with an IP address" $ do
-      let user = User.empty {User.ipAddress = Just $ Text.pack "example-ip-address"}
+      let user = User.empty {User.ipAddress = Text.pack "example-ip-address"}
           json = [Aeson.aesonQQ| { "ip_address": "example-ip-address" } |]
       Aeson.toJSON user `Hspec.shouldBe` json
 
     Hspec.it "works with a name" $ do
-      let user = User.empty {User.name = Just $ Text.pack "example-name"}
+      let user = User.empty {User.name = Text.pack "example-name"}
           json = [Aeson.aesonQQ| { "name": "example-name" } |]
       Aeson.toJSON user `Hspec.shouldBe` json
 
     Hspec.it "works with a segment" $ do
-      let user = User.empty {User.segment = Just $ Text.pack "example-segment"}
+      let user = User.empty {User.segment = Text.pack "example-segment"}
           json = [Aeson.aesonQQ| { "segment": "example-segment" } |]
       Aeson.toJSON user `Hspec.shouldBe` json
 
     Hspec.it "works with a username" $ do
-      let user = User.empty {User.username = Just $ Text.pack "example-username"}
+      let user = User.empty {User.username = Text.pack "example-username"}
           json = [Aeson.aesonQQ| { "username": "example-username" } |]
       Aeson.toJSON user `Hspec.shouldBe` json

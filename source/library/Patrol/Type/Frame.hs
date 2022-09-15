@@ -9,24 +9,24 @@ import qualified Patrol.Type.Platform as Platform
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#frame>
 data Frame = Frame
-  { absPath :: Maybe Text.Text,
-    addrMode :: Maybe Text.Text,
+  { absPath :: Text.Text,
+    addrMode :: Text.Text,
     colno :: Maybe Int,
-    contextLine :: Maybe Text.Text,
-    filename :: Maybe Text.Text,
-    function :: Maybe Text.Text,
-    imageAddr :: Maybe Text.Text,
+    contextLine :: Text.Text,
+    filename :: Text.Text,
+    function :: Text.Text,
+    imageAddr :: Text.Text,
     inApp :: Maybe Bool,
-    instructionAddr :: Maybe Text.Text,
+    instructionAddr :: Text.Text,
     lineno :: Maybe Int,
-    module_ :: Maybe Text.Text,
-    package :: Maybe Text.Text,
+    module_ :: Text.Text,
+    package :: Text.Text,
     platform :: Maybe Platform.Platform,
     postContext :: [Text.Text],
     preContext :: [Text.Text],
-    rawFunction :: Maybe Text.Text,
+    rawFunction :: Text.Text,
     stackStart :: Maybe Bool,
-    symbolAddr :: Maybe Text.Text,
+    symbolAddr :: Text.Text,
     vars :: Map.Map Text.Text Aeson.Value
   }
   deriving (Eq, Show)
@@ -58,24 +58,24 @@ instance Aeson.ToJSON Frame where
 empty :: Frame
 empty =
   Frame
-    { absPath = Nothing,
-      addrMode = Nothing,
+    { absPath = Text.empty,
+      addrMode = Text.empty,
       colno = Nothing,
-      contextLine = Nothing,
-      filename = Nothing,
-      function = Nothing,
-      imageAddr = Nothing,
+      contextLine = Text.empty,
+      filename = Text.empty,
+      function = Text.empty,
+      imageAddr = Text.empty,
       inApp = Nothing,
-      instructionAddr = Nothing,
+      instructionAddr = Text.empty,
       lineno = Nothing,
-      module_ = Nothing,
-      package = Nothing,
+      module_ = Text.empty,
+      package = Text.empty,
       platform = Nothing,
       postContext = [],
       preContext = [],
-      rawFunction = Nothing,
+      rawFunction = Text.empty,
       stackStart = Nothing,
-      symbolAddr = Nothing,
+      symbolAddr = Text.empty,
       vars = Map.empty
     }
 
@@ -83,8 +83,8 @@ fromSrcLoc :: Stack.SrcLoc -> Frame
 fromSrcLoc srcLoc =
   empty
     { colno = Just $ Stack.srcLocStartCol srcLoc,
-      filename = Just . Text.pack $ Stack.srcLocFile srcLoc,
+      filename = Text.pack $ Stack.srcLocFile srcLoc,
       lineno = Just $ Stack.srcLocStartLine srcLoc,
-      module_ = Just . Text.pack $ Stack.srcLocModule srcLoc,
-      package = Just . Text.pack $ Stack.srcLocPackage srcLoc
+      module_ = Text.pack $ Stack.srcLocModule srcLoc,
+      package = Text.pack $ Stack.srcLocPackage srcLoc
     }

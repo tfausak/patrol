@@ -53,7 +53,7 @@ spec = Hspec.describe "Patrol.Type.Stacktrace" $ do
               ]
           frame =
             (Frame.fromSrcLoc emptySrcLoc)
-              { Frame.function = Just $ Text.pack "example-function"
+              { Frame.function = Text.pack "example-function"
               }
           stacktrace =
             Stacktrace.empty
@@ -89,11 +89,11 @@ spec = Hspec.describe "Patrol.Type.Stacktrace" $ do
               ]
           frame1 =
             (Frame.fromSrcLoc srcLoc1)
-              { Frame.function = Just $ Text.pack "example-function-1"
+              { Frame.function = Text.pack "example-function-1"
               }
           frame2 =
             (Frame.fromSrcLoc srcLoc2)
-              { Frame.function = Just $ Text.pack "example-function-2"
+              { Frame.function = Text.pack "example-function-2"
               }
           stacktrace =
             Stacktrace.empty

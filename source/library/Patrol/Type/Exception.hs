@@ -11,11 +11,11 @@ import qualified Patrol.Type.Stacktrace as Stacktrace
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#valueclass>
 data Exception = Exception
   { mechanism :: Maybe Mechanism.Mechanism,
-    module_ :: Maybe Text.Text,
+    module_ :: Text.Text,
     stacktrace :: Maybe Stacktrace.Stacktrace,
-    threadId :: Maybe Text.Text,
-    type_ :: Maybe Text.Text,
-    value :: Maybe Text.Text
+    threadId :: Text.Text,
+    type_ :: Text.Text,
+    value :: Text.Text
   }
   deriving (Eq, Show)
 
@@ -34,16 +34,16 @@ empty :: Exception
 empty =
   Exception
     { mechanism = Nothing,
-      module_ = Nothing,
+      module_ = Text.empty,
       stacktrace = Nothing,
-      threadId = Nothing,
-      type_ = Nothing,
-      value = Nothing
+      threadId = Text.empty,
+      type_ = Text.empty,
+      value = Text.empty
     }
 
 fromSomeException :: Catch.SomeException -> Exception
 fromSomeException (Catch.SomeException e) =
   empty
-    { type_ = Just . Text.pack . show $ Typeable.typeOf e,
-      value = Just . Text.pack $ Catch.displayException e
+    { type_ = Text.pack . show $ Typeable.typeOf e,
+      value = Text.pack $ Catch.displayException e
     }

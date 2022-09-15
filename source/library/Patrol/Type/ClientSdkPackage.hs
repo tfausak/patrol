@@ -6,8 +6,8 @@ import qualified Patrol.Extra.Aeson as Aeson
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#clientsdkpackage>
 data ClientSdkPackage = ClientSdkPackage
-  { name :: Maybe Text.Text,
-    version :: Maybe Text.Text
+  { name :: Text.Text,
+    version :: Text.Text
   }
   deriving (Eq, Show)
 
@@ -21,6 +21,6 @@ instance Aeson.ToJSON ClientSdkPackage where
 empty :: ClientSdkPackage
 empty =
   ClientSdkPackage
-    { name = Nothing,
-      version = Nothing
+    { name = Text.empty,
+      version = Text.empty
     }

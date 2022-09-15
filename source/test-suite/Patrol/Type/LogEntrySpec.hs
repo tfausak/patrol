@@ -17,12 +17,12 @@ spec = Hspec.describe "Patrol.Type.LogEntry" $ do
       Aeson.toJSON logEntry `Hspec.shouldBe` json
 
     Hspec.it "works with a formatted string" $ do
-      let logEntry = LogEntry.empty {LogEntry.formatted = Just $ Text.pack "example-formatted"}
+      let logEntry = LogEntry.empty {LogEntry.formatted = Text.pack "example-formatted"}
           json = [Aeson.aesonQQ| { "formatted": "example-formatted" } |]
       Aeson.toJSON logEntry `Hspec.shouldBe` json
 
     Hspec.it "works with a message" $ do
-      let logEntry = LogEntry.empty {LogEntry.message = Just $ Text.pack "example-message"}
+      let logEntry = LogEntry.empty {LogEntry.message = Text.pack "example-message"}
           json = [Aeson.aesonQQ| { "message": "example-message" } |]
       Aeson.toJSON logEntry `Hspec.shouldBe` json
 

@@ -18,10 +18,7 @@ spec = Hspec.describe "Patrol.Type.Exceptions" $ do
       Aeson.toJSON exceptions `Hspec.shouldBe` json
 
     Hspec.it "works with a value" $ do
-      let exception =
-            Exception.empty
-              { Exception.type_ = Just $ Text.pack "example-type"
-              }
+      let exception = Exception.empty {Exception.type_ = Text.pack "example-type"}
           exceptions = Exceptions.empty {Exceptions.values = [exception]}
           json = [Aeson.aesonQQ| { "values": [ { "type": "example-type" } ] } |]
       Aeson.toJSON exceptions `Hspec.shouldBe` json

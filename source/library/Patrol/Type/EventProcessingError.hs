@@ -7,7 +7,7 @@ import qualified Patrol.Type.ErrorType as ErrorType
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#eventprocessingerror>
 data EventProcessingError = EventProcessingError
-  { name :: Maybe Text.Text,
+  { name :: Text.Text,
     type_ :: ErrorType.ErrorType,
     value :: Aeson.Value
   }
@@ -24,7 +24,7 @@ instance Aeson.ToJSON EventProcessingError where
 empty :: EventProcessingError
 empty =
   EventProcessingError
-    { name = Nothing,
+    { name = Text.empty,
       type_ = ErrorType.UnknownError,
       value = Aeson.Null
     }

@@ -32,6 +32,6 @@ fromCallStack :: Stack.CallStack -> Stacktrace
 fromCallStack =
   let intoFrame string srcLoc =
         (Frame.fromSrcLoc srcLoc)
-          { Frame.function = Just $ Text.pack string
+          { Frame.function = Text.pack string
           }
    in flip Stacktrace Map.empty . fmap (uncurry intoFrame) . reverse . Stack.getCallStack

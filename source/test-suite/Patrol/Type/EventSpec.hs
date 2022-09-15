@@ -54,11 +54,11 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
 
     Hspec.it "sets the environment" $ do
       event <- Event.new
-      Event.environment event `Hspec.shouldBe` Just (Text.pack "production")
+      Event.environment event `Hspec.shouldBe` Text.pack "production"
 
     Hspec.it "sets the version" $ do
       event <- Event.new
-      Event.version event `Hspec.shouldBe` Just Constant.sentryVersion
+      Event.version event `Hspec.shouldBe` Constant.sentryVersion
 
     Hspec.it "sets the type" $ do
       event <- Event.new
@@ -71,7 +71,7 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a breadcrumb" $ do
-      let breadcrumb = Breadcrumb.empty {Breadcrumb.category = Just $ Text.pack "example-category"}
+      let breadcrumb = Breadcrumb.empty {Breadcrumb.category = Text.pack "example-category"}
           breadcrumbs = Breadcrumbs.empty {Breadcrumbs.values = [breadcrumb]}
           event = Event.empty {Event.breadcrumbs = Just breadcrumbs}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "breadcrumbs": { "values": [ { "category": "example-category" } ] } } |]
@@ -92,12 +92,12 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a dist" $ do
-      let event = Event.empty {Event.dist = Just $ Text.pack "example-dist"}
+      let event = Event.empty {Event.dist = Text.pack "example-dist"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "dist": "example-dist" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with an environment" $ do
-      let event = Event.empty {Event.environment = Just $ Text.pack "example-environment"}
+      let event = Event.empty {Event.environment = Text.pack "example-environment"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "environment": "example-environment" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
@@ -108,14 +108,8 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with an exception" $ do
-      let exception =
-            Exception.empty
-              { Exception.type_ = Just $ Text.pack "example-type"
-              }
-          exceptions =
-            Exceptions.empty
-              { Exceptions.values = [exception]
-              }
+      let exception = Exception.empty {Exception.type_ = Text.pack "example-type"}
+          exceptions = Exceptions.empty {Exceptions.values = [exception]}
           event = Event.empty {Event.exception = Just exceptions}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "exception": { "values": [ { "type": "example-type" } ] } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
@@ -136,19 +130,19 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a log entry" $ do
-      let logEntry = LogEntry.empty {LogEntry.message = Just $ Text.pack "example-message"}
+      let logEntry = LogEntry.empty {LogEntry.message = Text.pack "example-message"}
           event = Event.empty {Event.logentry = Just logEntry}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "logentry": { "message": "example-message" } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a logger" $ do
-      let event = Event.empty {Event.logger = Just $ Text.pack "example-logger"}
+      let event = Event.empty {Event.logger = Text.pack "example-logger"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "logger": "example-logger" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with some modules" $ do
-      let event = Event.empty {Event.modules = Map.fromList [(Text.pack "module-name", Nothing)]}
-          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "modules": { "module-name": null } } |]
+      let event = Event.empty {Event.modules = Map.fromList [(Text.pack "module-name", Text.pack "module-version")]}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "modules": { "module-name": "module-version" } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a platform" $ do
@@ -157,30 +151,30 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a release" $ do
-      let event = Event.empty {Event.release = Just $ Text.pack "example-release"}
+      let event = Event.empty {Event.release = Text.pack "example-release"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "release": "example-release" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a request" $ do
-      let request = Request.empty {Request.fragment = Just $ Text.pack "example-fragment"}
+      let request = Request.empty {Request.fragment = Text.pack "example-fragment"}
           event = Event.empty {Event.request = Just request}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "request": { "fragment": "example-fragment" } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with an SDK" $ do
-      let clientSdkInfo = ClientSdkInfo.empty {ClientSdkInfo.name = Just $ Text.pack "example-name"}
+      let clientSdkInfo = ClientSdkInfo.empty {ClientSdkInfo.name = Text.pack "example-name"}
           event = Event.empty {Event.sdk = Just clientSdkInfo}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "sdk": { "name": "example-name" } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a server name" $ do
-      let event = Event.empty {Event.serverName = Just $ Text.pack "example-server-name"}
+      let event = Event.empty {Event.serverName = Text.pack "example-server-name"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "server_name": "example-server-name" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with some tags" $ do
-      let event = Event.empty {Event.tags = Map.fromList [(Text.pack "tag-key", Nothing)]}
-          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "tags": { "tag-key": null } } |]
+      let event = Event.empty {Event.tags = Map.fromList [(Text.pack "tag-key", Text.pack "tag-value")]}
+          json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "tags": { "tag-key": "tag-value" } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a time spent" $ do
@@ -194,12 +188,12 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a transaction" $ do
-      let event = Event.empty {Event.transaction = Just $ Text.pack "example-transaction"}
+      let event = Event.empty {Event.transaction = Text.pack "example-transaction"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "transaction": "example-transaction" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with some transaction info" $ do
-      let transactionInfo = TransactionInfo.empty {TransactionInfo.original = Just $ Text.pack "example-original"}
+      let transactionInfo = TransactionInfo.empty {TransactionInfo.original = Text.pack "example-original"}
           event = Event.empty {Event.transactionInfo = Just transactionInfo}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "transaction_info": { "original": "example-original" } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
@@ -210,13 +204,13 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a user" $ do
-      let user = User.empty {User.email = Just $ Text.pack "example-email"}
+      let user = User.empty {User.email = Text.pack "example-email"}
           event = Event.empty {Event.user = Just user}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "user": { "email": "example-email" } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a version" $ do
-      let event = Event.empty {Event.version = Just $ Text.pack "example-version"}
+      let event = Event.empty {Event.version = Text.pack "example-version"}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "version": "example-version" } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 

@@ -6,8 +6,8 @@ import qualified Patrol.Extra.Aeson as Aeson
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#logentry>
 data LogEntry = LogEntry
-  { formatted :: Maybe Text.Text,
-    message :: Maybe Text.Text,
+  { formatted :: Text.Text,
+    message :: Text.Text,
     params :: Aeson.Value
   }
   deriving (Eq, Show)
@@ -23,7 +23,7 @@ instance Aeson.ToJSON LogEntry where
 empty :: LogEntry
 empty =
   LogEntry
-    { formatted = Nothing,
-      message = Nothing,
+    { formatted = Text.empty,
+      message = Text.empty,
       params = Aeson.Null
     }

@@ -17,16 +17,16 @@ spec = Hspec.describe "Patrol.Type.Geo" $ do
       Aeson.toJSON geo `Hspec.shouldBe` json
 
     Hspec.it "works with a city" $ do
-      let geo = Geo.empty {Geo.city = Just $ Text.pack "example-city"}
+      let geo = Geo.empty {Geo.city = Text.pack "example-city"}
           json = [Aeson.aesonQQ| { "city": "example-city" } |]
       Aeson.toJSON geo `Hspec.shouldBe` json
 
     Hspec.it "works with a country code" $ do
-      let geo = Geo.empty {Geo.countryCode = Just $ Text.pack "example-country-code"}
+      let geo = Geo.empty {Geo.countryCode = Text.pack "example-country-code"}
           json = [Aeson.aesonQQ| { "country_code": "example-country-code" } |]
       Aeson.toJSON geo `Hspec.shouldBe` json
 
     Hspec.it "works with a region" $ do
-      let geo = Geo.empty {Geo.region = Just $ Text.pack "example-region"}
+      let geo = Geo.empty {Geo.region = Text.pack "example-region"}
           json = [Aeson.aesonQQ| { "region": "example-region" } |]
       Aeson.toJSON geo `Hspec.shouldBe` json

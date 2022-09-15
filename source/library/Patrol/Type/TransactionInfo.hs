@@ -7,7 +7,7 @@ import qualified Patrol.Type.TransactionSource as TransactionSource
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#cerror>
 data TransactionInfo = TransactionInfo
-  { original :: Maybe Text.Text,
+  { original :: Text.Text,
     source :: Maybe TransactionSource.TransactionSource
   }
   deriving (Eq, Show)
@@ -22,6 +22,6 @@ instance Aeson.ToJSON TransactionInfo where
 empty :: TransactionInfo
 empty =
   TransactionInfo
-    { original = Nothing,
+    { original = Text.empty,
       source = Nothing
     }

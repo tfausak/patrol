@@ -22,6 +22,6 @@ spec = Hspec.describe "Patrol.Type.NsError" $ do
       Aeson.toJSON nsError `Hspec.shouldBe` json
 
     Hspec.it "works with a domain" $ do
-      let nsError = NsError.empty {NsError.domain = Just $ Text.pack "example-domain"}
+      let nsError = NsError.empty {NsError.domain = Text.pack "example-domain"}
           json = [Aeson.aesonQQ| { "domain": "example-domain" } |]
       Aeson.toJSON nsError `Hspec.shouldBe` json

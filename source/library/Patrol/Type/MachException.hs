@@ -8,7 +8,7 @@ import qualified Patrol.Extra.Aeson as Aeson
 data MachException = MachException
   { code :: Maybe Int,
     exception :: Maybe Int,
-    name :: Maybe Text.Text,
+    name :: Text.Text,
     subcode :: Maybe Int
   }
   deriving (Eq, Show)
@@ -27,6 +27,6 @@ empty =
   MachException
     { code = Nothing,
       exception = Nothing,
-      name = Nothing,
+      name = Text.empty,
       subcode = Nothing
     }

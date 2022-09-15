@@ -17,7 +17,7 @@ spec = Hspec.describe "Patrol.Type.EventProcessingError" $ do
       Aeson.toJSON eventProcessingError `Hspec.shouldBe` json
 
     Hspec.it "works with a name" $ do
-      let eventProcessingError = EventProcessingError.empty {EventProcessingError.name = Just $ Text.pack "example-name"}
+      let eventProcessingError = EventProcessingError.empty {EventProcessingError.name = Text.pack "example-name"}
           json = [Aeson.aesonQQ| { "type": "unknown_error", "name": "example-name" } |]
       Aeson.toJSON eventProcessingError `Hspec.shouldBe` json
 

@@ -6,7 +6,7 @@ import qualified Patrol.Extra.Aeson as Aeson
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#systemsdkinfo>
 data SystemSdkInfo = SystemSdkInfo
-  { sdkName :: Maybe Text.Text,
+  { sdkName :: Text.Text,
     versionMajor :: Maybe Int,
     versionMinor :: Maybe Int,
     versionPatchlevel :: Maybe Int
@@ -25,7 +25,7 @@ instance Aeson.ToJSON SystemSdkInfo where
 empty :: SystemSdkInfo
 empty =
   SystemSdkInfo
-    { sdkName = Nothing,
+    { sdkName = Text.empty,
       versionMajor = Nothing,
       versionMinor = Nothing,
       versionPatchlevel = Nothing

@@ -34,8 +34,8 @@ data Event = Event
   { breadcrumbs :: Maybe Breadcrumbs.Breadcrumbs,
     contexts :: Map.Map Text.Text (Map.Map Text.Text Aeson.Value),
     debugMeta :: Maybe DebugMeta.DebugMeta,
-    dist :: Maybe Text.Text,
-    environment :: Maybe Text.Text,
+    dist :: Text.Text,
+    environment :: Text.Text,
     errors :: [EventProcessingError.EventProcessingError],
     eventId :: EventId.EventId,
     exception :: Maybe Exceptions.Exceptions,
@@ -43,22 +43,22 @@ data Event = Event
     fingerprint :: [Text.Text],
     level :: Maybe Level.Level,
     logentry :: Maybe LogEntry.LogEntry,
-    logger :: Maybe Text.Text,
-    modules :: Map.Map Text.Text (Maybe Text.Text),
+    logger :: Text.Text,
+    modules :: Map.Map Text.Text Text.Text,
     platform :: Maybe Platform.Platform,
-    release :: Maybe Text.Text,
+    release :: Text.Text,
     request :: Maybe Request.Request,
     sdk :: Maybe ClientSdkInfo.ClientSdkInfo,
-    serverName :: Maybe Text.Text,
-    tags :: Map.Map Text.Text (Maybe Text.Text),
+    serverName :: Text.Text,
+    tags :: Map.Map Text.Text Text.Text,
     threads :: Maybe Threads.Threads,
     timeSpent :: Maybe Time.NominalDiffTime,
     timestamp :: Maybe Time.UTCTime,
-    transaction :: Maybe Text.Text,
+    transaction :: Text.Text,
     transactionInfo :: Maybe TransactionInfo.TransactionInfo,
     type_ :: Maybe EventType.EventType,
     user :: Maybe User.User,
-    version :: Maybe Text.Text
+    version :: Text.Text
   }
   deriving (Eq, Show)
 
@@ -101,8 +101,8 @@ empty =
     { breadcrumbs = Nothing,
       contexts = Map.empty,
       debugMeta = Nothing,
-      dist = Nothing,
-      environment = Nothing,
+      dist = Text.empty,
+      environment = Text.empty,
       errors = [],
       eventId = EventId.empty,
       exception = Nothing,
@@ -110,22 +110,22 @@ empty =
       fingerprint = [],
       level = Nothing,
       logentry = Nothing,
-      logger = Nothing,
+      logger = Text.empty,
       modules = Map.empty,
       platform = Nothing,
-      release = Nothing,
+      release = Text.empty,
       request = Nothing,
       sdk = Nothing,
-      serverName = Nothing,
+      serverName = Text.empty,
       tags = Map.empty,
       threads = Nothing,
       timeSpent = Nothing,
       timestamp = Nothing,
-      transaction = Nothing,
+      transaction = Text.empty,
       transactionInfo = Nothing,
       type_ = Nothing,
       user = Nothing,
-      version = Nothing
+      version = Text.empty
     }
 
 new :: IO.MonadIO io => io Event
@@ -134,13 +134,13 @@ new = do
   theTimestamp <- IO.liftIO Time.getCurrentTime
   pure
     empty
-      { environment = Just $ Text.pack "production",
+      { environment = Text.pack "production",
         eventId = theEventId,
         level = Just Level.Error,
         platform = Just Platform.Haskell,
         timestamp = Just theTimestamp,
         type_ = Just EventType.Default,
-        version = Just Constant.sentryVersion
+        version = Constant.sentryVersion
       }
 
 intoRequest :: Catch.MonadThrow m => Dsn.Dsn -> Event -> m Client.Request

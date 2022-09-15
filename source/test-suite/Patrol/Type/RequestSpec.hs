@@ -18,7 +18,7 @@ spec = Hspec.describe "Patrol.Type.Request" $ do
       Aeson.toJSON request `Hspec.shouldBe` json
 
     Hspec.it "works with a cookie" $ do
-      let request = Request.empty {Request.cookies = Map.singleton (Text.pack "example-key") . Just $ Text.pack "example-value"}
+      let request = Request.empty {Request.cookies = Map.singleton (Text.pack "example-key") $ Text.pack "example-value"}
           json = [Aeson.aesonQQ| { "cookies": { "example-key": "example-value" } } |]
       Aeson.toJSON request `Hspec.shouldBe` json
 
@@ -33,31 +33,31 @@ spec = Hspec.describe "Patrol.Type.Request" $ do
       Aeson.toJSON request `Hspec.shouldBe` json
 
     Hspec.it "works with a fragment" $ do
-      let request = Request.empty {Request.fragment = Just $ Text.pack "example-fragment"}
+      let request = Request.empty {Request.fragment = Text.pack "example-fragment"}
           json = [Aeson.aesonQQ| { "fragment": "example-fragment" } |]
       Aeson.toJSON request `Hspec.shouldBe` json
 
     Hspec.it "works with a header" $ do
-      let request = Request.empty {Request.headers = Map.singleton (Text.pack "example-key") . Just $ Text.pack "example-value"}
+      let request = Request.empty {Request.headers = Map.singleton (Text.pack "example-key") $ Text.pack "example-value"}
           json = [Aeson.aesonQQ| { "headers": { "example-key": "example-value" } } |]
       Aeson.toJSON request `Hspec.shouldBe` json
 
     Hspec.it "works with an inferred content type" $ do
-      let request = Request.empty {Request.inferredContentType = Just $ Text.pack "example-inferred-content-type"}
+      let request = Request.empty {Request.inferredContentType = Text.pack "example-inferred-content-type"}
           json = [Aeson.aesonQQ| { "inferred_content_type": "example-inferred-content-type" } |]
       Aeson.toJSON request `Hspec.shouldBe` json
 
     Hspec.it "works with a method" $ do
-      let request = Request.empty {Request.method = Just $ Text.pack "example-method"}
+      let request = Request.empty {Request.method = Text.pack "example-method"}
           json = [Aeson.aesonQQ| { "method": "example-method" } |]
       Aeson.toJSON request `Hspec.shouldBe` json
 
     Hspec.it "works with a query string" $ do
-      let request = Request.empty {Request.queryString = Map.singleton (Text.pack "example-key") . Just $ Text.pack "example-value"}
+      let request = Request.empty {Request.queryString = Map.singleton (Text.pack "example-key") $ Text.pack "example-value"}
           json = [Aeson.aesonQQ| { "query_string": { "example-key": "example-value" } } |]
       Aeson.toJSON request `Hspec.shouldBe` json
 
     Hspec.it "works with a URL" $ do
-      let request = Request.empty {Request.url = Just $ Text.pack "example-url"}
+      let request = Request.empty {Request.url = Text.pack "example-url"}
           json = [Aeson.aesonQQ| { "url": "example-url" } |]
       Aeson.toJSON request `Hspec.shouldBe` json

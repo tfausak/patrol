@@ -9,8 +9,8 @@ import qualified Patrol.Type.Stacktrace as Stacktrace
 data Thread = Thread
   { crashed :: Maybe Bool,
     current :: Maybe Bool,
-    id :: Maybe Text.Text,
-    name :: Maybe Text.Text,
+    id :: Text.Text,
+    name :: Text.Text,
     stacktrace :: Maybe Stacktrace.Stacktrace
   }
   deriving (Eq, Show)
@@ -30,7 +30,7 @@ empty =
   Thread
     { crashed = Nothing,
       current = Nothing,
-      Patrol.Type.Thread.id = Nothing,
-      name = Nothing,
+      Patrol.Type.Thread.id = Text.empty,
+      name = Text.empty,
       stacktrace = Nothing
     }

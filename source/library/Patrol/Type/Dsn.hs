@@ -15,7 +15,7 @@ import qualified Text.Read as Read
 data Dsn = Dsn
   { protocol :: Text.Text,
     publicKey :: Text.Text,
-    secretKey :: Maybe Text.Text,
+    secretKey :: Text.Text,
     host :: Text.Text,
     port :: Maybe Natural.Natural,
     path :: Text.Text,
@@ -28,8 +28,7 @@ fromUri uri = do
   theProtocol <- maybe (Catch.throwM $ Problem.Problem "invalid scheme") pure . Text.stripSuffix (Text.singleton ':') . Text.pack $ Uri.uriScheme uri
   uriAuth <- maybe (Catch.throwM $ Problem.Problem "missing authority") pure $ Uri.uriAuthority uri
   userInfo <- maybe (Catch.throwM $ Problem.Problem "invalid user information") pure . Text.stripSuffix (Text.singleton '@') . Text.pack $ Uri.uriUserInfo uriAuth
-  let (thePublicKey, pass) = fmap (Text.drop 1) $ Text.breakOn (Text.singleton ':') userInfo
-      maybeSecretKey = if Text.null pass then Nothing else Just pass
+  let (thePublicKey, theSecretKey) = fmap (Text.drop 1) $ Text.breakOn (Text.singleton ':') userInfo
       theHost = Text.pack $ Uri.uriRegName uriAuth
   maybePort <- case Text.stripPrefix (Text.singleton ':') . Text.pack $ Uri.uriPort uriAuth of
     Nothing -> pure Nothing
@@ -41,7 +40,7 @@ fromUri uri = do
     Dsn
       { protocol = theProtocol,
         publicKey = thePublicKey,
-        secretKey = maybeSecretKey,
+        secretKey = theSecretKey,
         host = theHost,
         port = maybePort,
         path = thePath,
@@ -59,8 +58,9 @@ intoUri dsn =
                 mconcat
                   [ Text.unpack $ publicKey dsn,
                     case secretKey dsn of
-                      Nothing -> ""
-                      Just x -> mconcat [":", Text.unpack x],
+                      x
+                        | Text.null x -> ""
+                        | otherwise -> mconcat [":", Text.unpack x],
                     "@"
                   ],
               Uri.uriRegName = Text.unpack $ host dsn,
@@ -83,9 +83,9 @@ intoAuthorization dsn =
     . (Text.pack "Sentry " <>)
     . Text.intercalate (Text.singleton ',')
     $ Maybe.mapMaybe
-      (\(k, m) -> fmap (\v -> Text.pack k <> Text.singleton '=' <> v) m)
-      [ ("sentry_version", Just Constant.sentryVersion),
-        ("sentry_client", Just Constant.userAgent),
-        ("sentry_key", Just $ publicKey dsn),
+      (\(k, v) -> if Text.null v then Nothing else Just (Text.pack k <> Text.singleton '=' <> v))
+      [ ("sentry_version", Constant.sentryVersion),
+        ("sentry_client", Constant.userAgent),
+        ("sentry_key", publicKey dsn),
         ("sentry_secret", secretKey dsn)
       ]

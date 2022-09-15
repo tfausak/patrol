@@ -23,17 +23,17 @@ spec = Hspec.describe "Patrol.Type.ClientSdkInfo" $ do
       Aeson.toJSON clientSdkInfo `Hspec.shouldBe` json
 
     Hspec.it "works with a name" $ do
-      let clientSdkInfo = ClientSdkInfo.empty {ClientSdkInfo.name = Just $ Text.pack "example-name"}
+      let clientSdkInfo = ClientSdkInfo.empty {ClientSdkInfo.name = Text.pack "example-name"}
           json = [Aeson.aesonQQ| { "name": "example-name" } |]
       Aeson.toJSON clientSdkInfo `Hspec.shouldBe` json
 
     Hspec.it "works with a package" $ do
-      let clientSdkPackage = ClientSdkPackage.empty {ClientSdkPackage.name = Just $ Text.pack "example-name"}
+      let clientSdkPackage = ClientSdkPackage.empty {ClientSdkPackage.name = Text.pack "example-name"}
           clientSdkInfo = ClientSdkInfo.empty {ClientSdkInfo.packages = [clientSdkPackage]}
           json = [Aeson.aesonQQ| { "packages": [ { "name": "example-name" } ] } |]
       Aeson.toJSON clientSdkInfo `Hspec.shouldBe` json
 
     Hspec.it "works with a version" $ do
-      let clientSdkInfo = ClientSdkInfo.empty {ClientSdkInfo.version = Just $ Text.pack "example-version"}
+      let clientSdkInfo = ClientSdkInfo.empty {ClientSdkInfo.version = Text.pack "example-version"}
           json = [Aeson.aesonQQ| { "version": "example-version" } |]
       Aeson.toJSON clientSdkInfo `Hspec.shouldBe` json

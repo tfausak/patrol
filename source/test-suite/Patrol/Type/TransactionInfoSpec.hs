@@ -18,7 +18,7 @@ spec = Hspec.describe "Patrol.Type.TransactionInfo" $ do
       Aeson.toJSON transactionInfo `Hspec.shouldBe` json
 
     Hspec.it "works with an original" $ do
-      let transactionInfo = TransactionInfo.empty {TransactionInfo.original = Just $ Text.pack "example-original"}
+      let transactionInfo = TransactionInfo.empty {TransactionInfo.original = Text.pack "example-original"}
           json = [Aeson.aesonQQ| { "original": "example-original" } |]
       Aeson.toJSON transactionInfo `Hspec.shouldBe` json
 

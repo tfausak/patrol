@@ -8,9 +8,9 @@ import qualified Patrol.Type.ClientSdkPackage as ClientSdkPackage
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#clientsdkinfo>
 data ClientSdkInfo = ClientSdkInfo
   { integrations :: [Text.Text],
-    name :: Maybe Text.Text,
+    name :: Text.Text,
     packages :: [ClientSdkPackage.ClientSdkPackage],
-    version :: Maybe Text.Text
+    version :: Text.Text
   }
   deriving (Eq, Show)
 
@@ -27,7 +27,7 @@ empty :: ClientSdkInfo
 empty =
   ClientSdkInfo
     { integrations = [],
-      name = Nothing,
+      name = Text.empty,
       packages = [],
-      version = Nothing
+      version = Text.empty
     }

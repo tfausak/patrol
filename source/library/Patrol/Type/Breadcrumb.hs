@@ -11,11 +11,11 @@ import qualified Patrol.Type.Level as Level
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#breadcrumb>
 data Breadcrumb = Breadcrumb
-  { category :: Maybe Text.Text,
+  { category :: Text.Text,
     data_ :: Map.Map Text.Text Aeson.Value,
     eventId :: Maybe EventId.EventId,
     level :: Maybe Level.Level,
-    message :: Maybe Text.Text,
+    message :: Text.Text,
     timestamp :: Maybe Time.UTCTime,
     type_ :: Maybe BreadcrumbType.BreadcrumbType
   }
@@ -36,11 +36,11 @@ instance Aeson.ToJSON Breadcrumb where
 empty :: Breadcrumb
 empty =
   Breadcrumb
-    { category = Nothing,
+    { category = Text.empty,
       data_ = Map.empty,
       eventId = Nothing,
       level = Nothing,
-      message = Nothing,
+      message = Text.empty,
       timestamp = Nothing,
       type_ = Nothing
     }

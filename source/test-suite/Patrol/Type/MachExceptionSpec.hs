@@ -27,7 +27,7 @@ spec = Hspec.describe "Patrol.Type.MachException" $ do
       Aeson.toJSON machException `Hspec.shouldBe` json
 
     Hspec.it "works with a name" $ do
-      let machException = MachException.empty {MachException.name = Just $ Text.pack "example-name"}
+      let machException = MachException.empty {MachException.name = Text.pack "example-name"}
           json = [Aeson.aesonQQ| { "name": "example-name" } |]
       Aeson.toJSON machException `Hspec.shouldBe` json
 

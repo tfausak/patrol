@@ -7,7 +7,7 @@ import qualified Patrol.Extra.Aeson as Aeson
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#nserror>
 data NsError = NsError
   { code :: Maybe Int,
-    domain :: Maybe Text.Text
+    domain :: Text.Text
   }
   deriving (Eq, Show)
 
@@ -22,5 +22,5 @@ empty :: NsError
 empty =
   NsError
     { code = Nothing,
-      domain = Nothing
+      domain = Text.empty
     }

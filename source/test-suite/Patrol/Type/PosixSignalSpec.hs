@@ -22,12 +22,12 @@ spec = Hspec.describe "Patrol.Type.PosixSignal" $ do
       Aeson.toJSON posixSignal `Hspec.shouldBe` json
 
     Hspec.it "works with a code name" $ do
-      let posixSignal = PosixSignal.empty {PosixSignal.codeName = Just $ Text.pack "example-code-name"}
+      let posixSignal = PosixSignal.empty {PosixSignal.codeName = Text.pack "example-code-name"}
           json = [Aeson.aesonQQ| { "code_name": "example-code-name" } |]
       Aeson.toJSON posixSignal `Hspec.shouldBe` json
 
     Hspec.it "works with a name" $ do
-      let posixSignal = PosixSignal.empty {PosixSignal.name = Just $ Text.pack "example-name"}
+      let posixSignal = PosixSignal.empty {PosixSignal.name = Text.pack "example-name"}
           json = [Aeson.aesonQQ| { "name": "example-name" } |]
       Aeson.toJSON posixSignal `Hspec.shouldBe` json
 

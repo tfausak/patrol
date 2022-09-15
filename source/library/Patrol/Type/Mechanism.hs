@@ -9,12 +9,12 @@ import qualified Patrol.Type.MechanismMeta as MechanismMeta
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#mechanism>
 data Mechanism = Mechanism
   { data_ :: Map.Map Text.Text Aeson.Value,
-    description :: Maybe Text.Text,
+    description :: Text.Text,
     handled :: Maybe Bool,
-    helpLink :: Maybe Text.Text,
+    helpLink :: Text.Text,
     meta :: Maybe MechanismMeta.MechanismMeta,
     synthetic :: Maybe Bool,
-    type_ :: Maybe Text.Text
+    type_ :: Text.Text
   }
   deriving (Eq, Show)
 
@@ -34,10 +34,10 @@ empty :: Mechanism
 empty =
   Mechanism
     { data_ = Map.empty,
-      description = Nothing,
+      description = Text.empty,
       handled = Nothing,
-      helpLink = Nothing,
+      helpLink = Text.empty,
       meta = Nothing,
       synthetic = Nothing,
-      type_ = Nothing
+      type_ = Text.empty
     }

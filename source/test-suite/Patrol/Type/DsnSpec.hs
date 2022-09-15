@@ -20,7 +20,7 @@ spec = Hspec.describe "Patrol.Type.Dsn" $ do
             Dsn.Dsn
               { Dsn.protocol = Text.singleton 'a',
                 Dsn.publicKey = Text.singleton 'b',
-                Dsn.secretKey = Nothing,
+                Dsn.secretKey = Text.empty,
                 Dsn.host = Text.singleton 'c',
                 Dsn.port = Nothing,
                 Dsn.path = Text.singleton '/',
@@ -33,7 +33,7 @@ spec = Hspec.describe "Patrol.Type.Dsn" $ do
             Dsn.Dsn
               { Dsn.protocol = Text.singleton 'a',
                 Dsn.publicKey = Text.singleton 'b',
-                Dsn.secretKey = Just $ Text.singleton 'c',
+                Dsn.secretKey = Text.singleton 'c',
                 Dsn.host = Text.singleton 'd',
                 Dsn.port = Just 5,
                 Dsn.path = Text.pack "/f/",
@@ -53,7 +53,7 @@ spec = Hspec.describe "Patrol.Type.Dsn" $ do
             Dsn.Dsn
               { Dsn.protocol = Text.singleton 'a',
                 Dsn.publicKey = Text.singleton 'b',
-                Dsn.secretKey = Nothing,
+                Dsn.secretKey = Text.empty,
                 Dsn.host = Text.singleton 'c',
                 Dsn.port = Nothing,
                 Dsn.path = Text.singleton '/',
@@ -66,7 +66,7 @@ spec = Hspec.describe "Patrol.Type.Dsn" $ do
             Dsn.Dsn
               { Dsn.protocol = Text.singleton 'a',
                 Dsn.publicKey = Text.singleton 'b',
-                Dsn.secretKey = Just $ Text.singleton 'c',
+                Dsn.secretKey = Text.singleton 'c',
                 Dsn.host = Text.singleton 'd',
                 Dsn.port = Just 5,
                 Dsn.path = Text.pack "/f/",

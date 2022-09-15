@@ -7,15 +7,15 @@ import qualified Patrol.Extra.Aeson as Aeson
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#request>
 data Request = Request
-  { cookies :: Map.Map Text.Text (Maybe Text.Text),
+  { cookies :: Map.Map Text.Text Text.Text,
     data_ :: Aeson.Value,
     env :: Map.Map Text.Text Aeson.Value,
-    fragment :: Maybe Text.Text,
-    headers :: Map.Map Text.Text (Maybe Text.Text),
-    inferredContentType :: Maybe Text.Text,
-    method :: Maybe Text.Text,
-    queryString :: Map.Map Text.Text (Maybe Text.Text),
-    url :: Maybe Text.Text
+    fragment :: Text.Text,
+    headers :: Map.Map Text.Text Text.Text,
+    inferredContentType :: Text.Text,
+    method :: Text.Text,
+    queryString :: Map.Map Text.Text Text.Text,
+    url :: Text.Text
   }
   deriving (Eq, Show)
 
@@ -39,10 +39,10 @@ empty =
     { cookies = Map.empty,
       data_ = Aeson.Null,
       env = Map.empty,
-      fragment = Nothing,
+      fragment = Text.empty,
       headers = Map.empty,
-      inferredContentType = Nothing,
-      method = Nothing,
+      inferredContentType = Text.empty,
+      method = Text.empty,
       queryString = Map.empty,
-      url = Nothing
+      url = Text.empty
     }
