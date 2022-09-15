@@ -98,6 +98,7 @@ library
     Patrol.Type.NsError
     Patrol.Type.Platform
     Patrol.Type.PosixSignal
+    Patrol.Type.ProguardDebugImage
     Patrol.Type.Request
     Patrol.Type.Response
     Patrol.Type.Stacktrace
@@ -151,6 +152,7 @@ test-suite patrol-test-suite
     Patrol.Type.NsErrorSpec
     Patrol.Type.PlatformSpec
     Patrol.Type.PosixSignalSpec
+    Patrol.Type.ProguardDebugImageSpec
     Patrol.Type.RequestSpec
     Patrol.Type.ResponseSpec
     Patrol.Type.StacktraceSpec
