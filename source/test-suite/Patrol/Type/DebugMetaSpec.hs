@@ -6,6 +6,7 @@ import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.QQ.Simple as Aeson
 import qualified Data.Map as Map
 import qualified Data.Text as Text
+import qualified Patrol.Type.DebugImage as DebugImage
 import qualified Patrol.Type.DebugMeta as DebugMeta
 import qualified Patrol.Type.SystemSdkInfo as SystemSdkInfo
 import qualified Test.Hspec as Hspec
@@ -19,7 +20,7 @@ spec = Hspec.describe "Patrol.Type.DebugMeta" $ do
       Aeson.toJSON debugMeta `Hspec.shouldBe` json
 
     Hspec.it "works with an image" $ do
-      let image = Map.singleton (Text.pack "example-image") $ Aeson.Bool True
+      let image = DebugImage.Other . Map.singleton (Text.pack "example-image") $ Aeson.Bool True
           debugMeta = DebugMeta.empty {DebugMeta.images = [image]}
           json = [Aeson.aesonQQ| { "images": [ { "example-image": true } ] } |]
       Aeson.toJSON debugMeta `Hspec.shouldBe` json

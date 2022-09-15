@@ -15,6 +15,7 @@ import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Extra.List as List
 import qualified Patrol.Type.Breadcrumbs as Breadcrumbs
 import qualified Patrol.Type.ClientSdkInfo as ClientSdkInfo
+import qualified Patrol.Type.Context as Context
 import qualified Patrol.Type.DebugMeta as DebugMeta
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.EventId as EventId
@@ -32,7 +33,7 @@ import qualified Patrol.Type.User as User
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#event>
 data Event = Event
   { breadcrumbs :: Maybe Breadcrumbs.Breadcrumbs,
-    contexts :: Map.Map Text.Text (Map.Map Text.Text Aeson.Value),
+    contexts :: Map.Map Text.Text Context.Context,
     debugMeta :: Maybe DebugMeta.DebugMeta,
     dist :: Text.Text,
     environment :: Text.Text,

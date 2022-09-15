@@ -1,14 +1,13 @@
 module Patrol.Type.DebugMeta where
 
 import qualified Data.Aeson as Aeson
-import qualified Data.Map as Map
-import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
+import qualified Patrol.Type.DebugImage as DebugImage
 import qualified Patrol.Type.SystemSdkInfo as SystemSdkInfo
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#debugmeta>
 data DebugMeta = DebugMeta
-  { images :: [Map.Map Text.Text Aeson.Value],
+  { images :: [DebugImage.DebugImage],
     sdkInfo :: Maybe SystemSdkInfo.SystemSdkInfo
   }
   deriving (Eq, Show)

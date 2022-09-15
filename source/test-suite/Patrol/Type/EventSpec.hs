@@ -17,6 +17,8 @@ import qualified Patrol.Constant as Constant
 import qualified Patrol.Type.Breadcrumb as Breadcrumb
 import qualified Patrol.Type.Breadcrumbs as Breadcrumbs
 import qualified Patrol.Type.ClientSdkInfo as ClientSdkInfo
+import qualified Patrol.Type.Context as Context
+import qualified Patrol.Type.DebugImage as DebugImage
 import qualified Patrol.Type.DebugMeta as DebugMeta
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Event as Event
@@ -78,14 +80,14 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with a context" $ do
-      let context = Map.singleton (Text.pack "example-key") $ Aeson.Bool True
+      let context = Context.Other . Map.singleton (Text.pack "example-key") $ Aeson.Bool True
           contexts = Map.singleton (Text.pack "example-context") context
           event = Event.empty {Event.contexts = contexts}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "contexts": { "example-context": { "example-key": true } } } |]
       Aeson.toJSON event `Hspec.shouldBe` json
 
     Hspec.it "works with some debug meta" $ do
-      let image = Map.singleton (Text.pack "example-image") $ Aeson.Bool True
+      let image = DebugImage.Other . Map.singleton (Text.pack "example-image") $ Aeson.Bool True
           debugMeta = DebugMeta.empty {DebugMeta.images = [image]}
           event = Event.empty {Event.debugMeta = Just debugMeta}
           json = [Aeson.aesonQQ| { "event_id": "00000000000000000000000000000000", "debug_meta": { "images": [ { "example-image": true } ] } } |]

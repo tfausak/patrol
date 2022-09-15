@@ -10,6 +10,8 @@ import qualified Patrol.Type.BreadcrumbsSpec
 import qualified Patrol.Type.CErrorSpec
 import qualified Patrol.Type.ClientSdkInfoSpec
 import qualified Patrol.Type.ClientSdkPackageSpec
+import qualified Patrol.Type.ContextSpec
+import qualified Patrol.Type.DebugImageSpec
 import qualified Patrol.Type.DebugMetaSpec
 import qualified Patrol.Type.DsnSpec
 import qualified Patrol.Type.ErrorTypeSpec
@@ -34,6 +36,7 @@ import qualified Patrol.Type.ResponseSpec
 import qualified Patrol.Type.StacktraceSpec
 import qualified Patrol.Type.SystemSdkInfoSpec
 import qualified Patrol.Type.ThreadSpec
+import qualified Patrol.Type.ThreadsSpec
 import qualified Patrol.Type.TransactionInfoSpec
 import qualified Patrol.Type.TransactionSourceSpec
 import qualified Patrol.Type.UserSpec
@@ -51,6 +54,8 @@ spec = do
   Patrol.Type.CErrorSpec.spec
   Patrol.Type.ClientSdkInfoSpec.spec
   Patrol.Type.ClientSdkPackageSpec.spec
+  Patrol.Type.ContextSpec.spec
+  Patrol.Type.DebugImageSpec.spec
   Patrol.Type.DebugMetaSpec.spec
   Patrol.Type.DsnSpec.spec
   Patrol.Type.ErrorTypeSpec.spec
@@ -75,6 +80,7 @@ spec = do
   Patrol.Type.StacktraceSpec.spec
   Patrol.Type.SystemSdkInfoSpec.spec
   Patrol.Type.ThreadSpec.spec
+  Patrol.Type.ThreadsSpec.spec
   Patrol.Type.TransactionInfoSpec.spec
   Patrol.Type.TransactionSourceSpec.spec
   Patrol.Type.UserSpec.spec

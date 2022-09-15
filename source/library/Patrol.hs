@@ -4,6 +4,10 @@ module Patrol
     Patrol.Type.Breadcrumbs.Breadcrumbs,
     Patrol.Type.BreadcrumbType.BreadcrumbType,
     Patrol.Type.CError.CError,
+    Patrol.Type.ClientSdkInfo.ClientSdkInfo,
+    Patrol.Type.ClientSdkPackage.ClientSdkPackage,
+    Patrol.Type.Context.Context,
+    Patrol.Type.DebugImage.DebugImage,
     Patrol.Type.DebugMeta.DebugMeta,
     Patrol.Type.Dsn.Dsn,
     Patrol.Type.ErrorType.ErrorType,
@@ -40,6 +44,10 @@ import qualified Patrol.Type.Breadcrumb
 import qualified Patrol.Type.BreadcrumbType
 import qualified Patrol.Type.Breadcrumbs
 import qualified Patrol.Type.CError
+import qualified Patrol.Type.ClientSdkInfo
+import qualified Patrol.Type.ClientSdkPackage
+import qualified Patrol.Type.Context
+import qualified Patrol.Type.DebugImage
 import qualified Patrol.Type.DebugMeta
 import qualified Patrol.Type.Dsn
 import qualified Patrol.Type.ErrorType
