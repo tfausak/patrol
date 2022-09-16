@@ -75,6 +75,7 @@ library
     Patrol.Type.Breadcrumb
     Patrol.Type.Breadcrumbs
     Patrol.Type.BreadcrumbType
+    Patrol.Type.BrowserContext
     Patrol.Type.CError
     Patrol.Type.ClientSdkInfo
     Patrol.Type.ClientSdkPackage
@@ -131,6 +132,7 @@ test-suite patrol-test-suite
     Patrol.Type.BreadcrumbSpec
     Patrol.Type.BreadcrumbsSpec
     Patrol.Type.BreadcrumbTypeSpec
+    Patrol.Type.BrowserContextSpec
     Patrol.Type.CErrorSpec
     Patrol.Type.ClientSdkInfoSpec
     Patrol.Type.ClientSdkPackageSpec

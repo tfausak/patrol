@@ -9,6 +9,7 @@ import qualified Patrol.Type.AppleDebugImageSpec
 import qualified Patrol.Type.BreadcrumbSpec
 import qualified Patrol.Type.BreadcrumbTypeSpec
 import qualified Patrol.Type.BreadcrumbsSpec
+import qualified Patrol.Type.BrowserContextSpec
 import qualified Patrol.Type.CErrorSpec
 import qualified Patrol.Type.ClientSdkInfoSpec
 import qualified Patrol.Type.ClientSdkPackageSpec
@@ -57,6 +58,7 @@ spec = do
   Patrol.Type.BreadcrumbSpec.spec
   Patrol.Type.BreadcrumbsSpec.spec
   Patrol.Type.BreadcrumbTypeSpec.spec
+  Patrol.Type.BrowserContextSpec.spec
   Patrol.Type.CErrorSpec.spec
   Patrol.Type.ClientSdkInfoSpec.spec
   Patrol.Type.ClientSdkPackageSpec.spec

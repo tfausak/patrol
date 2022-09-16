@@ -5,6 +5,7 @@ module Patrol
     Patrol.Type.Breadcrumb.Breadcrumb,
     Patrol.Type.Breadcrumbs.Breadcrumbs,
     Patrol.Type.BreadcrumbType.BreadcrumbType,
+    Patrol.Type.BrowserContext.BrowserContext,
     Patrol.Type.CError.CError,
     Patrol.Type.ClientSdkInfo.ClientSdkInfo,
     Patrol.Type.ClientSdkPackage.ClientSdkPackage,
@@ -49,6 +50,7 @@ import qualified Patrol.Type.AppleDebugImage
 import qualified Patrol.Type.Breadcrumb
 import qualified Patrol.Type.BreadcrumbType
 import qualified Patrol.Type.Breadcrumbs
+import qualified Patrol.Type.BrowserContext
 import qualified Patrol.Type.CError
 import qualified Patrol.Type.ClientSdkInfo
 import qualified Patrol.Type.ClientSdkPackage
