@@ -25,6 +25,7 @@ module Patrol
     Patrol.Type.MachException.MachException,
     Patrol.Type.Mechanism.Mechanism,
     Patrol.Type.MechanismMeta.MechanismMeta,
+    Patrol.Type.NativeDebugImage.NativeDebugImage,
     Patrol.Type.NsError.NsError,
     Patrol.Type.Platform.Platform,
     Patrol.Type.PosixSignal.PosixSignal,
@@ -67,6 +68,7 @@ import qualified Patrol.Type.LogEntry
 import qualified Patrol.Type.MachException
 import qualified Patrol.Type.Mechanism
 import qualified Patrol.Type.MechanismMeta
+import qualified Patrol.Type.NativeDebugImage
 import qualified Patrol.Type.NsError
 import qualified Patrol.Type.Platform
 import qualified Patrol.Type.PosixSignal

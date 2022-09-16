@@ -28,6 +28,7 @@ import qualified Patrol.Type.LogEntrySpec
 import qualified Patrol.Type.MachExceptionSpec
 import qualified Patrol.Type.MechanismMetaSpec
 import qualified Patrol.Type.MechanismSpec
+import qualified Patrol.Type.NativeDebugImageSpec
 import qualified Patrol.Type.NsErrorSpec
 import qualified Patrol.Type.PlatformSpec
 import qualified Patrol.Type.PosixSignalSpec
@@ -73,6 +74,7 @@ spec = do
   Patrol.Type.MachExceptionSpec.spec
   Patrol.Type.MechanismMetaSpec.spec
   Patrol.Type.MechanismSpec.spec
+  Patrol.Type.NativeDebugImageSpec.spec
   Patrol.Type.NsErrorSpec.spec
   Patrol.Type.PlatformSpec.spec
   Patrol.Type.PosixSignalSpec.spec

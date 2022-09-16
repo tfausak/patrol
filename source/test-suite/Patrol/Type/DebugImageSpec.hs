@@ -8,6 +8,7 @@ import qualified Data.Map as Map
 import qualified Data.Text as Text
 import qualified Patrol.Type.AppleDebugImage as AppleDebugImage
 import qualified Patrol.Type.DebugImage as DebugImage
+import qualified Patrol.Type.NativeDebugImage as NativeDebugImage
 import qualified Patrol.Type.ProguardDebugImage as ProguardDebugImage
 import qualified Test.Hspec as Hspec
 
@@ -17,6 +18,12 @@ spec = Hspec.describe "Patrol.Type.DebugImage" $ do
     Hspec.it "works with apple" $ do
       let appleDebugImage = AppleDebugImage.empty {AppleDebugImage.arch = Text.pack "example-arch"}
           debugImage = DebugImage.Apple appleDebugImage
+          json = [Aeson.aesonQQ| { "arch": "example-arch" } |]
+      Aeson.toJSON debugImage `Hspec.shouldBe` json
+
+    Hspec.it "works with native" $ do
+      let nativeDebugImage = NativeDebugImage.empty {NativeDebugImage.arch = Text.pack "example-arch"}
+          debugImage = DebugImage.Native nativeDebugImage
           json = [Aeson.aesonQQ| { "arch": "example-arch" } |]
       Aeson.toJSON debugImage `Hspec.shouldBe` json
 
