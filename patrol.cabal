@@ -70,6 +70,7 @@ library
     Patrol.Exception.Problem
     Patrol.Extra.Aeson
     Patrol.Extra.List
+    Patrol.Type.AppContext
     Patrol.Type.AppleDebugImage
     Patrol.Type.Breadcrumb
     Patrol.Type.Breadcrumbs
@@ -125,6 +126,7 @@ test-suite patrol-test-suite
     Patrol.ConstantSpec
     Patrol.Extra.AesonSpec
     Patrol.Extra.ListSpec
+    Patrol.Type.AppContextSpec
     Patrol.Type.AppleDebugImageSpec
     Patrol.Type.BreadcrumbSpec
     Patrol.Type.BreadcrumbsSpec

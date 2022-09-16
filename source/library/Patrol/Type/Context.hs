@@ -3,10 +3,11 @@ module Patrol.Type.Context where
 import qualified Data.Aeson as Aeson
 import qualified Data.Map as Map
 import qualified Data.Text as Text
+import qualified Patrol.Type.AppContext as AppContext
 
-newtype Context
-  = Other (Map.Map Text.Text Aeson.Value)
-  -- TODO: https://develop.sentry.dev/sdk/event-payloads/types/#appcontext
+data Context
+  = App AppContext.AppContext
+  | Other (Map.Map Text.Text Aeson.Value)
   -- TODO: https://develop.sentry.dev/sdk/event-payloads/types/#browsercontext
   -- TODO: https://develop.sentry.dev/sdk/event-payloads/types/#devicecontext
   -- TODO: https://develop.sentry.dev/sdk/event-payloads/types/#gpucontext
@@ -17,4 +18,5 @@ newtype Context
 
 instance Aeson.ToJSON Context where
   toJSON context = case context of
+    App appContext -> Aeson.toJSON appContext
     Other other -> Aeson.toJSON other

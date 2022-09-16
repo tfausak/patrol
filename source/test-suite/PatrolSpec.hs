@@ -4,6 +4,8 @@ import qualified Patrol.ClientSpec
 import qualified Patrol.ConstantSpec
 import qualified Patrol.Extra.AesonSpec
 import qualified Patrol.Extra.ListSpec
+import qualified Patrol.Type.AppContextSpec
+import qualified Patrol.Type.AppleDebugImageSpec
 import qualified Patrol.Type.BreadcrumbSpec
 import qualified Patrol.Type.BreadcrumbTypeSpec
 import qualified Patrol.Type.BreadcrumbsSpec
@@ -50,6 +52,8 @@ spec = do
   Patrol.ConstantSpec.spec
   Patrol.Extra.AesonSpec.spec
   Patrol.Extra.ListSpec.spec
+  Patrol.Type.AppContextSpec.spec
+  Patrol.Type.AppleDebugImageSpec.spec
   Patrol.Type.BreadcrumbSpec.spec
   Patrol.Type.BreadcrumbsSpec.spec
   Patrol.Type.BreadcrumbTypeSpec.spec
