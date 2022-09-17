@@ -82,6 +82,7 @@ library
     Patrol.Type.Context
     Patrol.Type.DebugImage
     Patrol.Type.DebugMeta
+    Patrol.Type.DeviceContext
     Patrol.Type.Dsn
     Patrol.Type.ErrorType
     Patrol.Type.Event
@@ -139,6 +140,7 @@ test-suite patrol-test-suite
     Patrol.Type.ContextSpec
     Patrol.Type.DebugImageSpec
     Patrol.Type.DebugMetaSpec
+    Patrol.Type.DeviceContextSpec
     Patrol.Type.DsnSpec
     Patrol.Type.ErrorTypeSpec
     Patrol.Type.EventIdSpec

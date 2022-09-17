@@ -12,6 +12,7 @@ module Patrol
     Patrol.Type.Context.Context,
     Patrol.Type.DebugImage.DebugImage,
     Patrol.Type.DebugMeta.DebugMeta,
+    Patrol.Type.DeviceContext.DeviceContext,
     Patrol.Type.Dsn.Dsn,
     Patrol.Type.ErrorType.ErrorType,
     Patrol.Type.Event.Event,
@@ -57,6 +58,7 @@ import qualified Patrol.Type.ClientSdkPackage
 import qualified Patrol.Type.Context
 import qualified Patrol.Type.DebugImage
 import qualified Patrol.Type.DebugMeta
+import qualified Patrol.Type.DeviceContext
 import qualified Patrol.Type.Dsn
 import qualified Patrol.Type.ErrorType
 import qualified Patrol.Type.Event

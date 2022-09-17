@@ -9,6 +9,7 @@ import qualified Data.Text as Text
 import qualified Patrol.Type.AppContext as AppContext
 import qualified Patrol.Type.BrowserContext as BrowserContext
 import qualified Patrol.Type.Context as Context
+import qualified Patrol.Type.DeviceContext as DeviceContext
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -21,6 +22,11 @@ spec = Hspec.describe "Patrol.Type.Context" $ do
 
     Hspec.it "works with browser" $ do
       let context = Context.Browser BrowserContext.empty {BrowserContext.name = Text.pack "example-name"}
+          json = [Aeson.aesonQQ| { "name": "example-name" } |]
+      Aeson.toJSON context `Hspec.shouldBe` json
+
+    Hspec.it "works with device" $ do
+      let context = Context.Device DeviceContext.empty {DeviceContext.name = Text.pack "example-name"}
           json = [Aeson.aesonQQ| { "name": "example-name" } |]
       Aeson.toJSON context `Hspec.shouldBe` json
 

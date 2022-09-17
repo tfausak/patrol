@@ -16,6 +16,7 @@ import qualified Patrol.Type.ClientSdkPackageSpec
 import qualified Patrol.Type.ContextSpec
 import qualified Patrol.Type.DebugImageSpec
 import qualified Patrol.Type.DebugMetaSpec
+import qualified Patrol.Type.DeviceContextSpec
 import qualified Patrol.Type.DsnSpec
 import qualified Patrol.Type.ErrorTypeSpec
 import qualified Patrol.Type.EventIdSpec
@@ -65,6 +66,7 @@ spec = do
   Patrol.Type.ContextSpec.spec
   Patrol.Type.DebugImageSpec.spec
   Patrol.Type.DebugMetaSpec.spec
+  Patrol.Type.DeviceContextSpec.spec
   Patrol.Type.DsnSpec.spec
   Patrol.Type.ErrorTypeSpec.spec
   Patrol.Type.EventIdSpec.spec
