@@ -107,6 +107,7 @@ library
     Patrol.Type.ProguardDebugImage
     Patrol.Type.Request
     Patrol.Type.Response
+    Patrol.Type.RuntimeContext
     Patrol.Type.Stacktrace
     Patrol.Type.SystemSdkInfo
     Patrol.Type.Thread
@@ -167,6 +168,7 @@ test-suite patrol-test-suite
     Patrol.Type.ProguardDebugImageSpec
     Patrol.Type.RequestSpec
     Patrol.Type.ResponseSpec
+    Patrol.Type.RuntimeContextSpec
     Patrol.Type.StacktraceSpec
     Patrol.Type.SystemSdkInfoSpec
     Patrol.Type.ThreadSpec

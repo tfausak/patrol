@@ -12,6 +12,7 @@ import qualified Patrol.Type.Context as Context
 import qualified Patrol.Type.DeviceContext as DeviceContext
 import qualified Patrol.Type.GpuContext as GpuContext
 import qualified Patrol.Type.OsContext as OsContext
+import qualified Patrol.Type.RuntimeContext as RuntimeContext
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -39,6 +40,11 @@ spec = Hspec.describe "Patrol.Type.Context" $ do
 
     Hspec.it "works with os" $ do
       let context = Context.Os OsContext.empty {OsContext.name = Text.pack "example-name"}
+          json = [Aeson.aesonQQ| { "name": "example-name" } |]
+      Aeson.toJSON context `Hspec.shouldBe` json
+
+    Hspec.it "works with runtime" $ do
+      let context = Context.Runtime RuntimeContext.empty {RuntimeContext.name = Text.pack "example-name"}
           json = [Aeson.aesonQQ| { "name": "example-name" } |]
       Aeson.toJSON context `Hspec.shouldBe` json
 

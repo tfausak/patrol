@@ -37,6 +37,7 @@ module Patrol
     Patrol.Type.ProguardDebugImage.ProguardDebugImage,
     Patrol.Type.Request.Request,
     Patrol.Type.Response.Response,
+    Patrol.Type.RuntimeContext.RuntimeContext,
     Patrol.Type.Stacktrace.Stacktrace,
     Patrol.Type.SystemSdkInfo.SystemSdkInfo,
     Patrol.Type.Thread.Thread,
@@ -85,6 +86,7 @@ import qualified Patrol.Type.PosixSignal
 import qualified Patrol.Type.ProguardDebugImage
 import qualified Patrol.Type.Request
 import qualified Patrol.Type.Response
+import qualified Patrol.Type.RuntimeContext
 import qualified Patrol.Type.Stacktrace
 import qualified Patrol.Type.SystemSdkInfo
 import qualified Patrol.Type.Thread

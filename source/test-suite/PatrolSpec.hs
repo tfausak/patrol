@@ -41,6 +41,7 @@ import qualified Patrol.Type.PosixSignalSpec
 import qualified Patrol.Type.ProguardDebugImageSpec
 import qualified Patrol.Type.RequestSpec
 import qualified Patrol.Type.ResponseSpec
+import qualified Patrol.Type.RuntimeContextSpec
 import qualified Patrol.Type.StacktraceSpec
 import qualified Patrol.Type.SystemSdkInfoSpec
 import qualified Patrol.Type.ThreadSpec
@@ -93,6 +94,7 @@ spec = do
   Patrol.Type.ProguardDebugImageSpec.spec
   Patrol.Type.RequestSpec.spec
   Patrol.Type.ResponseSpec.spec
+  Patrol.Type.RuntimeContextSpec.spec
   Patrol.Type.StacktraceSpec.spec
   Patrol.Type.SystemSdkInfoSpec.spec
   Patrol.Type.ThreadSpec.spec
