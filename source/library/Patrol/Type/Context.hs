@@ -6,13 +6,14 @@ import qualified Data.Text as Text
 import qualified Patrol.Type.AppContext as AppContext
 import qualified Patrol.Type.BrowserContext as BrowserContext
 import qualified Patrol.Type.DeviceContext as DeviceContext
+import qualified Patrol.Type.GpuContext as GpuContext
 
 data Context
   = App AppContext.AppContext
   | Browser BrowserContext.BrowserContext
   | Device DeviceContext.DeviceContext
+  | Gpu GpuContext.GpuContext
   | Other (Map.Map Text.Text Aeson.Value)
-  -- TODO: https://develop.sentry.dev/sdk/event-payloads/types/#gpucontext
   -- TODO: https://develop.sentry.dev/sdk/event-payloads/types/#oscontext
   -- TODO: https://develop.sentry.dev/sdk/event-payloads/types/#runtimecontext
   -- TODO: https://develop.sentry.dev/sdk/event-payloads/types/#tracecontext
@@ -23,4 +24,5 @@ instance Aeson.ToJSON Context where
     App appContext -> Aeson.toJSON appContext
     Browser browserContext -> Aeson.toJSON browserContext
     Device deviceContext -> Aeson.toJSON deviceContext
+    Gpu gpuContext -> Aeson.toJSON gpuContext
     Other other -> Aeson.toJSON other

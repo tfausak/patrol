@@ -93,6 +93,7 @@ library
     Patrol.Type.Exceptions
     Patrol.Type.Frame
     Patrol.Type.Geo
+    Patrol.Type.GpuContext
     Patrol.Type.Level
     Patrol.Type.LogEntry
     Patrol.Type.MachException
@@ -151,6 +152,7 @@ test-suite patrol-test-suite
     Patrol.Type.ExceptionsSpec
     Patrol.Type.FrameSpec
     Patrol.Type.GeoSpec
+    Patrol.Type.GpuContextSpec
     Patrol.Type.LevelSpec
     Patrol.Type.LogEntrySpec
     Patrol.Type.MachExceptionSpec

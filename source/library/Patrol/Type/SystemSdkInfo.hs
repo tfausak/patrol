@@ -14,12 +14,12 @@ data SystemSdkInfo = SystemSdkInfo
   deriving (Eq, Show)
 
 instance Aeson.ToJSON SystemSdkInfo where
-  toJSON cError =
+  toJSON systemSdkInfo =
     Aeson.intoObject
-      [ Aeson.pair "sdk_name" $ sdkName cError,
-        Aeson.pair "version_major" $ versionMajor cError,
-        Aeson.pair "version_minor" $ versionMinor cError,
-        Aeson.pair "version_patchlevel" $ versionPatchlevel cError
+      [ Aeson.pair "sdk_name" $ sdkName systemSdkInfo,
+        Aeson.pair "version_major" $ versionMajor systemSdkInfo,
+        Aeson.pair "version_minor" $ versionMinor systemSdkInfo,
+        Aeson.pair "version_patchlevel" $ versionPatchlevel systemSdkInfo
       ]
 
 empty :: SystemSdkInfo

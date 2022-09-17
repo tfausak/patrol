@@ -5,7 +5,7 @@ import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Type.TransactionSource as TransactionSource
 
--- | <https://develop.sentry.dev/sdk/event-payloads/types/#cerror>
+-- | <https://develop.sentry.dev/sdk/event-payloads/types/#transactioninfo>
 data TransactionInfo = TransactionInfo
   { original :: Text.Text,
     source :: Maybe TransactionSource.TransactionSource

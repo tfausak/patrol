@@ -23,6 +23,7 @@ module Patrol
     Patrol.Type.Exceptions.Exceptions,
     Patrol.Type.Frame.Frame,
     Patrol.Type.Geo.Geo,
+    Patrol.Type.GpuContext.GpuContext,
     Patrol.Type.Level.Level,
     Patrol.Type.LogEntry.LogEntry,
     Patrol.Type.MachException.MachException,
@@ -69,6 +70,7 @@ import qualified Patrol.Type.Exception
 import qualified Patrol.Type.Exceptions
 import qualified Patrol.Type.Frame
 import qualified Patrol.Type.Geo
+import qualified Patrol.Type.GpuContext
 import qualified Patrol.Type.Level
 import qualified Patrol.Type.LogEntry
 import qualified Patrol.Type.MachException

@@ -27,6 +27,7 @@ import qualified Patrol.Type.ExceptionSpec
 import qualified Patrol.Type.ExceptionsSpec
 import qualified Patrol.Type.FrameSpec
 import qualified Patrol.Type.GeoSpec
+import qualified Patrol.Type.GpuContextSpec
 import qualified Patrol.Type.LevelSpec
 import qualified Patrol.Type.LogEntrySpec
 import qualified Patrol.Type.MachExceptionSpec
@@ -77,6 +78,7 @@ spec = do
   Patrol.Type.ExceptionsSpec.spec
   Patrol.Type.FrameSpec.spec
   Patrol.Type.GeoSpec.spec
+  Patrol.Type.GpuContextSpec.spec
   Patrol.Type.LevelSpec.spec
   Patrol.Type.LogEntrySpec.spec
   Patrol.Type.MachExceptionSpec.spec
