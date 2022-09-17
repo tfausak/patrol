@@ -1,2 +1,5 @@
-/.stack-work/
-/stack.yaml.lock
+/.vscode/
+/cabal.project.*
+/dist-newstyle/
+
+*.tix
