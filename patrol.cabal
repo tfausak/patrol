@@ -108,10 +108,12 @@ library
     Patrol.Type.Request
     Patrol.Type.Response
     Patrol.Type.RuntimeContext
+    Patrol.Type.SpanStatus
     Patrol.Type.Stacktrace
     Patrol.Type.SystemSdkInfo
     Patrol.Type.Thread
     Patrol.Type.Threads
+    Patrol.Type.TraceContext
     Patrol.Type.TransactionInfo
     Patrol.Type.TransactionSource
     Patrol.Type.User
@@ -169,10 +171,12 @@ test-suite patrol-test-suite
     Patrol.Type.RequestSpec
     Patrol.Type.ResponseSpec
     Patrol.Type.RuntimeContextSpec
+    Patrol.Type.SpanStatusSpec
     Patrol.Type.StacktraceSpec
     Patrol.Type.SystemSdkInfoSpec
     Patrol.Type.ThreadSpec
     Patrol.Type.ThreadsSpec
+    Patrol.Type.TraceContextSpec
     Patrol.Type.TransactionInfoSpec
     Patrol.Type.TransactionSourceSpec
     Patrol.Type.UserSpec

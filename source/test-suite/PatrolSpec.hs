@@ -42,10 +42,12 @@ import qualified Patrol.Type.ProguardDebugImageSpec
 import qualified Patrol.Type.RequestSpec
 import qualified Patrol.Type.ResponseSpec
 import qualified Patrol.Type.RuntimeContextSpec
+import qualified Patrol.Type.SpanStatusSpec
 import qualified Patrol.Type.StacktraceSpec
 import qualified Patrol.Type.SystemSdkInfoSpec
 import qualified Patrol.Type.ThreadSpec
 import qualified Patrol.Type.ThreadsSpec
+import qualified Patrol.Type.TraceContextSpec
 import qualified Patrol.Type.TransactionInfoSpec
 import qualified Patrol.Type.TransactionSourceSpec
 import qualified Patrol.Type.UserSpec
@@ -95,10 +97,12 @@ spec = do
   Patrol.Type.RequestSpec.spec
   Patrol.Type.ResponseSpec.spec
   Patrol.Type.RuntimeContextSpec.spec
+  Patrol.Type.SpanStatusSpec.spec
   Patrol.Type.StacktraceSpec.spec
   Patrol.Type.SystemSdkInfoSpec.spec
   Patrol.Type.ThreadSpec.spec
   Patrol.Type.ThreadsSpec.spec
+  Patrol.Type.TraceContextSpec.spec
   Patrol.Type.TransactionInfoSpec.spec
   Patrol.Type.TransactionSourceSpec.spec
   Patrol.Type.UserSpec.spec

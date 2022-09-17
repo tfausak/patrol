@@ -13,6 +13,7 @@ import qualified Patrol.Type.DeviceContext as DeviceContext
 import qualified Patrol.Type.GpuContext as GpuContext
 import qualified Patrol.Type.OsContext as OsContext
 import qualified Patrol.Type.RuntimeContext as RuntimeContext
+import qualified Patrol.Type.TraceContext as TraceContext
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -46,6 +47,11 @@ spec = Hspec.describe "Patrol.Type.Context" $ do
     Hspec.it "works with runtime" $ do
       let context = Context.Runtime RuntimeContext.empty {RuntimeContext.name = Text.pack "example-name"}
           json = [Aeson.aesonQQ| { "name": "example-name" } |]
+      Aeson.toJSON context `Hspec.shouldBe` json
+
+    Hspec.it "works with trace" $ do
+      let context = Context.Trace TraceContext.empty {TraceContext.op = Text.pack "example-op"}
+          json = [Aeson.aesonQQ| { "op": "example-op" } |]
       Aeson.toJSON context `Hspec.shouldBe` json
 
     Hspec.it "works with other" $ do

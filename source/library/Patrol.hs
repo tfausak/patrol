@@ -38,10 +38,12 @@ module Patrol
     Patrol.Type.Request.Request,
     Patrol.Type.Response.Response,
     Patrol.Type.RuntimeContext.RuntimeContext,
+    Patrol.Type.SpanStatus.SpanStatus,
     Patrol.Type.Stacktrace.Stacktrace,
     Patrol.Type.SystemSdkInfo.SystemSdkInfo,
     Patrol.Type.Thread.Thread,
     Patrol.Type.Threads.Threads,
+    Patrol.Type.TraceContext.TraceContext,
     Patrol.Type.TransactionInfo.TransactionInfo,
     Patrol.Type.TransactionSource.TransactionSource,
     Patrol.Type.User.User,
@@ -87,10 +89,12 @@ import qualified Patrol.Type.ProguardDebugImage
 import qualified Patrol.Type.Request
 import qualified Patrol.Type.Response
 import qualified Patrol.Type.RuntimeContext
+import qualified Patrol.Type.SpanStatus
 import qualified Patrol.Type.Stacktrace
 import qualified Patrol.Type.SystemSdkInfo
 import qualified Patrol.Type.Thread
 import qualified Patrol.Type.Threads
+import qualified Patrol.Type.TraceContext
 import qualified Patrol.Type.TransactionInfo
 import qualified Patrol.Type.TransactionSource
 import qualified Patrol.Type.User
