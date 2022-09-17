@@ -101,6 +101,7 @@ library
     Patrol.Type.MechanismMeta
     Patrol.Type.NativeDebugImage
     Patrol.Type.NsError
+    Patrol.Type.OsContext
     Patrol.Type.Platform
     Patrol.Type.PosixSignal
     Patrol.Type.ProguardDebugImage
@@ -160,6 +161,7 @@ test-suite patrol-test-suite
     Patrol.Type.MechanismSpec
     Patrol.Type.NativeDebugImageSpec
     Patrol.Type.NsErrorSpec
+    Patrol.Type.OsContextSpec
     Patrol.Type.PlatformSpec
     Patrol.Type.PosixSignalSpec
     Patrol.Type.ProguardDebugImageSpec

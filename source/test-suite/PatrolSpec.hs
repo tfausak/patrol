@@ -35,6 +35,7 @@ import qualified Patrol.Type.MechanismMetaSpec
 import qualified Patrol.Type.MechanismSpec
 import qualified Patrol.Type.NativeDebugImageSpec
 import qualified Patrol.Type.NsErrorSpec
+import qualified Patrol.Type.OsContextSpec
 import qualified Patrol.Type.PlatformSpec
 import qualified Patrol.Type.PosixSignalSpec
 import qualified Patrol.Type.ProguardDebugImageSpec
@@ -86,6 +87,7 @@ spec = do
   Patrol.Type.MechanismSpec.spec
   Patrol.Type.NativeDebugImageSpec.spec
   Patrol.Type.NsErrorSpec.spec
+  Patrol.Type.OsContextSpec.spec
   Patrol.Type.PlatformSpec.spec
   Patrol.Type.PosixSignalSpec.spec
   Patrol.Type.ProguardDebugImageSpec.spec
