@@ -38,10 +38,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - { platform: macos, ghc: 9.4.2 }
-          - { platform: ubuntu, ghc: 9.4.2 }
-          - { platform: windows, ghc: 9.4.2 }
-          - { platform: ubuntu, ghc: 9.2.4 }
+          - { platform: macos, ghc: 9.4.4 }
+          - { platform: ubuntu, ghc: 9.4.4 }
+          - { platform: windows, ghc: 9.4.4 }
+          - { platform: ubuntu, ghc: 9.2.5 }
           - { platform: ubuntu, ghc: 9.0.2 }
     runs-on: ${{ matrix.platform }}-latest
     name: GHC ${{ matrix.ghc }} on ${{ matrix.platform }}
@@ -98,5 +98,5 @@ jobs:
 
       - run: cabal run -- patrol-test-suite --fail-on focused --randomize
 
-      - if: github.event_name == 'release' && matrix.platform == 'ubuntu' && matrix.ghc == '9.4.2'
+      - if: github.event_name == 'release' && matrix.platform == 'ubuntu' && matrix.ghc == '9.4.4'
         run: cabal upload --publish --username '${{ secrets.HACKAGE_USERNAME }}' --password '${{ secrets.HACKAGE_PASSWORD }}' ${{ steps.artifact.outputs.directory }}/patrol-*.tar.gz
