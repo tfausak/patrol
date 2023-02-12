@@ -129,7 +129,7 @@ empty =
       version = Text.empty
     }
 
-new :: IO.MonadIO io => io Event
+new :: (IO.MonadIO io) => io Event
 new = do
   theEventId <- EventId.random
   theTimestamp <- IO.liftIO Time.getCurrentTime
@@ -144,7 +144,7 @@ new = do
         version = Constant.sentryVersion
       }
 
-intoRequest :: Catch.MonadThrow m => Dsn.Dsn -> Event -> m Client.Request
+intoRequest :: (Catch.MonadThrow m) => Dsn.Dsn -> Event -> m Client.Request
 intoRequest dsn event = do
   theRequest <-
     Client.parseUrlThrow

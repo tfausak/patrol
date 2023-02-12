@@ -33,7 +33,7 @@ fromUuid = EventId
 intoUuid :: EventId -> Uuid.UUID
 intoUuid (EventId uuid) = uuid
 
-random :: IO.MonadIO io => io EventId
+random :: (IO.MonadIO io) => io EventId
 random = IO.liftIO $ fmap fromUuid Uuid.nextRandom
 
 intoText :: EventId -> Text.Text
@@ -41,7 +41,7 @@ intoText eventId =
   let (lo, hi) = Uuid.toWords64 $ intoUuid eventId
    in Text.pack $ Printf.printf "%016x%016x" lo hi
 
-fromText :: Catch.MonadThrow m => Text.Text -> m EventId
+fromText :: (Catch.MonadThrow m) => Text.Text -> m EventId
 fromText t1 = do
   let parse :: (Catch.MonadThrow n, Integral a) => Int -> Text.Text -> n (a, Text.Text)
       parse size text = do

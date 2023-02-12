@@ -16,5 +16,5 @@ isEmpty value = case value of
   Aeson.String string -> Text.null string
   _ -> False
 
-pair :: Aeson.ToJSON a => String -> a -> Aeson.Pair
+pair :: (Aeson.ToJSON a) => String -> a -> Aeson.Pair
 pair = (Aeson..=) . Key.fromString
