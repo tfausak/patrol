@@ -23,7 +23,7 @@ data Dsn = Dsn
   }
   deriving (Eq, Show)
 
-fromUri :: Catch.MonadThrow m => Uri.URI -> m Dsn
+fromUri :: (Catch.MonadThrow m) => Uri.URI -> m Dsn
 fromUri uri = do
   theProtocol <- maybe (Catch.throwM $ Problem.Problem "invalid scheme") pure . Text.stripSuffix (Text.singleton ':') . Text.pack $ Uri.uriScheme uri
   uriAuth <- maybe (Catch.throwM $ Problem.Problem "missing authority") pure $ Uri.uriAuthority uri

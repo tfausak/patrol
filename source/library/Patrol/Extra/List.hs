@@ -2,10 +2,10 @@ module Patrol.Extra.List where
 
 import qualified Data.Function as Function
 
-insertAll :: Eq k => [(k, v)] -> [(k, v)] -> [(k, v)]
+insertAll :: (Eq k) => [(k, v)] -> [(k, v)] -> [(k, v)]
 insertAll = flip $ foldr insert
 
-insert :: Eq k => (k, v) -> [(k, v)] -> [(k, v)]
+insert :: (Eq k) => (k, v) -> [(k, v)] -> [(k, v)]
 insert = insertBy $ Function.on (==) fst
 
 insertBy :: (a -> a -> Bool) -> a -> [a] -> [a]
