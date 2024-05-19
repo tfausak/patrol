@@ -1,6 +1,6 @@
 cabal-version: 2.2
 name: patrol
-version: 1.0.0.7
+version: 1.0.0.8
 synopsis: Sentry SDK
 description: Patrol is a Sentry SDK.
 build-type: Simple
