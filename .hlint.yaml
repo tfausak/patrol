@@ -1,25 +1,11 @@
-[
-  {
-    "group": {
-      "enabled": true,
-      "name": "dollar"
-    }
-  },
-  {
-    "group": {
-      "enabled": true,
-      "name": "future"
-    }
-  },
-  {
-    "group": {
-      "enabled": true,
-      "name": "generalise"
-    }
-  },
-  {
-    "ignore": {
-      "name": "Use <$>"
-    }
-  }
-]
+- group:
+    enabled: true
+    name: dollar
+- group:
+    enabled: true
+    name: future
+- group:
+    enabled: true
+    name: generalise
+- ignore:
+    name: Use <$>
