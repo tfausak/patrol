@@ -18,6 +18,7 @@ import qualified Patrol.Type.DebugImageSpec
 import qualified Patrol.Type.DebugMetaSpec
 import qualified Patrol.Type.DeviceContextSpec
 import qualified Patrol.Type.DsnSpec
+import qualified Patrol.Type.EnvelopeSpec
 import qualified Patrol.Type.ErrorTypeSpec
 import qualified Patrol.Type.EventIdSpec
 import qualified Patrol.Type.EventProcessingErrorSpec
@@ -28,6 +29,8 @@ import qualified Patrol.Type.ExceptionsSpec
 import qualified Patrol.Type.FrameSpec
 import qualified Patrol.Type.GeoSpec
 import qualified Patrol.Type.GpuContextSpec
+import qualified Patrol.Type.HeadersSpec
+import qualified Patrol.Type.ItemSpec
 import qualified Patrol.Type.LevelSpec
 import qualified Patrol.Type.LogEntrySpec
 import qualified Patrol.Type.MachExceptionSpec
@@ -73,6 +76,9 @@ spec = do
   Patrol.Type.DebugMetaSpec.spec
   Patrol.Type.DeviceContextSpec.spec
   Patrol.Type.DsnSpec.spec
+  Patrol.Type.EnvelopeSpec.spec
+  Patrol.Type.HeadersSpec.spec
+  Patrol.Type.ItemSpec.spec
   Patrol.Type.ErrorTypeSpec.spec
   Patrol.Type.EventIdSpec.spec
   Patrol.Type.EventProcessingErrorSpec.spec

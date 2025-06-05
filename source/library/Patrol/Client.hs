@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-deprecations #-}
+
 module Patrol.Client where
 
 import qualified Control.Monad.Catch as Catch
@@ -9,6 +11,7 @@ import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.Response as Response
 
+{-# DEPRECATED store "Use envelopes instead." #-}
 store ::
   (IO.MonadIO io, Catch.MonadThrow io) =>
   Client.Manager ->

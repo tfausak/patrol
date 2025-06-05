@@ -144,6 +144,7 @@ new = do
         version = Constant.sentryVersion
       }
 
+{-# DEPRECATED intoRequest "Use envelopes instead." #-}
 intoRequest :: (Catch.MonadThrow m) => Dsn.Dsn -> Event -> m Client.Request
 intoRequest dsn event = do
   theRequest <-

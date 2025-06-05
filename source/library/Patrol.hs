@@ -14,7 +14,10 @@ module Patrol
     Patrol.Type.DebugMeta.DebugMeta,
     Patrol.Type.DeviceContext.DeviceContext,
     Patrol.Type.Dsn.Dsn,
+    Patrol.Type.Envelope.Envelope,
     Patrol.Type.ErrorType.ErrorType,
+    Patrol.Type.Headers.Headers,
+    Patrol.Type.Item.Item,
     Patrol.Type.Event.Event,
     Patrol.Type.EventId.EventId,
     Patrol.Type.EventProcessingError.EventProcessingError,
@@ -65,6 +68,7 @@ import qualified Patrol.Type.DebugImage
 import qualified Patrol.Type.DebugMeta
 import qualified Patrol.Type.DeviceContext
 import qualified Patrol.Type.Dsn
+import qualified Patrol.Type.Envelope
 import qualified Patrol.Type.ErrorType
 import qualified Patrol.Type.Event
 import qualified Patrol.Type.EventId
@@ -75,6 +79,8 @@ import qualified Patrol.Type.Exceptions
 import qualified Patrol.Type.Frame
 import qualified Patrol.Type.Geo
 import qualified Patrol.Type.GpuContext
+import qualified Patrol.Type.Headers
+import qualified Patrol.Type.Item
 import qualified Patrol.Type.Level
 import qualified Patrol.Type.LogEntry
 import qualified Patrol.Type.MachException
