@@ -8,6 +8,7 @@ import qualified Data.Map as Map
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Text
 import qualified Data.Time as Time
+import qualified GHC.Stack as Stack
 import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
 import qualified Patrol.Constant as Constant
@@ -129,22 +130,42 @@ empty =
       version = Text.empty
     }
 
-new :: (IO.MonadIO io) => io Event
-new = do
+initial :: Event
+initial =
+  empty
+    { environment = Text.pack "production",
+      level = Just Level.Error,
+      platform = Just Platform.Haskell,
+      type_ = Just EventType.Default,
+      version = Constant.sentryVersion
+    }
+
+setEventId :: (IO.MonadIO io) => Event -> io Event
+setEventId event = do
   theEventId <- EventId.random
+  pure event {eventId = theEventId}
+
+setTimestamp :: (IO.MonadIO io) => Event -> io Event
+setTimestamp event = do
   theTimestamp <- IO.liftIO Time.getCurrentTime
+  pure event {timestamp = Just theTimestamp}
+
+new :: (IO.MonadIO io) => io Event
+new = setEventId initial >>= setTimestamp
+
+fromException ::
+  (Catch.Exception e, IO.MonadIO io) =>
+  (Catch.SomeException -> Maybe Stack.CallStack) ->
+  e ->
+  io Event
+fromException getCallStack e = do
+  event <- new
   pure
-    empty
-      { environment = Text.pack "production",
-        eventId = theEventId,
-        level = Just Level.Error,
-        platform = Just Platform.Haskell,
-        timestamp = Just theTimestamp,
-        type_ = Just EventType.Default,
-        version = Constant.sentryVersion
+    event
+      { exception = Just $ Exceptions.fromException getCallStack e
       }
 
-{-# DEPRECATED intoRequest "Use envelopes instead." #-}
+{-# DEPRECATED intoRequest "Use `Patrol.Type.Envelope.intoRequest` instead." #-}
 intoRequest :: (Catch.MonadThrow m) => Dsn.Dsn -> Event -> m Client.Request
 intoRequest dsn event = do
   theRequest <-

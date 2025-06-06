@@ -12,7 +12,7 @@ spec :: Hspec.Spec
 spec = Hspec.describe "Patrol.Type.Headers" $ do
   Hspec.describe "serialize" $ do
     Hspec.it "works with an empty object" $ do
-      let actual = Builder.toLazyByteString . Headers.serialize $ Headers.fromObject mempty
+      let actual = Builder.toLazyByteString $ Headers.serialize Headers.empty
       actual `Hspec.shouldBe` "{}"
 
     Hspec.it "works with a singleton object" $ do

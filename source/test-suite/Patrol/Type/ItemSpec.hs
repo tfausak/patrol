@@ -4,7 +4,9 @@ module Patrol.Type.ItemSpec where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.KeyMap as KeyMap
+import qualified Data.ByteString as ByteString
 import qualified Data.ByteString.Builder as Builder
+import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.Headers as Headers
 import qualified Patrol.Type.Item as Item
 import qualified Test.Hspec as Hspec
@@ -17,7 +19,7 @@ spec = Hspec.describe "Patrol.Type.Item" $ do
             Builder.toLazyByteString $
               Item.serialize
                 Item.Item
-                  { Item.headers = Headers.fromObject mempty,
+                  { Item.headers = Headers.empty,
                     Item.payload = ""
                   }
       actual `Hspec.shouldBe` "{}\n"
@@ -27,7 +29,7 @@ spec = Hspec.describe "Patrol.Type.Item" $ do
             Builder.toLazyByteString $
               Item.serialize
                 Item.Item
-                  { Item.headers = Headers.fromObject mempty,
+                  { Item.headers = Headers.empty,
                     Item.payload = "x"
                   }
       actual `Hspec.shouldBe` "{}\nx"
@@ -48,3 +50,22 @@ spec = Hspec.describe "Patrol.Type.Item" $ do
                     Item.payload = "a\nb"
                   }
       actual `Hspec.shouldBe` "{\"length\":3}\na\nb"
+
+  Hspec.describe "fromEvent" $ do
+    Hspec.it "sets the headers" $ do
+      let event = Event.empty
+      let actual = Item.fromEvent event
+      let expected =
+            Headers.fromObject $
+              KeyMap.fromList
+                [ ("type", "event"),
+                  ("length", Aeson.toJSON (47 :: Int)),
+                  ("event_id", Aeson.toJSON $ Event.eventId event)
+                ]
+      Item.headers actual `Hspec.shouldBe` expected
+
+    Hspec.it "sets the payload" $ do
+      let event = Event.empty
+      let actual = Item.fromEvent event
+      let expected = "{\"event_id\":\"00000000000000000000000000000000\"}" :: ByteString.ByteString
+      Item.payload actual `Hspec.shouldBe` expected

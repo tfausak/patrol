@@ -1,5 +1,6 @@
 module Patrol
-  ( Patrol.Exception.Problem.Problem,
+  ( Patrol.Client.captureException,
+    Patrol.Exception.Problem.Problem,
     Patrol.Type.AppContext.AppContext,
     Patrol.Type.AppleDebugImage.AppleDebugImage,
     Patrol.Type.Breadcrumb.Breadcrumb,
@@ -53,6 +54,7 @@ module Patrol
   )
 where
 
+import qualified Patrol.Client
 import qualified Patrol.Exception.Problem
 import qualified Patrol.Type.AppContext
 import qualified Patrol.Type.AppleDebugImage

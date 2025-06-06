@@ -20,5 +20,8 @@ fromObject = Headers
 intoObject :: Headers -> Aeson.Object
 intoObject (Headers object) = object
 
+empty :: Headers
+empty = Headers mempty
+
 serialize :: Headers -> Builder.Builder
 serialize = Aeson.fromEncoding . Aeson.toEncoding
