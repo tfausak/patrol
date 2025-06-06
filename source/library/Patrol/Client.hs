@@ -16,11 +16,18 @@ import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.Response as Response
 import qualified System.Environment as Environment
 
+-- | Capture an exception by sending it to Sentry. The DSN is read from the
+-- @SENTRY_DSN@ environment variable. To customize the behavior, use
+-- 'captureExceptionWith'.
 captureException ::
   (Catch.Exception e, IO.MonadIO io, Catch.MonadThrow io) =>
   e ->
   io Response.Response
-captureException = captureExceptionWith (const Nothing) pure
+captureException e = do
+  dsn <- do
+    maybeString <- IO.liftIO $ Environment.lookupEnv "SENTRY_DSN"
+    Dsn.fromText $ maybe Text.empty Text.pack maybeString
+  captureExceptionWith (const Nothing) pure dsn e
 
 captureExceptionWith ::
   (Catch.Exception e, IO.MonadIO io, Catch.MonadThrow io) =>
@@ -30,12 +37,10 @@ captureExceptionWith ::
   -- | How to modify the 'Envelope.Envelope' before it is sent. Use @'pure'@ if
   -- you don't want to modify the envelope.
   (Envelope.Envelope -> io Envelope.Envelope) ->
+  Dsn.Dsn ->
   e ->
   io Response.Response
-captureExceptionWith getCallStack modifyEnvelope e = do
-  dsn <- do
-    maybeString <- IO.liftIO $ Environment.lookupEnv "SENTRY_DSN"
-    Dsn.fromText $ maybe Text.empty Text.pack maybeString
+captureExceptionWith getCallStack modifyEnvelope dsn e = do
   initialEnvelope <- Envelope.fromException getCallStack dsn e
   envelope <- modifyEnvelope initialEnvelope
   request <- Envelope.intoRequest dsn envelope
