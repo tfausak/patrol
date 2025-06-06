@@ -5,12 +5,43 @@ module Patrol.Type.DsnSpec where
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Text
 import qualified Network.URI.Static as Uri
+import qualified Patrol.Exception.Problem as Problem
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Version as Version
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
 spec = Hspec.describe "Patrol.Type.Dsn" $ do
+  Hspec.describe "fromText" $ do
+    Hspec.it "fails with an invalid DSN" $ do
+      Dsn.fromText (Text.pack "a:") `Hspec.shouldThrow` (\(Problem.Problem _) -> True)
+
+    Hspec.it "succeeds with a minimal DSN" $ do
+      dsn <- Dsn.fromText (Text.pack "a://b@c/d")
+      dsn
+        `Hspec.shouldBe` Dsn.Dsn
+          { Dsn.protocol = Text.singleton 'a',
+            Dsn.publicKey = Text.singleton 'b',
+            Dsn.secretKey = Text.empty,
+            Dsn.host = Text.singleton 'c',
+            Dsn.port = Nothing,
+            Dsn.path = Text.singleton '/',
+            Dsn.projectId = Text.singleton 'd'
+          }
+
+    Hspec.it "succeeds with a maximal DSN" $ do
+      dsn <- Dsn.fromText (Text.pack "a://b:c@d:5/f/g")
+      dsn
+        `Hspec.shouldBe` Dsn.Dsn
+          { Dsn.protocol = Text.singleton 'a',
+            Dsn.publicKey = Text.singleton 'b',
+            Dsn.secretKey = Text.singleton 'c',
+            Dsn.host = Text.singleton 'd',
+            Dsn.port = Just 5,
+            Dsn.path = Text.pack "/f/",
+            Dsn.projectId = Text.singleton 'g'
+          }
+
   Hspec.describe "fromUri" $ do
     Hspec.it "fails with an invalid DSN" $ do
       Dsn.fromUri [Uri.uri|a:|] `Hspec.shouldBe` Nothing

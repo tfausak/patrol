@@ -23,6 +23,11 @@ data Dsn = Dsn
   }
   deriving (Eq, Show)
 
+fromText :: (Catch.MonadThrow m) => Text.Text -> m Dsn
+fromText text = case Uri.parseURI (Text.unpack text) of
+  Nothing -> Catch.throwM $ Problem.Problem "invalid URI"
+  Just uri -> fromUri uri
+
 fromUri :: (Catch.MonadThrow m) => Uri.URI -> m Dsn
 fromUri uri = do
   theProtocol <- maybe (Catch.throwM $ Problem.Problem "invalid scheme") pure . Text.stripSuffix (Text.singleton ':') . Text.pack $ Uri.uriScheme uri

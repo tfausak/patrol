@@ -12,6 +12,10 @@ spec = Hspec.describe "Patrol.Constant" $ do
     Hspec.it "is correct" $ do
       Constant.applicationJson `Hspec.shouldBe` Text.encodeUtf8 (Text.pack "application/json")
 
+  Hspec.describe "applicationXSentryEnvelope" $ do
+    Hspec.it "is correct" $ do
+      Constant.applicationXSentryEnvelope `Hspec.shouldBe` Text.encodeUtf8 (Text.pack "application/x-sentry-envelope")
+
   Hspec.describe "sentryVersion" $ do
     Hspec.it "is correct" $ do
       Constant.sentryVersion `Hspec.shouldBe` Text.singleton '7'

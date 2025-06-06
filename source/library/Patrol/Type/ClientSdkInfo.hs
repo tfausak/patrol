@@ -4,6 +4,7 @@ import qualified Data.Aeson as Aeson
 import qualified Data.Text as Text
 import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Type.ClientSdkPackage as ClientSdkPackage
+import qualified Patrol.Version as Version
 
 -- | <https://develop.sentry.dev/sdk/event-payloads/types/#clientsdkinfo>
 data ClientSdkInfo = ClientSdkInfo
@@ -30,4 +31,11 @@ empty =
       name = Text.empty,
       packages = [],
       version = Text.empty
+    }
+
+patrol :: ClientSdkInfo
+patrol =
+  empty
+    { name = Text.pack "patrol",
+      version = Version.text
     }
