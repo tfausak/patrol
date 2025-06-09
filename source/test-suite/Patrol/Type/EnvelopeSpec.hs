@@ -1,22 +1,22 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE QuasiQuotes #-}
 
 module Patrol.Type.EnvelopeSpec where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.KeyMap as KeyMap
-import qualified Data.Aeson.QQ.Simple as Aeson
 import qualified Data.ByteString.Builder as Builder
 import qualified Data.ByteString.Lazy as LazyByteString
 import qualified Data.Text.Encoding as Text
 import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
 import qualified Patrol.Constant as Constant
+import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Envelope as Envelope
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.Headers as Headers
 import qualified Patrol.Type.Item as Item
+import qualified Patrol.Version as Version
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -75,7 +75,12 @@ spec = Hspec.describe "Patrol.Type.Envelope" $ do
             Headers.fromObject $
               KeyMap.fromList
                 [ ("dsn", "http://key@sentry.test/1"),
-                  ("sdk", [Aeson.aesonQQ| { "name": "patrol", "version": "1.0.0.11" } |])
+                  ( "sdk",
+                    Aeson.object
+                      [ Aeson.pair "name" ("patrol" :: String),
+                        Aeson.pair "version" Version.version
+                      ]
+                  )
                 ]
       Envelope.headers envelope `Hspec.shouldBe` expected
 
