@@ -10,6 +10,9 @@ import qualified Patrol.Version as Version
 applicationJson :: ByteString.ByteString
 applicationJson = Text.encodeUtf8 $ Text.pack "application/json"
 
+applicationXSentryEnvelope :: ByteString.ByteString
+applicationXSentryEnvelope = Text.encodeUtf8 $ Text.pack "application/x-sentry-envelope"
+
 sentryVersion :: Text.Text
 sentryVersion = Text.singleton '7'
 

@@ -22,7 +22,7 @@ flag pedantic
   manual: True
 
 common library
-  build-depends: base ^>=4.19.0.0 || ^>=4.20.0.0 || ^>=4.21.0.0
+  build-depends: base ^>=4.19 || ^>=4.20 || ^>=4.21
   default-language: Haskell2010
   ghc-options:
     -Weverything
@@ -51,14 +51,15 @@ library
   import: library
   autogen-modules: Paths_patrol
   build-depends:
-    aeson ^>=2.1.2.1 || ^>=2.2.2.0,
-    bytestring ^>=0.11.4.0 || ^>=0.12.0.2,
-    case-insensitive ^>=1.2.1.0,
+    aeson ^>=2.1.2.1 || ^>=2.2.2,
+    bytestring ^>=0.11.4 || ^>=0.12.0.2,
+    case-insensitive ^>=1.2.1,
     containers ^>=0.6.7 || ^>=0.7,
     exceptions ^>=0.10.7,
     http-client ^>=0.7.17,
+    http-client-tls ^>=0.3.6.4,
     http-types ^>=0.12.4,
-    network-uri ^>=2.6.4.2 || ^>=2.7.0.0,
+    network-uri ^>=2.6.4.2 || ^>=2.7,
     text ^>=2.0.2 || ^>=2.1,
     time ^>=1.12.2 || ^>=1.14,
     uuid ^>=1.3.15,
@@ -85,6 +86,7 @@ library
     Patrol.Type.DebugMeta
     Patrol.Type.DeviceContext
     Patrol.Type.Dsn
+    Patrol.Type.Envelope
     Patrol.Type.ErrorType
     Patrol.Type.Event
     Patrol.Type.EventId
@@ -95,6 +97,8 @@ library
     Patrol.Type.Frame
     Patrol.Type.Geo
     Patrol.Type.GpuContext
+    Patrol.Type.Headers
+    Patrol.Type.Item
     Patrol.Type.Level
     Patrol.Type.LogEntry
     Patrol.Type.MachException
@@ -130,7 +134,6 @@ test-suite patrol-test-suite
     bytestring,
     case-insensitive,
     containers,
-    exceptions,
     hspec ^>=2.11.8,
     http-client,
     http-types,
@@ -161,6 +164,7 @@ test-suite patrol-test-suite
     Patrol.Type.DebugMetaSpec
     Patrol.Type.DeviceContextSpec
     Patrol.Type.DsnSpec
+    Patrol.Type.EnvelopeSpec
     Patrol.Type.ErrorTypeSpec
     Patrol.Type.EventIdSpec
     Patrol.Type.EventProcessingErrorSpec
@@ -171,6 +175,8 @@ test-suite patrol-test-suite
     Patrol.Type.FrameSpec
     Patrol.Type.GeoSpec
     Patrol.Type.GpuContextSpec
+    Patrol.Type.HeadersSpec
+    Patrol.Type.ItemSpec
     Patrol.Type.LevelSpec
     Patrol.Type.LogEntrySpec
     Patrol.Type.MachExceptionSpec

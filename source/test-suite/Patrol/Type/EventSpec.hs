@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE QuasiQuotes #-}
 
 module Patrol.Type.EventSpec where
@@ -12,7 +13,6 @@ import qualified Data.Text.Encoding as Text
 import qualified Data.Time as Time
 import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
-import qualified Network.URI.Static as Uri
 import qualified Patrol.Constant as Constant
 import qualified Patrol.Type.Breadcrumb as Breadcrumb
 import qualified Patrol.Type.Breadcrumbs as Breadcrumbs
@@ -218,37 +218,37 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
 
   Hspec.describe "intoRequest" $ do
     Hspec.it "sets the method" $ do
-      dsn <- maybe (fail "invalid DSN") pure $ Dsn.fromUri [Uri.uri|http://public-key@sentry.test/project-id|]
+      dsn <- Dsn.fromText "http://public-key@sentry.test/project-id"
       event <- Event.new
       request <- Event.intoRequest dsn event
       Client.method request `Hspec.shouldBe` Http.methodPost
 
     Hspec.it "sets the host" $ do
-      dsn <- maybe (fail "invalid DSN") pure $ Dsn.fromUri [Uri.uri|http://public-key@sentry.test:8080/project-id|]
+      dsn <- Dsn.fromText "http://public-key@sentry.test:8080/project-id"
       event <- Event.new
       request <- Event.intoRequest dsn event
       Client.host request `Hspec.shouldBe` Text.encodeUtf8 (Text.pack "sentry.test")
 
     Hspec.it "sets the port" $ do
-      dsn <- maybe (fail "invalid DSN") pure $ Dsn.fromUri [Uri.uri|http://public-key@sentry.test:8080/project-id|]
+      dsn <- Dsn.fromText "http://public-key@sentry.test:8080/project-id"
       event <- Event.new
       request <- Event.intoRequest dsn event
       Client.port request `Hspec.shouldBe` 8080
 
     Hspec.it "sets the path" $ do
-      dsn <- maybe (fail "invalid DSN") pure $ Dsn.fromUri [Uri.uri|http://public-key@sentry.test/project-id|]
+      dsn <- Dsn.fromText "http://public-key@sentry.test/project-id"
       event <- Event.new
       request <- Event.intoRequest dsn event
       Client.path request `Hspec.shouldBe` Text.encodeUtf8 (Text.pack "/api/project-id/store/")
 
     Hspec.it "handles a custom path" $ do
-      dsn <- maybe (fail "invalid DSN") pure $ Dsn.fromUri [Uri.uri|http://public-key@sentry.test/custom/project-id|]
+      dsn <- Dsn.fromText "http://public-key@sentry.test/custom/project-id"
       event <- Event.new
       request <- Event.intoRequest dsn event
       Client.path request `Hspec.shouldBe` Text.encodeUtf8 (Text.pack "/custom/api/project-id/store/")
 
     Hspec.it "sets the body" $ do
-      dsn <- maybe (fail "invalid DSN") pure $ Dsn.fromUri [Uri.uri|http://public-key@sentry.test/project-id|]
+      dsn <- Dsn.fromText "http://public-key@sentry.test/project-id"
       event <- Event.new
       request <- Event.intoRequest dsn event
       case Client.requestBody request of
@@ -256,19 +256,52 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
         _ -> fail "unexpected request body"
 
     Hspec.it "sets the content type" $ do
-      dsn <- maybe (fail "invalid DSN") pure $ Dsn.fromUri [Uri.uri|http://public-key@sentry.test/project-id|]
+      dsn <- Dsn.fromText "http://public-key@sentry.test/project-id"
       event <- Event.new
       request <- Event.intoRequest dsn event
       lookup Http.hContentType (Client.requestHeaders request) `Hspec.shouldSatisfy` Maybe.isJust
 
     Hspec.it "sets the user agent" $ do
-      dsn <- maybe (fail "invalid DSN") pure $ Dsn.fromUri [Uri.uri|http://public-key@sentry.test/project-id|]
+      dsn <- Dsn.fromText "http://public-key@sentry.test/project-id"
       event <- Event.new
       request <- Event.intoRequest dsn event
       lookup Http.hUserAgent (Client.requestHeaders request) `Hspec.shouldSatisfy` Maybe.isJust
 
     Hspec.it "sets the authorization" $ do
-      dsn <- maybe (fail "invalid DSN") pure $ Dsn.fromUri [Uri.uri|http://public-key@sentry.test/project-id|]
+      dsn <- Dsn.fromText "http://public-key@sentry.test/project-id"
       event <- Event.new
       request <- Event.intoRequest dsn event
       lookup Constant.xSentryAuth (Client.requestHeaders request) `Hspec.shouldSatisfy` Maybe.isJust
+
+  Hspec.describe "fromException" $ do
+    Hspec.it "sets the environment" $ do
+      event <- Event.fromException (const Nothing) $ userError ""
+      Event.environment event `Hspec.shouldBe` Text.pack "production"
+
+    Hspec.it "sets the event ID" $ do
+      event <- Event.fromException (const Nothing) $ userError ""
+      Event.eventId event `Hspec.shouldNotBe` EventId.empty
+
+    Hspec.it "sets the exception" $ do
+      event <- Event.fromException (const Nothing) $ userError ""
+      Event.exception event `Hspec.shouldSatisfy` Maybe.isJust
+
+    Hspec.it "sets the level" $ do
+      event <- Event.fromException (const Nothing) $ userError ""
+      Event.level event `Hspec.shouldBe` Just Level.Error
+
+    Hspec.it "sets the platform" $ do
+      event <- Event.fromException (const Nothing) $ userError ""
+      Event.platform event `Hspec.shouldBe` Just Platform.Haskell
+
+    Hspec.it "sets the timestamp" $ do
+      event <- Event.fromException (const Nothing) $ userError ""
+      Event.timestamp event `Hspec.shouldSatisfy` Maybe.isJust
+
+    Hspec.it "sets the type" $ do
+      event <- Event.fromException (const Nothing) $ userError ""
+      Event.type_ event `Hspec.shouldBe` Just EventType.Default
+
+    Hspec.it "sets the version" $ do
+      event <- Event.fromException (const Nothing) $ userError ""
+      Event.version event `Hspec.shouldBe` Constant.sentryVersion

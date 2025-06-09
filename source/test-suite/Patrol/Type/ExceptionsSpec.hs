@@ -22,3 +22,8 @@ spec = Hspec.describe "Patrol.Type.Exceptions" $ do
           exceptions = Exceptions.empty {Exceptions.values = [exception]}
           json = [Aeson.aesonQQ| { "values": [ { "type": "example-type" } ] } |]
       Aeson.toJSON exceptions `Hspec.shouldBe` json
+
+  Hspec.describe "fromException" $ do
+    Hspec.it "works" $ do
+      let exceptions = Exceptions.fromException (const Nothing) $ userError ""
+      Exceptions.values exceptions `Hspec.shouldNotSatisfy` null
