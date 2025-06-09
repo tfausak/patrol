@@ -1,6 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE QuasiQuotes #-}
-{-# OPTIONS_GHC -Wno-deprecations #-}
 
 module Patrol.Type.EventSpec where
 

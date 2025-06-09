@@ -151,7 +151,9 @@ setTimestamp event = do
   pure event {timestamp = Just theTimestamp}
 
 new :: (IO.MonadIO io) => io Event
-new = setEventId initial >>= setTimestamp
+new = do
+  withEventId <- setEventId initial
+  setTimestamp withEventId
 
 fromException ::
   (Catch.Exception e, IO.MonadIO io) =>
@@ -165,7 +167,7 @@ fromException getCallStack e = do
       { exception = Just $ Exceptions.fromException getCallStack e
       }
 
-{-# DEPRECATED intoRequest "Use `Patrol.Type.Envelope.intoRequest` instead." #-}
+-- TODO: Deprecate.
 intoRequest :: (Catch.MonadThrow m) => Dsn.Dsn -> Event -> m Client.Request
 intoRequest dsn event = do
   theRequest <-

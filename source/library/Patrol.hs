@@ -1,5 +1,6 @@
 module Patrol
   ( Patrol.Client.captureException,
+    Patrol.Client.captureExceptionWith,
     Patrol.Exception.Problem.Problem,
     Patrol.Type.AppContext.AppContext,
     Patrol.Type.AppleDebugImage.AppleDebugImage,

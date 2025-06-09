@@ -1,5 +1,3 @@
-{-# OPTIONS_GHC -Wno-deprecations #-}
-
 module Patrol.Client where
 
 import qualified Control.Monad.Catch as Catch
@@ -50,7 +48,7 @@ captureExceptionWith getCallStack modifyEnvelope dsn e = do
     . Aeson.eitherDecode
     $ Client.responseBody response
 
-{-# DEPRECATED store "Use `captureException` instead." #-}
+-- TODO: Deprecate.
 store ::
   (IO.MonadIO io, Catch.MonadThrow io) =>
   Client.Manager ->
