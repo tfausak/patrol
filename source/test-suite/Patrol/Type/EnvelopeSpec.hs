@@ -2,7 +2,6 @@
 
 module Patrol.Type.EnvelopeSpec where
 
-import qualified Control.Monad.Catch as Catch
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.KeyMap as KeyMap
 import qualified Data.ByteString.Builder as Builder
@@ -70,8 +69,7 @@ spec = Hspec.describe "Patrol.Type.Envelope" $ do
   Hspec.describe "fromEvent" $ do
     Hspec.it "sets the header" $ do
       dsn <- Dsn.fromText "http://key@sentry.test/1"
-      event <- Event.fromSomeException . Catch.toException $ userError ""
-      let envelope = Envelope.fromEvent dsn event {Event.timestamp = Nothing}
+      let envelope = Envelope.fromEvent dsn Event.empty
       let expected =
             Headers.fromObject $
               KeyMap.fromList
@@ -87,8 +85,7 @@ spec = Hspec.describe "Patrol.Type.Envelope" $ do
 
     Hspec.it "sets the items" $ do
       dsn <- Dsn.fromText "http://key@sentry.test/1"
-      event <- Event.fromSomeException . Catch.toException $ userError ""
-      let envelope = Envelope.fromEvent dsn event
+      let envelope = Envelope.fromEvent dsn Event.empty
       Envelope.items envelope `Hspec.shouldNotSatisfy` null
 
   Hspec.describe "intoRequest" $ do
