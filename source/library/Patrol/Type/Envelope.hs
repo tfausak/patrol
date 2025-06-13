@@ -7,13 +7,11 @@ import qualified Data.Aeson.KeyMap as KeyMap
 import qualified Data.ByteString as ByteString
 import qualified Data.ByteString.Builder as Builder
 import qualified Data.ByteString.Lazy as LazyByteString
-import qualified Data.List as List
 import qualified Data.Maybe as Maybe
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Encoding
 import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
-import qualified Network.URI as Uri
 import qualified Patrol.Constant as Constant
 import qualified Patrol.Extra.List as List
 import qualified Patrol.Type.ClientSdkInfo as ClientSdkInfo
@@ -45,16 +43,18 @@ fromEvent dsn event =
 
 intoRequest :: (Catch.MonadThrow m) => Dsn.Dsn -> Envelope -> m Client.Request
 intoRequest dsn envelope = do
-  let uri =
-        Dsn.intoUri
-          dsn
-            { Dsn.path = Text.dropWhileEnd (== '/') (Dsn.path dsn) <> Text.pack "/api/"
-            }
   request <-
-    Client.requestFromURI
-      uri
-        { Uri.uriPath = List.dropWhileEnd (== '/') (Uri.uriPath uri) <> "/envelope/"
-        }
+    Client.parseUrlThrow $
+      mconcat
+        [ Text.unpack $ Dsn.protocol dsn,
+          "://",
+          Text.unpack $ Dsn.host dsn,
+          maybe "" ((':' :) . show) $ Dsn.port dsn,
+          Text.unpack $ Dsn.path dsn,
+          "api/",
+          Text.unpack $ Dsn.projectId dsn,
+          "/envelope/"
+        ]
   let body =
         LazyByteString.toStrict
           . Builder.toLazyByteString
