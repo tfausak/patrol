@@ -8,7 +8,6 @@ import qualified Data.Map as Map
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Text
 import qualified Data.Time as Time
-import qualified GHC.Stack as Stack
 import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
 import qualified Patrol.Constant as Constant
@@ -136,6 +135,7 @@ initial =
     { environment = Text.pack "production",
       level = Just Level.Error,
       platform = Just Platform.Haskell,
+      sdk = Just ClientSdkInfo.patrol,
       type_ = Just EventType.Default,
       version = Constant.sentryVersion
     }
@@ -155,19 +155,15 @@ new = do
   withEventId <- setEventId initial
   setTimestamp withEventId
 
-fromException ::
-  (Catch.Exception e, IO.MonadIO io) =>
-  (Catch.SomeException -> Maybe Stack.CallStack) ->
-  e ->
-  io Event
-fromException getCallStack e = do
+fromSomeException :: (IO.MonadIO io) => Catch.SomeException -> io Event
+fromSomeException e = do
   event <- new
   pure
     event
-      { exception = Just $ Exceptions.fromException getCallStack e
+      { exception = Just $ Exceptions.fromSomeException e
       }
 
--- TODO: Deprecate.
+{-# DEPRECATED intoRequest "Use 'Patrol.Type.Envelope.intoRequest' instead." #-}
 intoRequest :: (Catch.MonadThrow m) => Dsn.Dsn -> Event -> m Client.Request
 intoRequest dsn event = do
   theRequest <-

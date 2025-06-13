@@ -2,6 +2,7 @@
 
 module Patrol.Type.ExceptionsSpec where
 
+import qualified Control.Monad.Catch as Catch
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.QQ.Simple as Aeson
 import qualified Data.Text as Text
@@ -23,7 +24,7 @@ spec = Hspec.describe "Patrol.Type.Exceptions" $ do
           json = [Aeson.aesonQQ| { "values": [ { "type": "example-type" } ] } |]
       Aeson.toJSON exceptions `Hspec.shouldBe` json
 
-  Hspec.describe "fromException" $ do
+  Hspec.describe "fromSomeException" $ do
     Hspec.it "works" $ do
-      let exceptions = Exceptions.fromException (const Nothing) $ userError ""
+      let exceptions = Exceptions.fromSomeException . Catch.toException $ userError ""
       Exceptions.values exceptions `Hspec.shouldNotSatisfy` null

@@ -1,10 +1,12 @@
+-- In the use of ‘intoRequest’ (imported from Patrol.Type.Event)
+{-# OPTIONS_GHC -Wno-deprecations #-}
+
 module Patrol.Client where
 
 import qualified Control.Monad.Catch as Catch
 import qualified Control.Monad.IO.Class as IO
 import qualified Data.Aeson as Aeson
 import qualified Data.Text as Text
-import qualified GHC.Stack as Stack
 import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Client.TLS as Tls
 import qualified Patrol.Exception.Problem as Problem
@@ -25,22 +27,20 @@ captureException e = do
   dsn <- do
     maybeString <- IO.liftIO $ Environment.lookupEnv "SENTRY_DSN"
     Dsn.fromText $ maybe Text.empty Text.pack maybeString
-  captureExceptionWith (const Nothing) pure dsn e
+  captureExceptionWith pure dsn e
 
 captureExceptionWith ::
   (Catch.Exception e, IO.MonadIO io, Catch.MonadThrow io) =>
-  -- | How to get a 'Stack.CallStack' from a 'Catch.SomeException'. Use
-  -- @'const' 'Nothing'@ if you don't want to get a call stack.
-  (Catch.SomeException -> Maybe Stack.CallStack) ->
-  -- | How to modify the 'Envelope.Envelope' before it is sent. Use @'pure'@ if
-  -- you don't want to modify the envelope.
-  (Envelope.Envelope -> io Envelope.Envelope) ->
+  -- | How to modify the 'Event.Event' before it is sent. Use @'pure'@ if you
+  -- don't want to modify the event.
+  (Event.Event -> io Event.Event) ->
   Dsn.Dsn ->
   e ->
   io Response.Response
-captureExceptionWith getCallStack modifyEnvelope dsn e = do
-  initialEnvelope <- Envelope.fromException getCallStack dsn e
-  envelope <- modifyEnvelope initialEnvelope
+captureExceptionWith modifyEvent dsn e = do
+  initialEvent <- Event.fromSomeException $ Catch.toException e
+  event <- modifyEvent initialEvent
+  let envelope = Envelope.fromEvent dsn event
   request <- Envelope.intoRequest dsn envelope
   manager <- Tls.newTlsManager
   response <- IO.liftIO $ Client.httpLbs request manager
@@ -48,7 +48,7 @@ captureExceptionWith getCallStack modifyEnvelope dsn e = do
     . Aeson.eitherDecode
     $ Client.responseBody response
 
--- TODO: Deprecate.
+{-# DEPRECATED store "Use 'captureException' instead." #-}
 store ::
   (IO.MonadIO io, Catch.MonadThrow io) =>
   Client.Manager ->

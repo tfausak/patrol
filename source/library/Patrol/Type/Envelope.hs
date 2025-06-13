@@ -1,19 +1,19 @@
 module Patrol.Type.Envelope where
 
 import qualified Control.Monad.Catch as Catch
-import qualified Control.Monad.IO.Class as IO
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Key as Key
 import qualified Data.Aeson.KeyMap as KeyMap
 import qualified Data.ByteString as ByteString
 import qualified Data.ByteString.Builder as Builder
 import qualified Data.ByteString.Lazy as LazyByteString
+import qualified Data.List as List
 import qualified Data.Maybe as Maybe
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Encoding
-import qualified GHC.Stack as Stack
 import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
+import qualified Network.URI as Uri
 import qualified Patrol.Constant as Constant
 import qualified Patrol.Extra.List as List
 import qualified Patrol.Type.ClientSdkInfo as ClientSdkInfo
@@ -28,16 +28,6 @@ data Envelope = Envelope
     items :: [Item.Item]
   }
   deriving (Eq, Show)
-
-fromException ::
-  (Catch.Exception e, IO.MonadIO io) =>
-  (Catch.SomeException -> Maybe Stack.CallStack) ->
-  Dsn.Dsn ->
-  e ->
-  io Envelope
-fromException getCallStack dsn =
-  fmap (fromEvent dsn)
-    . Event.fromException getCallStack
 
 fromEvent :: Dsn.Dsn -> Event.Event -> Envelope
 fromEvent dsn event =
@@ -55,18 +45,16 @@ fromEvent dsn event =
 
 intoRequest :: (Catch.MonadThrow m) => Dsn.Dsn -> Envelope -> m Client.Request
 intoRequest dsn envelope = do
+  let uri =
+        Dsn.intoUri
+          dsn
+            { Dsn.path = Text.dropWhileEnd (== '/') (Dsn.path dsn) <> Text.pack "/api/"
+            }
   request <-
-    Client.parseUrlThrow $
-      mconcat
-        [ Text.unpack $ Dsn.protocol dsn,
-          "://",
-          Text.unpack $ Dsn.host dsn,
-          maybe "" ((':' :) . show) $ Dsn.port dsn,
-          Text.unpack $ Dsn.path dsn,
-          "api/",
-          Text.unpack $ Dsn.projectId dsn,
-          "/envelope/"
-        ]
+    Client.requestFromURI
+      uri
+        { Uri.uriPath = List.dropWhileEnd (== '/') (Uri.uriPath uri) <> "/envelope/"
+        }
   let body =
         LazyByteString.toStrict
           . Builder.toLazyByteString

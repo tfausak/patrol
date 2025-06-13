@@ -24,7 +24,7 @@ data Dsn = Dsn
   deriving (Eq, Show)
 
 fromText :: (Catch.MonadThrow m) => Text.Text -> m Dsn
-fromText text = case Uri.parseURI (Text.unpack text) of
+fromText text = case Uri.parseURI $ Text.unpack text of
   Nothing -> Catch.throwM $ Problem.Problem "invalid URI"
   Just uri -> fromUri uri
 

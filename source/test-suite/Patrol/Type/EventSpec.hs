@@ -1,8 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE QuasiQuotes #-}
+-- In the use of ‘intoRequest’ (imported from Patrol.Type.Event)
+{-# OPTIONS_GHC -Wno-deprecations #-}
 
 module Patrol.Type.EventSpec where
 
+import qualified Control.Exception as Catch
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.QQ.Simple as Aeson
 import qualified Data.ByteString.Lazy as LazyByteString
@@ -273,35 +276,35 @@ spec = Hspec.describe "Patrol.Type.Event" $ do
       request <- Event.intoRequest dsn event
       lookup Constant.xSentryAuth (Client.requestHeaders request) `Hspec.shouldSatisfy` Maybe.isJust
 
-  Hspec.describe "fromException" $ do
+  Hspec.describe "fromSomeException" $ do
     Hspec.it "sets the environment" $ do
-      event <- Event.fromException (const Nothing) $ userError ""
+      event <- Event.fromSomeException . Catch.toException $ userError ""
       Event.environment event `Hspec.shouldBe` Text.pack "production"
 
     Hspec.it "sets the event ID" $ do
-      event <- Event.fromException (const Nothing) $ userError ""
+      event <- Event.fromSomeException . Catch.toException $ userError ""
       Event.eventId event `Hspec.shouldNotBe` EventId.empty
 
     Hspec.it "sets the exception" $ do
-      event <- Event.fromException (const Nothing) $ userError ""
+      event <- Event.fromSomeException . Catch.toException $ userError ""
       Event.exception event `Hspec.shouldSatisfy` Maybe.isJust
 
     Hspec.it "sets the level" $ do
-      event <- Event.fromException (const Nothing) $ userError ""
+      event <- Event.fromSomeException . Catch.toException $ userError ""
       Event.level event `Hspec.shouldBe` Just Level.Error
 
     Hspec.it "sets the platform" $ do
-      event <- Event.fromException (const Nothing) $ userError ""
+      event <- Event.fromSomeException . Catch.toException $ userError ""
       Event.platform event `Hspec.shouldBe` Just Platform.Haskell
 
     Hspec.it "sets the timestamp" $ do
-      event <- Event.fromException (const Nothing) $ userError ""
+      event <- Event.fromSomeException . Catch.toException $ userError ""
       Event.timestamp event `Hspec.shouldSatisfy` Maybe.isJust
 
     Hspec.it "sets the type" $ do
-      event <- Event.fromException (const Nothing) $ userError ""
+      event <- Event.fromSomeException . Catch.toException $ userError ""
       Event.type_ event `Hspec.shouldBe` Just EventType.Default
 
     Hspec.it "sets the version" $ do
-      event <- Event.fromException (const Nothing) $ userError ""
+      event <- Event.fromSomeException . Catch.toException $ userError ""
       Event.version event `Hspec.shouldBe` Constant.sentryVersion

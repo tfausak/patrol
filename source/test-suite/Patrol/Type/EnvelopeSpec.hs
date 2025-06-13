@@ -2,6 +2,7 @@
 
 module Patrol.Type.EnvelopeSpec where
 
+import qualified Control.Monad.Catch as Catch
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.KeyMap as KeyMap
 import qualified Data.ByteString.Builder as Builder
@@ -69,7 +70,7 @@ spec = Hspec.describe "Patrol.Type.Envelope" $ do
   Hspec.describe "fromEvent" $ do
     Hspec.it "sets the header" $ do
       dsn <- Dsn.fromText "http://key@sentry.test/1"
-      event <- Event.fromException (const Nothing) $ userError ""
+      event <- Event.fromSomeException . Catch.toException $ userError ""
       let envelope = Envelope.fromEvent dsn event {Event.timestamp = Nothing}
       let expected =
             Headers.fromObject $
@@ -86,44 +87,44 @@ spec = Hspec.describe "Patrol.Type.Envelope" $ do
 
     Hspec.it "sets the items" $ do
       dsn <- Dsn.fromText "http://key@sentry.test/1"
-      event <- Event.fromException (const Nothing) $ userError ""
+      event <- Event.fromSomeException . Catch.toException $ userError ""
       let envelope = Envelope.fromEvent dsn event
       Envelope.items envelope `Hspec.shouldNotSatisfy` null
 
   Hspec.describe "intoRequest" $ do
     Hspec.it "sets the method" $ do
       dsn <- Dsn.fromText "http://key@sentry.test/1"
-      envelope <- Envelope.fromException (const Nothing) dsn $ userError ""
+      let envelope = Envelope.fromEvent dsn Event.empty
       request <- Envelope.intoRequest dsn envelope
       Client.method request `Hspec.shouldBe` Http.methodPost
 
     Hspec.it "sets the host" $ do
       dsn <- Dsn.fromText "http://key@sentry.test/1"
-      envelope <- Envelope.fromException (const Nothing) dsn $ userError ""
+      let envelope = Envelope.fromEvent dsn Event.empty
       request <- Envelope.intoRequest dsn envelope
       Client.host request `Hspec.shouldBe` "sentry.test"
 
     Hspec.it "sets the port" $ do
       dsn <- Dsn.fromText "http://key@sentry.test:8080/1"
-      envelope <- Envelope.fromException (const Nothing) dsn $ userError ""
+      let envelope = Envelope.fromEvent dsn Event.empty
       request <- Envelope.intoRequest dsn envelope
       Client.port request `Hspec.shouldBe` 8080
 
     Hspec.it "sets the path" $ do
       dsn <- Dsn.fromText "http://key@sentry.test/1"
-      envelope <- Envelope.fromException (const Nothing) dsn $ userError ""
+      let envelope = Envelope.fromEvent dsn Event.empty
       request <- Envelope.intoRequest dsn envelope
       Client.path request `Hspec.shouldBe` "/api/1/envelope/"
 
     Hspec.it "handles a custom path" $ do
       dsn <- Dsn.fromText "http://key@sentry.test/custom/1"
-      envelope <- Envelope.fromException (const Nothing) dsn $ userError ""
+      let envelope = Envelope.fromEvent dsn Event.empty
       request <- Envelope.intoRequest dsn envelope
       Client.path request `Hspec.shouldBe` "/custom/api/1/envelope/"
 
     Hspec.it "sets the body" $ do
       dsn <- Dsn.fromText "http://key@sentry.test/1"
-      envelope <- Envelope.fromException (const Nothing) dsn $ userError ""
+      let envelope = Envelope.fromEvent dsn Event.empty
       request <- Envelope.intoRequest dsn envelope
       actual <- case Client.requestBody request of
         Client.RequestBodyBS byteString -> pure byteString
@@ -133,18 +134,18 @@ spec = Hspec.describe "Patrol.Type.Envelope" $ do
 
     Hspec.it "sets the content type" $ do
       dsn <- Dsn.fromText "http://key@sentry.test/1"
-      envelope <- Envelope.fromException (const Nothing) dsn $ userError ""
+      let envelope = Envelope.fromEvent dsn Event.empty
       request <- Envelope.intoRequest dsn envelope
       lookup Http.hContentType (Client.requestHeaders request) `Hspec.shouldBe` Just Constant.applicationXSentryEnvelope
 
     Hspec.it "sets the user agent" $ do
       dsn <- Dsn.fromText "http://key@sentry.test/1"
-      envelope <- Envelope.fromException (const Nothing) dsn $ userError ""
+      let envelope = Envelope.fromEvent dsn Event.empty
       request <- Envelope.intoRequest dsn envelope
       lookup Http.hUserAgent (Client.requestHeaders request) `Hspec.shouldBe` Just (Text.encodeUtf8 Constant.userAgent)
 
     Hspec.it "sets the authorization" $ do
       dsn <- Dsn.fromText "http://key@sentry.test/1"
-      envelope <- Envelope.fromException (const Nothing) dsn $ userError ""
+      let envelope = Envelope.fromEvent dsn Event.empty
       request <- Envelope.intoRequest dsn envelope
       lookup Constant.xSentryAuth (Client.requestHeaders request) `Hspec.shouldBe` Just (Dsn.intoAuthorization dsn)
