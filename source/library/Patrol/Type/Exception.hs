@@ -4,7 +4,6 @@ import qualified Control.Monad.Catch as Catch
 import qualified Data.Aeson as Aeson
 import qualified Data.Text as Text
 import qualified Data.Typeable as Typeable
-import qualified GHC.Stack as Stack
 import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Type.Mechanism as Mechanism
 import qualified Patrol.Type.Stacktrace as Stacktrace
@@ -42,14 +41,9 @@ empty =
       value = Text.empty
     }
 
-fromException ::
-  (Catch.Exception e) =>
-  (Catch.SomeException -> Maybe Stack.CallStack) ->
-  e ->
-  Exception
-fromException getCallStack e =
+fromSomeException :: Catch.SomeException -> Exception
+fromSomeException (Catch.SomeException e) =
   empty
-    { stacktrace = fmap Stacktrace.fromCallStack . getCallStack $ Catch.toException e,
-      type_ = Text.pack . show $ Typeable.typeOf e,
+    { type_ = Text.pack . show $ Typeable.typeOf e,
       value = Text.pack $ Catch.displayException e
     }

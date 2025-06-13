@@ -78,6 +78,12 @@ spec = Hspec.describe "Patrol.Type.Dsn" $ do
     Hspec.it "fails with a fragment" $ do
       Dsn.fromUri [Uri.uri|a://b@c/d#|] `Hspec.shouldBe` Nothing
 
+    Hspec.it "fails without a project ID" $ do
+      Dsn.fromUri [Uri.uri|a://b@c|] `Hspec.shouldBe` Nothing
+
+    Hspec.it "fails with a trailing slash" $ do
+      Dsn.fromUri [Uri.uri|a://b@c/d/|] `Hspec.shouldBe` Nothing
+
   Hspec.describe "intoUri" $ do
     Hspec.it "converts a minimal DSN into URI" $ do
       let dsn =

@@ -2,11 +2,11 @@
 
 module Patrol.Type.ExceptionSpec where
 
+import qualified Control.Monad.Catch as Catch
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.QQ.Simple as Aeson
 import qualified Data.Map as Map
 import qualified Data.Text as Text
-import qualified GHC.Stack as Stack
 import qualified Patrol.Type.Exception as Exception
 import qualified Patrol.Type.Mechanism as Mechanism
 import qualified Patrol.Type.Stacktrace as Stacktrace
@@ -52,16 +52,11 @@ spec = Hspec.describe "Patrol.Type.Exception" $ do
           json = [Aeson.aesonQQ| { "value": "example-value" } |]
       Aeson.toJSON exception `Hspec.shouldBe` json
 
-  Hspec.describe "fromException" $ do
-    Hspec.it "sets the stacktrace" $ do
-      let callStack = Stack.callStack
-      let exception = Exception.fromException (const $ Just callStack) $ userError ""
-      Exception.stacktrace exception `Hspec.shouldBe` Just (Stacktrace.fromCallStack callStack)
-
+  Hspec.describe "fromSomeException" $ do
     Hspec.it "sets the type" $ do
-      let exception = Exception.fromException (const Nothing) $ userError ""
+      let exception = Exception.fromSomeException . Catch.toException $ userError ""
       Exception.type_ exception `Hspec.shouldBe` Text.pack "IOException"
 
     Hspec.it "sets the value" $ do
-      let exception = Exception.fromException (const Nothing) $ userError "example-exception-value"
+      let exception = Exception.fromSomeException . Catch.toException $ userError "example-exception-value"
       Exception.value exception `Hspec.shouldBe` Text.pack "user error (example-exception-value)"

@@ -134,6 +134,7 @@ test-suite patrol-test-suite
     bytestring,
     case-insensitive,
     containers,
+    exceptions,
     hspec ^>=2.11.8,
     http-client,
     http-types,

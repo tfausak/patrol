@@ -1,7 +1,6 @@
 module Patrol.Type.Envelope where
 
 import qualified Control.Monad.Catch as Catch
-import qualified Control.Monad.IO.Class as IO
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Key as Key
 import qualified Data.Aeson.KeyMap as KeyMap
@@ -11,7 +10,6 @@ import qualified Data.ByteString.Lazy as LazyByteString
 import qualified Data.Maybe as Maybe
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as Encoding
-import qualified GHC.Stack as Stack
 import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
 import qualified Patrol.Constant as Constant
@@ -28,16 +26,6 @@ data Envelope = Envelope
     items :: [Item.Item]
   }
   deriving (Eq, Show)
-
-fromException ::
-  (Catch.Exception e, IO.MonadIO io) =>
-  (Catch.SomeException -> Maybe Stack.CallStack) ->
-  Dsn.Dsn ->
-  e ->
-  io Envelope
-fromException getCallStack dsn =
-  fmap (fromEvent dsn)
-    . Event.fromException getCallStack
 
 fromEvent :: Dsn.Dsn -> Event.Event -> Envelope
 fromEvent dsn event =

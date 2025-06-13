@@ -2,7 +2,6 @@ module Patrol.Type.Exceptions where
 
 import qualified Control.Monad.Catch as Catch
 import qualified Data.Aeson as Aeson
-import qualified GHC.Stack as Stack
 import qualified Patrol.Extra.Aeson as Aeson
 import qualified Patrol.Type.Exception as Exception
 
@@ -24,12 +23,8 @@ empty =
     { values = []
     }
 
-fromException ::
-  (Catch.Exception e) =>
-  (Catch.SomeException -> Maybe Stack.CallStack) ->
-  e ->
+fromSomeException :: Catch.SomeException -> Exceptions
+fromSomeException e =
   Exceptions
-fromException getCallStack e =
-  Exceptions
-    { values = [Exception.fromException getCallStack e]
+    { values = [Exception.fromSomeException e]
     }
