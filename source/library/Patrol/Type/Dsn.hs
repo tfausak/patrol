@@ -29,18 +29,19 @@ fromText text = case Uri.parseURI $ Text.unpack text of
   Just uri -> fromUri uri
 
 fromUri :: (Catch.MonadThrow m) => Uri.URI -> m Dsn
-fromUri uri = do
-  theProtocol <- maybe (Catch.throwM $ Problem.Problem "invalid scheme") pure . Text.stripSuffix (Text.singleton ':') . Text.pack $ Uri.uriScheme uri
-  uriAuth <- maybe (Catch.throwM $ Problem.Problem "missing authority") pure $ Uri.uriAuthority uri
-  userInfo <- maybe (Catch.throwM $ Problem.Problem "invalid user information") pure . Text.stripSuffix (Text.singleton '@') . Text.pack $ Uri.uriUserInfo uriAuth
+fromUri uri = either (Catch.throwM . Problem.Problem) pure $ do
+  Monad.unless (null $ Uri.uriQuery uri) $ Left "unexpected query"
+  Monad.unless (null $ Uri.uriFragment uri) $ Left "unexpected fragment"
+  theProtocol <- maybe (Left "invalid scheme") pure . Text.stripSuffix (Text.singleton ':') . Text.pack $ Uri.uriScheme uri
+  uriAuth <- maybe (Left "missing authority") pure $ Uri.uriAuthority uri
+  userInfo <- maybe (Left "invalid user information") pure . Text.stripSuffix (Text.singleton '@') . Text.pack $ Uri.uriUserInfo uriAuth
   let (thePublicKey, theSecretKey) = fmap (Text.drop 1) $ Text.breakOn (Text.singleton ':') userInfo
       theHost = Text.pack $ Uri.uriRegName uriAuth
   maybePort <- case Text.stripPrefix (Text.singleton ':') . Text.pack $ Uri.uriPort uriAuth of
     Nothing -> pure Nothing
-    Just text -> maybe (Catch.throwM $ Problem.Problem "invalid port") (pure . Just) . Read.readMaybe $ Text.unpack text
+    Just text -> maybe (Left "invalid port") (pure . Just) . Read.readMaybe $ Text.unpack text
   let (thePath, theProjectId) = Text.breakOnEnd (Text.singleton '/') . Text.pack $ Uri.uriPath uri
-  Monad.unless (null $ Uri.uriQuery uri) . Catch.throwM $ Problem.Problem "unexpected query"
-  Monad.unless (null $ Uri.uriFragment uri) . Catch.throwM $ Problem.Problem "unexpected fragment"
+  Monad.when (Text.null theProjectId) $ Left "missing project ID"
   pure
     Dsn
       { protocol = theProtocol,
