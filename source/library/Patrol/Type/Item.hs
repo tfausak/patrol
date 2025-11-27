@@ -1,37 +1,33 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Patrol.Type.Item where
 
 import qualified Data.Aeson as Aeson
 import qualified Data.Aeson.Key as Key
-import qualified Data.Aeson.KeyMap as KeyMap
 import qualified Data.ByteString as ByteString
 import qualified Data.ByteString.Builder as Builder
 import qualified Data.ByteString.Lazy as LazyByteString
 import qualified Patrol.Type.Event as Event
-import qualified Patrol.Type.Headers as Headers
 
 -- | <https://develop.sentry.dev/sdk/data-model/envelope-items/>
-data Item = Item
-  { headers :: Headers.Headers,
-    payload :: ByteString.ByteString
-  }
+data Item
+  = Event Event.Event
+  -- ^ An 'Patrol.Type.Event.Event' item.
+  --
+  -- <https://develop.sentry.dev/sdk/envelopes/#event>
+  | Raw
+  -- ^ A sentinel item used to filter raw envelopes.
   deriving (Eq, Show)
 
-fromEvent :: Event.Event -> Item
-fromEvent event =
-  let thePayload = LazyByteString.toStrict $ Aeson.encode event
-   in Item
-        { headers =
-            Headers.fromObject $
-              KeyMap.fromList
-                [ (Key.fromString "type", Aeson.toJSON "event"),
-                  (Key.fromString "length", Aeson.toJSON $ ByteString.length thePayload),
-                  (Key.fromString "event_id", Aeson.toJSON $ Event.eventId event)
-                ],
-          payload = thePayload
-        }
-
 serialize :: Item -> Builder.Builder
-serialize item =
-  Headers.serialize (headers item)
-    <> Builder.char7 '\n'
-    <> Builder.byteString (payload item)
+serialize item = case item of
+  Event event ->
+    let payload = LazyByteString.toStrict $ Aeson.encode event
+        headers = buildHeaders "event" (ByteString.length payload)
+     in headers <> Builder.char7 '\n' <> Builder.byteString payload
+  Raw -> mempty
+  where
+    buildHeaders :: Key.Key -> Int -> Builder.Builder
+    buildHeaders type_ length_ =
+      Aeson.fromEncoding $
+        Aeson.pairs ("type" Aeson..= type_ <> "length" Aeson..= length_)

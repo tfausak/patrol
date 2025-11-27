@@ -2,21 +2,20 @@
 
 module Patrol.Type.EnvelopeSpec where
 
-import qualified Data.Aeson as Aeson
-import qualified Data.Aeson.KeyMap as KeyMap
 import qualified Data.ByteString.Builder as Builder
 import qualified Data.ByteString.Lazy as LazyByteString
 import qualified Data.Text.Encoding as Text
 import qualified Network.HTTP.Client as Client
 import qualified Network.HTTP.Types as Http
 import qualified Patrol.Constant as Constant
-import qualified Patrol.Extra.Aeson as Aeson
+import qualified Patrol.Type.ClientSdkInfo as ClientSdkInfo
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Envelope as Envelope
+import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Event as Event
 import qualified Patrol.Type.Headers as Headers
 import qualified Patrol.Type.Item as Item
-import qualified Patrol.Version as Version
+import qualified Patrol.Type.Items as Items
 import qualified Test.Hspec as Hspec
 
 spec :: Hspec.Spec
@@ -28,65 +27,49 @@ spec = Hspec.describe "Patrol.Type.Envelope" $ do
               Envelope.serialize
                 Envelope.Envelope
                   { Envelope.headers = Headers.empty,
-                    Envelope.items = []
+                    Envelope.items = Items.EnvelopeItems []
                   }
       actual `Hspec.shouldBe` "{}\n"
 
-    Hspec.it "works with one item" $ do
+    Hspec.it "works with 'Items.Raw'" $ do
       let actual =
             Builder.toLazyByteString $
               Envelope.serialize
                 Envelope.Envelope
-                  { Envelope.headers = Headers.fromObject . KeyMap.singleton "a" $ Aeson.toJSON False,
-                    Envelope.items =
-                      [ Item.Item
-                          { Item.headers = Headers.fromObject . KeyMap.singleton "b" $ Aeson.toJSON True,
-                            Item.payload = "c"
-                          }
-                      ]
+                  { Envelope.headers = Headers.empty,
+                    Envelope.items = Items.Raw ""
                   }
-      actual `Hspec.shouldBe` "{\"a\":false}\n{\"b\":true}\nc\n"
+      actual `Hspec.shouldBe` "{}\n"
 
-    Hspec.it "works with two items" $ do
+    Hspec.it "works with 'Items.EnvelopeItems'" $ do
       let actual =
             Builder.toLazyByteString $
-              Envelope.serialize
-                Envelope.Envelope
-                  { Envelope.headers = Headers.fromObject . KeyMap.singleton "a" $ Aeson.toJSON (1 :: Int),
-                    Envelope.items =
-                      [ Item.Item
-                          { Item.headers = Headers.fromObject . KeyMap.singleton "b" $ Aeson.toJSON (2 :: Int),
-                            Item.payload = "c"
-                          },
-                        Item.Item
-                          { Item.headers = Headers.fromObject . KeyMap.singleton "d" $ Aeson.toJSON (3 :: Int),
-                            Item.payload = "e"
-                          }
-                      ]
-                  }
-      actual `Hspec.shouldBe` "{\"a\":1}\n{\"b\":2}\nc\n{\"d\":3}\ne\n"
+              Envelope.serialize Envelope.Envelope
+                { Envelope.headers = Headers.empty,
+                  Envelope.items = Items.EnvelopeItems [Item.Event Event.empty]
+                }
+      actual `Hspec.shouldBe` "{}\n{\"type\":\"event\",\"length\":47}\n{\"event_id\":\"00000000000000000000000000000000\"}\n"
 
   Hspec.describe "fromEvent" $ do
     Hspec.it "sets the header" $ do
       dsn <- Dsn.fromText "http://key@sentry.test/1"
       let envelope = Envelope.fromEvent dsn Event.empty
       let expected =
-            Headers.fromObject $
-              KeyMap.fromList
-                [ ("dsn", "http://key@sentry.test/1"),
-                  ( "sdk",
-                    Aeson.object
-                      [ Aeson.pair "name" ("patrol" :: String),
-                        Aeson.pair "version" Version.version
-                      ]
-                  )
-                ]
+            Headers.Headers
+              { Headers.eventId = Just EventId.empty,
+                Headers.dsn = Just dsn,
+                Headers.sdk = Just ClientSdkInfo.patrol,
+                Headers.sentAt = Event.timestamp Event.empty
+              }
       Envelope.headers envelope `Hspec.shouldBe` expected
 
     Hspec.it "sets the items" $ do
       dsn <- Dsn.fromText "http://key@sentry.test/1"
       let envelope = Envelope.fromEvent dsn Event.empty
-      Envelope.items envelope `Hspec.shouldNotSatisfy` null
+      case Envelope.items envelope of
+        Items.EnvelopeItems items ->
+          items `Hspec.shouldBe` [Item.Event Event.empty]
+        other -> Hspec.expectationFailure $ "expected an envelope containing an event, got: " <> show other
 
   Hspec.describe "intoRequest" $ do
     Hspec.it "sets the method" $ do
