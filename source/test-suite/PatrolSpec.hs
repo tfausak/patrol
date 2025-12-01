@@ -31,6 +31,7 @@ import qualified Patrol.Type.GeoSpec
 import qualified Patrol.Type.GpuContextSpec
 import qualified Patrol.Type.HeadersSpec
 import qualified Patrol.Type.ItemSpec
+import qualified Patrol.Type.ItemsSpec
 import qualified Patrol.Type.LevelSpec
 import qualified Patrol.Type.LogEntrySpec
 import qualified Patrol.Type.MachExceptionSpec
@@ -79,6 +80,7 @@ spec = do
   Patrol.Type.EnvelopeSpec.spec
   Patrol.Type.HeadersSpec.spec
   Patrol.Type.ItemSpec.spec
+  Patrol.Type.ItemsSpec.spec
   Patrol.Type.ErrorTypeSpec.spec
   Patrol.Type.EventIdSpec.spec
   Patrol.Type.EventProcessingErrorSpec.spec

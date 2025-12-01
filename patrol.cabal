@@ -99,6 +99,7 @@ library
     Patrol.Type.GpuContext
     Patrol.Type.Headers
     Patrol.Type.Item
+    Patrol.Type.Items
     Patrol.Type.Level
     Patrol.Type.LogEntry
     Patrol.Type.MachException
@@ -178,6 +179,7 @@ test-suite patrol-test-suite
     Patrol.Type.GpuContextSpec
     Patrol.Type.HeadersSpec
     Patrol.Type.ItemSpec
+    Patrol.Type.ItemsSpec
     Patrol.Type.LevelSpec
     Patrol.Type.LogEntrySpec
     Patrol.Type.MachExceptionSpec
