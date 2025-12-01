@@ -35,7 +35,7 @@ spec = Hspec.describe "Patrol.Type.Headers" $ do
       actual `Hspec.shouldBe` "{\"dsn\":\"a://b@c/d\"}"
 
     Hspec.it "works with ClientSdkInfo" $ do
-      let clientSdkInfo = ClientSdkInfo.empty { ClientSdkInfo.name = "patrol" }
+      let clientSdkInfo = ClientSdkInfo.empty {ClientSdkInfo.name = "patrol"}
       let actual =
             Builder.toLazyByteString
               . Headers.serialize

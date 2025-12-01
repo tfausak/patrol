@@ -1,7 +1,7 @@
 module Patrol.Type.Items where
 
-import qualified Data.ByteString.Builder as Builder
 import qualified Data.ByteString as ByteString
+import qualified Data.ByteString.Builder as Builder
 import qualified Patrol.Type.Item as Item
 
 -- | The items contained in an 'Patrol.Type.Envelope.Envelope'.

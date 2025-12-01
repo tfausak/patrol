@@ -27,12 +27,13 @@ data Envelope = Envelope
 fromEvent :: Dsn.Dsn -> Event.Event -> Envelope
 fromEvent dsn event =
   Envelope
-    { headers = Headers.empty
-        { Headers.eventId = Just $ Event.eventId event,
-          Headers.dsn = Just dsn,
-          Headers.sdk = Just ClientSdkInfo.patrol,
-          Headers.sentAt = Event.timestamp event
-        },
+    { headers =
+        Headers.empty
+          { Headers.eventId = Just $ Event.eventId event,
+            Headers.dsn = Just dsn,
+            Headers.sdk = Just ClientSdkInfo.patrol,
+            Headers.sentAt = Event.timestamp event
+          },
       items = Items.EnvelopeItems [Item.Event event]
     }
 

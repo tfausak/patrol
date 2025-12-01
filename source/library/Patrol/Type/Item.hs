@@ -11,12 +11,12 @@ import qualified Patrol.Type.Event as Event
 
 -- | <https://develop.sentry.dev/sdk/data-model/envelope-items/>
 data Item
-  = Event Event.Event
-  -- ^ An 'Patrol.Type.Event.Event' item.
-  --
-  -- <https://develop.sentry.dev/sdk/envelopes/#event>
-  | Raw
-  -- ^ A sentinel item used to filter raw envelopes.
+  = -- | An 'Patrol.Type.Event.Event' item.
+    --
+    -- <https://develop.sentry.dev/sdk/envelopes/#event>
+    Event Event.Event
+  | -- | A sentinel item used to filter raw envelopes.
+    Raw
   deriving (Eq, Show)
 
 serialize :: Item -> Builder.Builder

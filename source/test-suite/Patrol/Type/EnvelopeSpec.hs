@@ -11,8 +11,8 @@ import qualified Patrol.Constant as Constant
 import qualified Patrol.Type.ClientSdkInfo as ClientSdkInfo
 import qualified Patrol.Type.Dsn as Dsn
 import qualified Patrol.Type.Envelope as Envelope
-import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Event as Event
+import qualified Patrol.Type.EventId as EventId
 import qualified Patrol.Type.Headers as Headers
 import qualified Patrol.Type.Item as Item
 import qualified Patrol.Type.Items as Items
@@ -44,10 +44,11 @@ spec = Hspec.describe "Patrol.Type.Envelope" $ do
     Hspec.it "works with 'Items.EnvelopeItems'" $ do
       let actual =
             Builder.toLazyByteString $
-              Envelope.serialize Envelope.Envelope
-                { Envelope.headers = Headers.empty,
-                  Envelope.items = Items.EnvelopeItems [Item.Event Event.empty]
-                }
+              Envelope.serialize
+                Envelope.Envelope
+                  { Envelope.headers = Headers.empty,
+                    Envelope.items = Items.EnvelopeItems [Item.Event Event.empty]
+                  }
       actual `Hspec.shouldBe` "{}\n{\"type\":\"event\",\"length\":47}\n{\"event_id\":\"00000000000000000000000000000000\"}\n"
 
   Hspec.describe "fromEvent" $ do

@@ -21,7 +21,7 @@ instance Aeson.ToJSON Headers where
   toJSON headers =
     Aeson.intoObject
       [ Aeson.pair "event_id" $ eventId headers,
-        Aeson.pair "dsn" $ fmap Dsn.intoUri $ dsn headers,
+        Aeson.pair "dsn" . fmap Dsn.intoUri $ dsn headers,
         Aeson.pair "sdk" $ sdk headers,
         Aeson.pair "sent_at" $ sentAt headers
       ]
