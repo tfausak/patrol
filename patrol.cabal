@@ -75,8 +75,8 @@ library
     Patrol.Type.AppContext
     Patrol.Type.AppleDebugImage
     Patrol.Type.Breadcrumb
-    Patrol.Type.BreadcrumbType
     Patrol.Type.Breadcrumbs
+    Patrol.Type.BreadcrumbType
     Patrol.Type.BrowserContext
     Patrol.Type.CError
     Patrol.Type.ClientSdkInfo
@@ -155,8 +155,8 @@ test-suite patrol-test-suite
     Patrol.Type.AppContextSpec
     Patrol.Type.AppleDebugImageSpec
     Patrol.Type.BreadcrumbSpec
-    Patrol.Type.BreadcrumbTypeSpec
     Patrol.Type.BreadcrumbsSpec
+    Patrol.Type.BreadcrumbTypeSpec
     Patrol.Type.BrowserContextSpec
     Patrol.Type.CErrorSpec
     Patrol.Type.ClientSdkInfoSpec
