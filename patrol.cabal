@@ -79,12 +79,15 @@ library
     Patrol.Type.BreadcrumbType
     Patrol.Type.BrowserContext
     Patrol.Type.CError
+    Patrol.Type.ClientReport
     Patrol.Type.ClientSdkInfo
     Patrol.Type.ClientSdkPackage
     Patrol.Type.Context
+    Patrol.Type.DataCategory
     Patrol.Type.DebugImage
     Patrol.Type.DebugMeta
     Patrol.Type.DeviceContext
+    Patrol.Type.DiscardedEvent
     Patrol.Type.Dsn
     Patrol.Type.Envelope
     Patrol.Type.ErrorType
@@ -159,12 +162,15 @@ test-suite patrol-test-suite
     Patrol.Type.BreadcrumbTypeSpec
     Patrol.Type.BrowserContextSpec
     Patrol.Type.CErrorSpec
+    Patrol.Type.ClientReportSpec
     Patrol.Type.ClientSdkInfoSpec
     Patrol.Type.ClientSdkPackageSpec
     Patrol.Type.ContextSpec
+    Patrol.Type.DataCategorySpec
     Patrol.Type.DebugImageSpec
     Patrol.Type.DebugMetaSpec
     Patrol.Type.DeviceContextSpec
+    Patrol.Type.DiscardedEventSpec
     Patrol.Type.DsnSpec
     Patrol.Type.EnvelopeSpec
     Patrol.Type.ErrorTypeSpec

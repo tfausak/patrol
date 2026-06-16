@@ -9,12 +9,15 @@ module Patrol
     Patrol.Type.BreadcrumbType.BreadcrumbType,
     Patrol.Type.BrowserContext.BrowserContext,
     Patrol.Type.CError.CError,
+    Patrol.Type.ClientReport.ClientReport,
     Patrol.Type.ClientSdkInfo.ClientSdkInfo,
     Patrol.Type.ClientSdkPackage.ClientSdkPackage,
     Patrol.Type.Context.Context,
+    Patrol.Type.DataCategory.DataCategory,
     Patrol.Type.DebugImage.DebugImage,
     Patrol.Type.DebugMeta.DebugMeta,
     Patrol.Type.DeviceContext.DeviceContext,
+    Patrol.Type.DiscardedEvent.DiscardedEvent,
     Patrol.Type.Dsn.Dsn,
     Patrol.Type.Envelope.Envelope,
     Patrol.Type.ErrorType.ErrorType,
@@ -64,12 +67,15 @@ import qualified Patrol.Type.BreadcrumbType
 import qualified Patrol.Type.Breadcrumbs
 import qualified Patrol.Type.BrowserContext
 import qualified Patrol.Type.CError
+import qualified Patrol.Type.ClientReport
 import qualified Patrol.Type.ClientSdkInfo
 import qualified Patrol.Type.ClientSdkPackage
 import qualified Patrol.Type.Context
+import qualified Patrol.Type.DataCategory
 import qualified Patrol.Type.DebugImage
 import qualified Patrol.Type.DebugMeta
 import qualified Patrol.Type.DeviceContext
+import qualified Patrol.Type.DiscardedEvent
 import qualified Patrol.Type.Dsn
 import qualified Patrol.Type.Envelope
 import qualified Patrol.Type.ErrorType
