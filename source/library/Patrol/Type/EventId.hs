@@ -4,13 +4,15 @@ import qualified Control.Monad as Monad
 import qualified Control.Monad.Catch as Catch
 import qualified Control.Monad.IO.Class as IO
 import qualified Data.Aeson as Aeson
+import qualified Data.ByteString.Builder as Builder
+import qualified Data.ByteString.Lazy as LazyByteString
 import qualified Data.Text as Text
+import qualified Data.Text.Encoding as Text
 import qualified Data.Text.Read as Text
 import qualified Data.Typeable as Typeable
 import qualified Data.UUID as Uuid
 import qualified Data.UUID.V4 as Uuid
 import qualified Patrol.Exception.Problem as Problem
-import qualified Text.Printf as Printf
 
 newtype EventId
   = EventId Uuid.UUID
@@ -36,10 +38,16 @@ intoUuid (EventId uuid) = uuid
 random :: (IO.MonadIO io) => io EventId
 random = IO.liftIO $ fmap fromUuid Uuid.nextRandom
 
+-- | Render an 'EventId' as 32 zero-padded lowercase hexadecimal digits.
+--
+-- __NOTE__: The output is ASCII, so 'Text.decodeLatin1' is total.
 intoText :: EventId -> Text.Text
 intoText eventId =
   let (lo, hi) = Uuid.toWords64 $ intoUuid eventId
-   in Text.pack $ Printf.printf "%016x%016x" lo hi
+   in Text.decodeLatin1
+        . LazyByteString.toStrict
+        . Builder.toLazyByteString
+        $ Builder.word64HexFixed lo <> Builder.word64HexFixed hi
 
 fromText :: (Catch.MonadThrow m) => Text.Text -> m EventId
 fromText t1 = do
