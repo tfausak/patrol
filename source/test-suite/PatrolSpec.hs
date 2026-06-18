@@ -11,12 +11,15 @@ import qualified Patrol.Type.BreadcrumbTypeSpec
 import qualified Patrol.Type.BreadcrumbsSpec
 import qualified Patrol.Type.BrowserContextSpec
 import qualified Patrol.Type.CErrorSpec
+import qualified Patrol.Type.ClientReportSpec
 import qualified Patrol.Type.ClientSdkInfoSpec
 import qualified Patrol.Type.ClientSdkPackageSpec
 import qualified Patrol.Type.ContextSpec
+import qualified Patrol.Type.DataCategorySpec
 import qualified Patrol.Type.DebugImageSpec
 import qualified Patrol.Type.DebugMetaSpec
 import qualified Patrol.Type.DeviceContextSpec
+import qualified Patrol.Type.DiscardedEventSpec
 import qualified Patrol.Type.DsnSpec
 import qualified Patrol.Type.EnvelopeSpec
 import qualified Patrol.Type.ErrorTypeSpec
@@ -70,12 +73,15 @@ spec = do
   Patrol.Type.BreadcrumbTypeSpec.spec
   Patrol.Type.BrowserContextSpec.spec
   Patrol.Type.CErrorSpec.spec
+  Patrol.Type.ClientReportSpec.spec
   Patrol.Type.ClientSdkInfoSpec.spec
   Patrol.Type.ClientSdkPackageSpec.spec
   Patrol.Type.ContextSpec.spec
+  Patrol.Type.DataCategorySpec.spec
   Patrol.Type.DebugImageSpec.spec
   Patrol.Type.DebugMetaSpec.spec
   Patrol.Type.DeviceContextSpec.spec
+  Patrol.Type.DiscardedEventSpec.spec
   Patrol.Type.DsnSpec.spec
   Patrol.Type.EnvelopeSpec.spec
   Patrol.Type.HeadersSpec.spec
