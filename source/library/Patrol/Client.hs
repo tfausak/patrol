@@ -19,6 +19,8 @@ import qualified System.Environment as Environment
 -- | Capture an exception by sending it to Sentry. The DSN is read from the
 -- @SENTRY_DSN@ environment variable. To customize the behavior, use
 -- 'captureExceptionWith'.
+--
+-- May throw an exception of the call to Sentry fails.
 captureException ::
   (Catch.Exception e, IO.MonadIO io, Catch.MonadThrow io) =>
   e ->
@@ -29,6 +31,13 @@ captureException e = do
     Dsn.fromText $ maybe Text.empty Text.pack maybeString
   captureExceptionWith pure dsn e
 
+-- | Capture an exception by sending it to Sentry, possibly modifying
+-- the event first.
+--
+-- Unlike `captureException`, this gets the DSN from an argument
+-- instead of from environment variables.
+--
+-- May throw an exception of the call to Sentry fails.
 captureExceptionWith ::
   (Catch.Exception e, IO.MonadIO io, Catch.MonadThrow io) =>
   -- | How to modify the 'Event.Event' before it is sent. Use @'pure'@ if you
