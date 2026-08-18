@@ -12,6 +12,10 @@ Patrol is a Sentry SDK for Haskell.
 The simplest way to report an exception is with `captureException`. It reads the
 DSN from the `SENTRY_DSN` environment variable.
 
+Note: `captureException` itself can throw exceptions, for example if
+the call to Sentry returns a non-success HTTP code or the network is
+down.
+
 ```haskell
 import qualified Patrol
 
@@ -29,6 +33,9 @@ main = do
 
 Use `captureExceptionWith` to add tags, set the environment, attach user info, or
 otherwise modify the event before it is sent.
+
+As with `captureException`, `captureExceptionWith` itself can throw
+exceptions.
 
 ```haskell
 import qualified Data.Map as Map
@@ -90,4 +97,16 @@ sentryMiddleware dsn app request respond =
           , (Text.pack "status_code", Text.pack (show (Http.statusCode status)))
           ]
       }
+```
+
+If you want the response handler to `respond` even if the call to
+Sentry throws an exception, you can e.g. wrap the call in `catch` or
+`try`, like
+
+```haskell
+import Control.Exception (try) -- or UnliftIO.Exception(try)
+
+[...]
+
+      _ <- try (Patrol.captureExceptionWith (modifyEvent request status) dsn err) :: IO (Either SomeException Patrol.Response)
 ```
